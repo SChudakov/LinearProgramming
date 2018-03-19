@@ -1,11 +1,11 @@
-package com.sschudakov.simplex_method.util;
+package com.sschudakov.simplex_method.table_building;
 
 import com.sschudakov.simplex_method.table.SimplexTable;
-import com.sschudakov.simplex_method.enums.TaskType;
+import com.sschudakov.simplex_method.enumerable.TaskType;
 import com.sschudakov.simplex_method.table_building.BasisFinder;
 import com.sschudakov.simplex_method.table_building.MBasisBuilder;
 import com.sschudakov.simplex_method.table_building.SimplexTableModifier;
-import com.sschudakov.simplex_method.table_building.input.ConsoleValuesInput;
+import com.sschudakov.simplex_method.input.ConsoleValuesInput;
 
 import java.util.Vector;
 
@@ -28,9 +28,7 @@ public class SimplexTableBuilder {
 
     public SimplexTable buildSimplexTable() {
 
-        SimplexTable table = new SimplexTable();
-
-        this.valuesInput.inputValues(table);
+        SimplexTable table = this.valuesInput.inputValues();
         buildTableVectors(table);
         System.out.println("\nafter values input\n");
         table.outputTable();

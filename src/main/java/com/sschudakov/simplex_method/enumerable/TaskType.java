@@ -1,4 +1,4 @@
-package com.sschudakov.simplex_method.enums;
+package com.sschudakov.simplex_method.enumerable;
 
 /**
  * Created by Semen Chudakov on 12.10.2017.

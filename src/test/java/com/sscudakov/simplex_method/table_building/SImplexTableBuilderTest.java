@@ -1,6 +1,6 @@
 package com.sscudakov.simplex_method.table_building;
 
-import com.sschudakov.simplex_method.util.SimplexTableBuilder;
+import com.sschudakov.simplex_method.table_building.SimplexTableBuilder;
 import org.junit.Test;
 
 /**

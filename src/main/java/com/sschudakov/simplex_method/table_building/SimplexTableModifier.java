@@ -1,9 +1,9 @@
 package com.sschudakov.simplex_method.table_building;
 
 import com.sschudakov.simplex_method.util.MainTableCopy;
-import com.sschudakov.simplex_method.enums.Sign;
+import com.sschudakov.simplex_method.enumerable.Sign;
 import com.sschudakov.simplex_method.table.SimplexTable;
-import com.sschudakov.simplex_method.enums.TaskType;
+import com.sschudakov.simplex_method.enumerable.TaskType;
 
 import java.util.Vector;
 

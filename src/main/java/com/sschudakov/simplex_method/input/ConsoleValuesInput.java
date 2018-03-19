@@ -1,8 +1,8 @@
-package com.sschudakov.simplex_method.table_building.input;
+package com.sschudakov.simplex_method.input;
 
+import com.sschudakov.simplex_method.enumerable.Sign;
+import com.sschudakov.simplex_method.enumerable.TaskType;
 import com.sschudakov.simplex_method.table.SimplexTable;
-import com.sschudakov.simplex_method.enums.Sign;
-import com.sschudakov.simplex_method.enums.TaskType;
 
 import java.util.Scanner;
 import java.util.Vector;
@@ -10,7 +10,7 @@ import java.util.Vector;
 /**
  * Created by Semen Chudakov on 30.09.2017.
  */
-public class ConsoleValuesInput implements ValuesInput {
+public class ConsoleValuesInput {
 
     private Scanner scanner;
 
@@ -18,8 +18,10 @@ public class ConsoleValuesInput implements ValuesInput {
         this.scanner = new Scanner(System.in);
     }
 
-    @Override
-    public void inputValues(SimplexTable table) {
+
+    public SimplexTable inputValues() {
+
+        SimplexTable table = new SimplexTable();
 
         int numOfVariables = inputNumOfVariables();
         int numOfEquations = inputNumOfEquations();
@@ -32,6 +34,8 @@ public class ConsoleValuesInput implements ValuesInput {
         table.setMainTable(inputMainTable(numOfEquations, numOfVariables));
         table.setEquationsSigns(inputRestrictionsSigns(numOfEquations));
         table.setRestrictionsVector(inputRestrictions(numOfEquations));
+
+        return table;
     }
 
     private int inputNumOfVariables() {

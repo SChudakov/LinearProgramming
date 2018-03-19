@@ -1,7 +1,7 @@
 package com.sschudakov.simplex_method.table;
 
-import com.sschudakov.simplex_method.enums.Sign;
-import com.sschudakov.simplex_method.enums.TaskType;
+import com.sschudakov.simplex_method.enumerable.Sign;
+import com.sschudakov.simplex_method.enumerable.TaskType;
 import com.sschudakov.simplex_method.exception.NoSolutionException;
 
 import java.util.Arrays;
@@ -26,17 +26,14 @@ public class SimplexTable {
     private Vector<Double> restrictionsVector;
 
     private Vector<Integer> basicVariables;
-//    private Vector<Double> basicVariablesCoefficients;
+
+    //    private Vector<Double> basicVariablesCoefficients;
 
     private Vector<Double> deltasVector;
 
     private Vector<Double> simplexRatios;
 
     private double functionValue;
-
-
-//    private Vector<Double> nonbasicVariablesCoefficients;
-
 
     //getters and setters
 

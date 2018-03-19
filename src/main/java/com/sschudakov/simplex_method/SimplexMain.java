@@ -2,7 +2,7 @@ package com.sschudakov.simplex_method;
 
 import com.sschudakov.simplex_method.table.SimplexTable;
 import com.sschudakov.simplex_method.solver.SimplexTableSolver;
-import com.sschudakov.simplex_method.util.SimplexTableBuilder;
+import com.sschudakov.simplex_method.table_building.SimplexTableBuilder;
 
 public class SimplexMain {
 

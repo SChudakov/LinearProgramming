@@ -1,6 +1,7 @@
 package com.sscudakov.simplex_method.table_building;
 
 import com.sschudakov.simplex_method.table_building.SimplexTableBuilder;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -17,6 +18,7 @@ public class SImplexTableBuilderTest {
                     "<= = >=" +
                     "8 10 4";
 
+    @Ignore
     @Test
     public void buildSimplexTableTest() {
         SimplexTableBuilder simplexTableBuilder = new SimplexTableBuilder();

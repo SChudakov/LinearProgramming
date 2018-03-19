@@ -4,6 +4,7 @@ import com.sschudakov.transport_task.Tasks;
 import com.sschudakov.transport_task.solving.TransportTaskSolver;
 import com.sschudakov.transport_task.table.TransportTaskTable;
 import com.sschudakov.transport_task.table_building.TransportTaskTableBuilder;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -12,6 +13,7 @@ import org.junit.Test;
 public class TransportTaskSolverTest {
 
 
+    @Ignore
     @Test(timeout = 10_000)
     public void solveSeventhTaskTest() {
         TransportTaskTableBuilder builder = new TransportTaskTableBuilder();
@@ -20,6 +22,7 @@ public class TransportTaskSolverTest {
         TransportTaskSolver.solve(table);
     }
 
+    @Ignore
     @Test(timeout = 10_000)
     public void solveFirstTaskTest() {
         TransportTaskTableBuilder builder = new TransportTaskTableBuilder();
@@ -28,6 +31,7 @@ public class TransportTaskSolverTest {
         TransportTaskSolver.solve(table);
     }
 
+    @Ignore
     @Test(timeout = 10_000)
     public void solveSecondTaskTest() {
         TransportTaskTableBuilder builder = new TransportTaskTableBuilder();
@@ -36,6 +40,7 @@ public class TransportTaskSolverTest {
         TransportTaskSolver.solve(table);
     }
 
+    @Ignore
     @Test(timeout = 10_000)
     public void solveThirdTaskTest() {
         TransportTaskTableBuilder builder = new TransportTaskTableBuilder();
@@ -44,6 +49,7 @@ public class TransportTaskSolverTest {
         TransportTaskSolver.solve(table);
     }
 
+    @Ignore
     @Test(timeout = 10_000)
     public void solveFourthTaskTest() {
         TransportTaskTableBuilder builder = new TransportTaskTableBuilder();
@@ -52,6 +58,7 @@ public class TransportTaskSolverTest {
         TransportTaskSolver.solve(table);
     }
 
+    @Ignore
     @Test(timeout = 10_000)
     public void solveFifthTaskTest() {
         TransportTaskTableBuilder builder = new TransportTaskTableBuilder();
@@ -60,6 +67,7 @@ public class TransportTaskSolverTest {
         TransportTaskSolver.solve(table);
     }
 
+    @Ignore
     @Test(timeout = 10_000)
     public void solveSixthTaskTest() {
         TransportTaskTableBuilder builder = new TransportTaskTableBuilder();
@@ -68,6 +76,7 @@ public class TransportTaskSolverTest {
         TransportTaskSolver.solve(table);
     }
 
+    @Ignore
     @Test(timeout = 10_000)
     public void solveEighthTaskTest() {
         TransportTaskTableBuilder builder = new TransportTaskTableBuilder();
@@ -76,6 +85,7 @@ public class TransportTaskSolverTest {
         TransportTaskSolver.solve(table);
     }
 
+    @Ignore
     @Test(timeout = 10_000)
     public void solveNinthTaskTest() {
         TransportTaskTableBuilder builder = new TransportTaskTableBuilder();
@@ -84,6 +94,7 @@ public class TransportTaskSolverTest {
         TransportTaskSolver.solve(table);
     }
 
+    @Ignore
     @Test(timeout = 10_000)
     public void solveTenthTaskTest() {
         TransportTaskTableBuilder builder = new TransportTaskTableBuilder();

@@ -3,14 +3,17 @@ package com.sscudakov.simplex_method.utils;
 import com.sschudakov.simplex_method.table.SimplexTable;
 import com.sschudakov.simplex_method.table_building.MFinder;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
  * Created by Semen Chudakosv on 16.10.2017.
  */
 public class MFinderTest {
+    @Ignore
     @Test
     public void test() {
 
@@ -21,12 +24,12 @@ public class MFinderTest {
                 {0, -12313, 231, 4},
                 {0, 0, 0, 3}
         };
-        Vector<Double> function = new Vector<>();
+        ArrayList<Double> function = new ArrayList<>();
         function.add(1.0);
         function.add(-3.0);
         function.add(-300.0);
         function.add(23.0);
-        Vector<Double> restrictions = new Vector<>();
+        ArrayList<Double> restrictions = new ArrayList<>();
         restrictions.add(1.0);
         restrictions.add(-3.0);
         restrictions.add(-300.0);

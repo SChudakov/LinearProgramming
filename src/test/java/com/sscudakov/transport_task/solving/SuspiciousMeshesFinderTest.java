@@ -8,6 +8,7 @@ import com.sschudakov.transport_task.table.TransportTableBasis;
 import com.sschudakov.transport_task.table.TransportTaskTable;
 import com.sschudakov.transport_task.table_building.BasisBuilder;
 import com.sschudakov.transport_task.table_building.TransportTaskTableBuilder;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class SuspiciousMeshesFinderTest {
     private static final String TASK = NUM_OF_CONSUMERS_AND_PRODUCERS + CONSUMERS_VECTOR
             + PRODUCERS_VECTOR + PRICES + RESTRICTIONS;
 
+    @Ignore
     @Test
     public void findSuspiciousMeshesTest() {
         TransportTaskTableBuilder builder = new TransportTaskTableBuilder();

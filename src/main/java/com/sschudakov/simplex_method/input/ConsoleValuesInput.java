@@ -4,6 +4,7 @@ import com.sschudakov.simplex_method.enumerable.Sign;
 import com.sschudakov.simplex_method.enumerable.TaskType;
 import com.sschudakov.simplex_method.table.SimplexTable;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -50,8 +51,8 @@ public class ConsoleValuesInput {
         return result;
     }
 
-    private Vector<Double> inputFunction(int numOfVariables) {
-        Vector<Double> result = new Vector<>(numOfVariables);
+    private ArrayList<Double> inputFunction(int numOfVariables) {
+        ArrayList<Double> result = new ArrayList<>();
         System.out.println("enter variables coefficients in function");
         for (int i = 0; i < numOfVariables; i++) {
             result.add(this.scanner.nextDouble());
@@ -88,9 +89,9 @@ public class ConsoleValuesInput {
         return result;
     }
 
-    private Vector<Sign> inputRestrictionsSigns(int numOfEquations) {
+    private ArrayList<Sign> inputRestrictionsSigns(int numOfEquations) {
 
-        Vector<Sign> result = new Vector<>();
+        ArrayList<Sign> result = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -125,8 +126,8 @@ public class ConsoleValuesInput {
         throw new IllegalArgumentException("Input sign is not available. Available sings are: = >= > < <=");
     }
 
-    private Vector<Double> inputRestrictions(int numOfEquations) {
-        Vector<Double> result = new Vector<>();
+    private ArrayList<Double> inputRestrictions(int numOfEquations) {
+        ArrayList<Double> result = new ArrayList<>();
 
         for (int i = 0; i < numOfEquations; i++) {
             System.out.println("input restriction for " + (i + 1) + " equation");

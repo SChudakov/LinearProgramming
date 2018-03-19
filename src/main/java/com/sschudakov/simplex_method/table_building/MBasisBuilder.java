@@ -3,6 +3,7 @@ package com.sschudakov.simplex_method.table_building;
 import com.sschudakov.simplex_method.util.MainTableCopy;
 import com.sschudakov.simplex_method.table.SimplexTable;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -30,7 +31,7 @@ public class MBasisBuilder {
     private void rewriteDataInTable(SimplexTable table, int numOfXVariables, int numOfYVariables) {
         table.setNumOfVariables(table.getNumOfVariables() + numOfYVariables);
 
-        Vector<Integer> basicVariables = table.getBasicVariables();
+        ArrayList<Integer> basicVariables = table.getBasicVariables();
 
         double[][] mainTable = table.getMainTable();
 
@@ -39,7 +40,7 @@ public class MBasisBuilder {
         }
     }
 
-    private double[][] rebuildMainTable(double[][] mainTable, Vector<Integer> basicVariables, int numOfYVariables) {
+    private double[][] rebuildMainTable(double[][] mainTable, ArrayList<Integer> basicVariables, int numOfYVariables) {
 
         double[][] result = new double[mainTable.length][mainTable[0].length + numOfYVariables];
 
@@ -55,7 +56,7 @@ public class MBasisBuilder {
         return result;
     }
 
-    private void initializeYVariables(double[][] result, Vector<Integer> basicVariables, int numOfXVariables) {
+    private void initializeYVariables(double[][] result, ArrayList<Integer> basicVariables, int numOfXVariables) {
 
         int numOfEquations = result.length;
         int totalAmountOfVariables = result[0].length;
@@ -93,7 +94,7 @@ public class MBasisBuilder {
         throw new RuntimeException("there is no 1 in " + column + " column");
     }
 
-    private void rebuildFunction(Vector<Double> function, int numOfYVariables) {
+    private void rebuildFunction(ArrayList<Double> function, int numOfYVariables) {
         for (int i = 0; i < numOfYVariables; i++) {
             function.add(M_VALUE);
         }
@@ -102,7 +103,7 @@ public class MBasisBuilder {
     private int tellNumOfMVariables(SimplexTable table){
         int result = 0;
 
-        Vector<Integer> basicVariables = table.getBasicVariables();
+        ArrayList<Integer> basicVariables = table.getBasicVariables();
 
         for (Integer basicVariable : basicVariables) {
             if(basicVariable == -1){

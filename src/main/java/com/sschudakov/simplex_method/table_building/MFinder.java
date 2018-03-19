@@ -2,7 +2,7 @@ package com.sschudakov.simplex_method.table_building;
 
 import com.sschudakov.simplex_method.table.SimplexTable;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Created by Semen Chudakov on 16.10.2017.
@@ -26,7 +26,7 @@ public class MFinder {
         return result;
     }
 
-    private static double maxOfVector(Vector<Double> vector) {
+    private static double maxOfVector(ArrayList<Double> vector) {
         double result = Math.abs(vector.get(0));
         for (Double aDouble : vector) {
             if (result < Math.abs(aDouble)) {

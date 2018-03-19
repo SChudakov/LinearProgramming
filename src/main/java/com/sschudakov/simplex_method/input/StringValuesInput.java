@@ -4,6 +4,7 @@ import com.sschudakov.simplex_method.enumerable.Sign;
 import com.sschudakov.simplex_method.enumerable.TaskType;
 import com.sschudakov.simplex_method.table.SimplexTable;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -43,8 +44,8 @@ public class StringValuesInput {
         return scanner.nextInt();
     }
 
-    private Vector<Double> inputFunction(Scanner scanner, int numOfVariables) {
-        Vector<Double> result = new Vector<>(numOfVariables);
+    private ArrayList<Double> inputFunction(Scanner scanner, int numOfVariables) {
+        ArrayList<Double> result = new ArrayList<>(numOfVariables);
         for (int i = 0; i < numOfVariables; i++) {
             result.add(scanner.nextDouble());
         }
@@ -77,9 +78,10 @@ public class StringValuesInput {
         return result;
     }
 
-    private Vector<Sign> inputRestrictionsSigns(Scanner scanner, int numOfEquations) {
+    private ArrayList<Sign> inputRestrictionsSigns(Scanner scanner, int numOfEquations) {
 
-        Vector<Sign> result = new Vector<>();
+        ArrayList<Sign> result = new ArrayList<>();
+
         for (int i = 0; i < numOfEquations; i++) {
             result.add(inputSign(scanner));
         }
@@ -110,8 +112,8 @@ public class StringValuesInput {
         throw new IllegalArgumentException("Input sign is not available. Available sings are: = >= > < <=");
     }
 
-    private Vector<Double> inputRestrictions(Scanner scanner, int numOfEquations) {
-        Vector<Double> result = new Vector<>();
+    private ArrayList<Double> inputRestrictions(Scanner scanner, int numOfEquations) {
+        ArrayList<Double> result = new ArrayList<>();
 
         for (int i = 0; i < numOfEquations; i++) {
             System.out.println("input restriction for " + (i + 1) + " equation");

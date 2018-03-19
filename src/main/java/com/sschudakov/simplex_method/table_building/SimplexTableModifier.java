@@ -1,18 +1,18 @@
 package com.sschudakov.simplex_method.table_building;
 
-import com.sschudakov.simplex_method.util.MainTableCopy;
 import com.sschudakov.simplex_method.enumerable.Sign;
-import com.sschudakov.simplex_method.table.SimplexTable;
 import com.sschudakov.simplex_method.enumerable.TaskType;
+import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.util.MainTableCopy;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Created by Semen Chudakov on 12.10.2017.
  */
 public class SimplexTableModifier {
 
-    public void modifyTable(SimplexTable table,TaskType toType){
+    public void modifyTable(SimplexTable table, TaskType toType) {
         modifyFunctionType(table, toType);
         modifyInequationsToEquations(table);
     }
@@ -28,7 +28,7 @@ public class SimplexTableModifier {
         table.setTaskType(toType);
     }
 
-    private void changeFunctionCoefficients(Vector<Double> function) {
+    private void changeFunctionCoefficients(ArrayList<Double> function) {
         for (int i = 0; i < function.size(); i++) {
             function.set(i, -function.get(i));
         }
@@ -36,9 +36,9 @@ public class SimplexTableModifier {
 
     private void modifyInequationsToEquations(SimplexTable table) {
 
-        Vector<Sign> equationsSigns = table.getEquationsSigns();
+        ArrayList<Sign> equationsSigns = table.getEquationsSigns();
 
-        Vector<Integer> equationsForNewVariables = new Vector<>();
+        ArrayList<Integer> equationsForNewVariables = new ArrayList<>();
 
         for (int i = 0; i < equationsSigns.size(); i++) {
             if (table.getEquationsSigns().get(i).equals(Sign.GREATER_THAN)
@@ -74,7 +74,7 @@ public class SimplexTableModifier {
         }
     }
 
-    private void addVariables(SimplexTable table, Vector<Integer> equationsForNewVariables) {
+    private void addVariables(SimplexTable table, ArrayList<Integer> equationsForNewVariables) {
 
         int numOfNewVariables = equationsForNewVariables.size();
 
@@ -83,7 +83,7 @@ public class SimplexTableModifier {
 
         MainTableCopy.copyTable(mainTable, newTable);
 
-        for(int i = 0; i < numOfNewVariables; i++){
+        for (int i = 0; i < numOfNewVariables; i++) {
             newTable[equationsForNewVariables.get(i)][mainTable[0].length + i] = 1;
             table.getFunction().add(0.0);
         }
@@ -98,8 +98,8 @@ public class SimplexTableModifier {
         //change num of variables value in the table
     }
 
-    private void changeInequationSignsToEqual(SimplexTable table){
-        for(int i = 0; i < table.getEquationsSigns().size(); i++){
+    private void changeInequationSignsToEqual(SimplexTable table) {
+        for (int i = 0; i < table.getEquationsSigns().size(); i++) {
             table.getEquationsSigns().set(i, Sign.EQUAL);
         }
     }

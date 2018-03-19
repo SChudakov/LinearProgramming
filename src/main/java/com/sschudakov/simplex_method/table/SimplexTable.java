@@ -4,8 +4,8 @@ import com.sschudakov.simplex_method.enumerable.Sign;
 import com.sschudakov.simplex_method.enumerable.TaskType;
 import com.sschudakov.simplex_method.exception.NoSolutionException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Vector;
 
 /**
  * Created by Semen Chudakov on 10.09.2017.
@@ -13,37 +13,26 @@ import java.util.Vector;
 public class SimplexTable {
 
 
-    int numOfMVariables;
     private int numOfVariables;
     private int numOfEquations;
 
-    private Vector<Double> function;
+    int numOfMVariables;
+
+    private ArrayList<Double> function;
     private TaskType taskType;
     private double[][] mainTable;
 
+    private ArrayList<Sign> equationsSigns;
+    private ArrayList<Double> restrictionsVector;
 
-    private Vector<Sign> equationsSigns;
-    private Vector<Double> restrictionsVector;
+    private ArrayList<Integer> basicVariables;
 
-    private Vector<Integer> basicVariables;
-
-    //    private Vector<Double> basicVariablesCoefficients;
-
-    private Vector<Double> deltasVector;
-
-    private Vector<Double> simplexRatios;
+    private ArrayList<Double> deltasVector;
+    private ArrayList<Double> simplexRatios;
 
     private double functionValue;
 
     //getters and setters
-
-    public int getNumOfMVariables() {
-        return numOfMVariables;
-    }
-
-    public void setNumOfMVariables(int numOfMVariables) {
-        this.numOfMVariables = numOfMVariables;
-    }
 
     public int getNumOfVariables() {
         return numOfVariables;
@@ -61,72 +50,20 @@ public class SimplexTable {
         this.numOfEquations = numOfEquations;
     }
 
-    public Vector<Integer> getBasicVariables() {
-        return basicVariables;
+    public int getNumOfMVariables() {
+        return numOfMVariables;
     }
 
-    public void setBasicVariables(Vector<Integer> basicVariables) {
-        this.basicVariables = basicVariables;
+    public void setNumOfMVariables(int numOfMVariables) {
+        this.numOfMVariables = numOfMVariables;
     }
 
-    public Vector<Double> getFunction() {
+    public ArrayList<Double> getFunction() {
         return function;
     }
 
-    public void setFunction(Vector<Double> function) {
+    public void setFunction(ArrayList<Double> function) {
         this.function = function;
-    }
-
-    public void setFunctionValue(double functionValue) {
-        this.functionValue = functionValue;
-    }
-
-    public Vector<Double> getDeltasVector() {
-        return deltasVector;
-    }
-
-    public void setDeltasVector(Vector<Double> deltasVector) {
-        this.deltasVector = deltasVector;
-    }
-
-    public Vector<Double> getRestrictionsVector() {
-        return restrictionsVector;
-    }
-
-    public void setRestrictionsVector(Vector<Double> restrictionsVector) {
-        this.restrictionsVector = restrictionsVector;
-    }
-
-    public double getFunctionValue() {
-        return functionValue;
-    }
-
-    public void setFunctionValue(Integer functionValue) {
-        this.functionValue = functionValue;
-    }
-
-    public Vector<Double> getSimplexRatios() {
-        return simplexRatios;
-    }
-
-    public void setSimplexRatios(Vector<Double> simplexRatios) {
-        this.simplexRatios = simplexRatios;
-    }
-
-    public double[][] getMainTable() {
-        return mainTable;
-    }
-
-    public void setMainTable(double[][] mainTable) {
-        this.mainTable = mainTable;
-    }
-
-    public Vector<Sign> getEquationsSigns() {
-        return equationsSigns;
-    }
-
-    public void setEquationsSigns(Vector<Sign> equationsSigns) {
-        this.equationsSigns = equationsSigns;
     }
 
     public TaskType getTaskType() {
@@ -137,25 +74,63 @@ public class SimplexTable {
         this.taskType = taskType;
     }
 
-
-    public SimplexTable() {
+    public double[][] getMainTable() {
+        return mainTable;
     }
 
-    public SimplexTable(int numOfEquations, int numOfVariables) {
+    public void setMainTable(double[][] mainTable) {
+        this.mainTable = mainTable;
+    }
 
-        this.numOfVariables = numOfVariables;
-        this.numOfEquations = numOfEquations;
+    public ArrayList<Sign> getEquationsSigns() {
+        return equationsSigns;
+    }
 
-        this.function = new Vector<>(numOfVariables);
+    public void setEquationsSigns(ArrayList<Sign> equationsSigns) {
+        this.equationsSigns = equationsSigns;
+    }
 
-        this.deltasVector = new Vector<>(numOfVariables);
-        this.restrictionsVector = new Vector<>(numOfEquations);
+    public ArrayList<Double> getRestrictionsVector() {
+        return restrictionsVector;
+    }
 
-        this.basicVariables = new Vector<>(numOfEquations);
-//        this.basicVariablesCoefficients = new Vector<>(numOfEquations);
-//        this.nonbasicVariablesCoefficients = new Vector<>(numOfEquations);
+    public void setRestrictionsVector(ArrayList<Double> restrictionsVector) {
+        this.restrictionsVector = restrictionsVector;
+    }
 
-        this.mainTable = new double[numOfEquations][numOfVariables];
+    public ArrayList<Integer> getBasicVariables() {
+        return basicVariables;
+    }
+
+    public void setBasicVariables(ArrayList<Integer> basicVariables) {
+        this.basicVariables = basicVariables;
+    }
+
+    public ArrayList<Double> getDeltasVector() {
+        return deltasVector;
+    }
+
+    public void setDeltasVector(ArrayList<Double> deltasVector) {
+        this.deltasVector = deltasVector;
+    }
+
+    public ArrayList<Double> getSimplexRatios() {
+        return simplexRatios;
+    }
+
+    public void setSimplexRatios(ArrayList<Double> simplexRatios) {
+        this.simplexRatios = simplexRatios;
+    }
+
+    public double getFunctionValue() {
+        return functionValue;
+    }
+
+    public void setFunctionValue(double functionValue) {
+        this.functionValue = functionValue;
+    }
+
+    public SimplexTable() {
     }
 
     public boolean isOptimal() {
@@ -179,7 +154,7 @@ public class SimplexTable {
 
     private void ensureCorrectTask() {
         for (Integer basicVariable : this.basicVariables) {
-            if(basicVariable >= this.numOfVariables - this.numOfMVariables){
+            if (basicVariable >= this.numOfVariables - this.numOfMVariables) {
                 throw new NoSolutionException("The multitude of appropriate solving vectors is empty");
             }
         }

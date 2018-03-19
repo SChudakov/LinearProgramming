@@ -3,6 +3,7 @@ package com.sscudakov.transport_task.table_building;
 import com.sschudakov.transport_task.table.TransportTaskTable;
 import com.sschudakov.transport_task.table_building.InitialValuesFiller;
 import com.sschudakov.transport_task.table_building.StringInput;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -23,6 +24,7 @@ public class InitialValueFillerTest {
     private static final String TASK = NUM_OF_CONSUMERS_AND_PRODUCERS + CONSUMERS_VECTOR
             + PRODUCERS_VECTOR + PRICES + RESTRICTIONS;
 
+    @Ignore
     @Test
     public void buildTableTest() {
         TransportTaskTable taskTable = new TransportTaskTable();

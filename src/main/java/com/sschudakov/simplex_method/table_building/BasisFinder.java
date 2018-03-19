@@ -2,6 +2,7 @@ package com.sschudakov.simplex_method.table_building;
 
 import com.sschudakov.simplex_method.table.SimplexTable;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -11,7 +12,7 @@ public class BasisFinder {
 
     public void findBasis(SimplexTable table) {
 
-        Vector<Integer> basicVariables = table.getBasicVariables();
+        ArrayList<Integer> basicVariables = table.getBasicVariables();
 
         int numOfVariables = table.getNumOfVariables();
         double[][] mainTable = table.getMainTable();

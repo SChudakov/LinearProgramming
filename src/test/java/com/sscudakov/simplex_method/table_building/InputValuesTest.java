@@ -2,6 +2,7 @@ package com.sscudakov.simplex_method.table_building;
 
 import com.sschudakov.simplex_method.input.ConsoleValuesInput;
 import com.sschudakov.simplex_method.table.SimplexTable;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -18,6 +19,7 @@ public class InputValuesTest {
                     "<= = >=" +
                     "8 10 4";
 
+    @Ignore
     @Test
     public void testInputValues() {
         ConsoleValuesInput input = new ConsoleValuesInput();

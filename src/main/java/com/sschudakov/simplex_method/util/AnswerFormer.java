@@ -3,6 +3,7 @@ package com.sschudakov.simplex_method.util;
 import com.sschudakov.simplex_method.table.SimplexTable;
 import com.sschudakov.simplex_method.exception.TableNotOptimalException;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -17,7 +18,7 @@ public class AnswerFormer {
 
         System.out.println("\nANSWER\n");
 
-        Vector<Double> answerVector = formAnswerVector(table);
+        ArrayList<Double> answerVector = formAnswerVector(table);
 
         System.out.println("Optimal value is reached on the vector: " + answerVector.toString());
         System.out.println("Where function value is: " + findFunctionValue(table.getFunction(), answerVector));
@@ -25,11 +26,11 @@ public class AnswerFormer {
 
     }
 
-    public static Vector<Double> formAnswerVector(SimplexTable table) {
+    public static ArrayList<Double> formAnswerVector(SimplexTable table) {
 
-        Vector<Integer> basicVariables = table.getBasicVariables();
-        Vector<Double> restrictions = table.getRestrictionsVector();
-        Vector<Double> result = new Vector<>();
+        ArrayList<Integer> basicVariables = table.getBasicVariables();
+        ArrayList<Double> restrictions = table.getRestrictionsVector();
+        ArrayList<Double> result = new ArrayList<>();
 
         for (int i = 0; i < table.getNumOfVariables(); i++) {
             if (hasVariable(basicVariables, i)) {
@@ -43,7 +44,7 @@ public class AnswerFormer {
         return result;
     }
 
-    private static boolean hasVariable(Vector<Integer> basicVariables, int variable) {
+    private static boolean hasVariable(ArrayList<Integer> basicVariables, int variable) {
         for (Integer basicVariable : basicVariables) {
             if (basicVariable == variable) {
                 return true;
@@ -52,7 +53,7 @@ public class AnswerFormer {
         return false;
     }
 
-    private static double findFunctionValue(Vector<Double> function, Vector<Double> vector) {
+    private static double findFunctionValue(ArrayList<Double> function, ArrayList<Double> vector) {
         double result = 0;
         for (int i = 0; i < function.size(); i++) {
             result += function.get(i) * vector.get(i);
@@ -60,7 +61,7 @@ public class AnswerFormer {
         return result;
     }
 
-    private static int tellBasicVariablePosition(Vector<Integer> basicVariable, int variable) {
+    private static int tellBasicVariablePosition(ArrayList<Integer> basicVariable, int variable) {
         for (int i = 0; i < basicVariable.size(); i++) {
             if (basicVariable.get(i) == variable) {
                 return i;

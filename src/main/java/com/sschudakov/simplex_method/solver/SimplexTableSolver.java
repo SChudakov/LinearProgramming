@@ -1,11 +1,11 @@
 package com.sschudakov.simplex_method.solver;
 
-import com.sschudakov.simplex_method.table.SimplexTable;
 import com.sschudakov.simplex_method.exception.TableAlreadyOptimalException;
 import com.sschudakov.simplex_method.exception.UnlimitedFunctionException;
+import com.sschudakov.simplex_method.table.SimplexTable;
 import com.sschudakov.simplex_method.util.AnswerFormer;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Created by Semen Chudakov on 10.09.2017.
@@ -52,7 +52,7 @@ public class SimplexTableSolver {
 
     public void recountMainTable(int resolvingLine, int resolvingColumn) {
         double[][] mainTable = this.simplexTable.getMainTable();
-        Vector<Double> restrictions = this.simplexTable.getRestrictionsVector();
+        ArrayList<Double> restrictions = this.simplexTable.getRestrictionsVector();
         double resolvingElementValue = mainTable[resolvingLine][resolvingColumn];
         double[][] recountedTable = new double[mainTable.length][mainTable[0].length];
 
@@ -62,7 +62,7 @@ public class SimplexTableSolver {
             recountedValue = mainTable[resolvingLine][i] / resolvingElementValue;
             if (recountedValue != 0) {
                 recountedTable[resolvingLine][i] = recountedValue;
-            }else{
+            } else {
                 recountedTable[resolvingLine][i] = Math.abs(recountedValue);
             }
         }
@@ -98,7 +98,7 @@ public class SimplexTableSolver {
     }
 
     private void recountDeltas() {
-        Vector<Double> deltas = this.simplexTable.getDeltasVector();
+        ArrayList<Double> deltas = this.simplexTable.getDeltasVector();
 
         if (deltas.size() == 0) {
             for (int i = 0; i < this.simplexTable.getNumOfVariables(); i++) {
@@ -129,7 +129,7 @@ public class SimplexTableSolver {
         if (this.simplexTable.isDualOptimal()) {
             throw new TableAlreadyOptimalException();
         }
-        Vector<Double> restrictions = this.simplexTable.getRestrictionsVector();
+        ArrayList<Double> restrictions = this.simplexTable.getRestrictionsVector();
 
         int position = tellPositionOfFirstNegative(restrictions);
         double value = restrictions.get(position);
@@ -149,7 +149,7 @@ public class SimplexTableSolver {
 
         recountSimplexRatios(resolvingLine);
 
-        Vector<Double> simplexRatios = this.simplexTable.getSimplexRatios();
+        ArrayList<Double> simplexRatios = this.simplexTable.getSimplexRatios();
         int position = 0;
         double currentRatio = simplexRatios.get(0);
 
@@ -170,8 +170,8 @@ public class SimplexTableSolver {
         }
 
         double[][] mainTable = this.simplexTable.getMainTable();
-        Vector<Double> deltas = this.simplexTable.getDeltasVector();
-        Vector<Double> simplexRatios = this.simplexTable.getSimplexRatios();
+        ArrayList<Double> deltas = this.simplexTable.getDeltasVector();
+        ArrayList<Double> simplexRatios = this.simplexTable.getSimplexRatios();
 
 
         for (int i = 0; i < mainTable[resolvingLine].length; i++) {
@@ -193,9 +193,9 @@ public class SimplexTableSolver {
         return false;
     }
 
-    private int tellPositionOfFirstNegative(Vector<Double> vector){
-        for(int i = 0; i < vector.size(); i++){
-            if(vector.get(i) < 0){
+    private int tellPositionOfFirstNegative(ArrayList<Double> vector) {
+        for (int i = 0; i < vector.size(); i++) {
+            if (vector.get(i) < 0) {
                 return i;
             }
         }

@@ -5,6 +5,7 @@ import com.sschudakov.transport_task.table.TransportTableBasis;
 import com.sschudakov.transport_task.table.TransportTaskTableMesh;
 import com.sschudakov.transport_task.table_building.TransportTaskUtils;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
  */
 public class TransportTaskTableUtilsTest {
 
+    @Ignore
     @Test
     public void wouldCreateCycleTest() {
 
@@ -29,18 +31,21 @@ public class TransportTaskTableUtilsTest {
 
     }
 
+    @Ignore
     @Test
     public void isLMeshTest() {
         TransportTaskTableMesh mesh = new TransportTaskTableMesh(null, null, 0, 146);
         Assert.assertEquals(TransportTaskUtils.isLMesh(mesh), true);
     }
 
+    @Ignore
     @Test
     public void isRMeshTest() {
         TransportTaskTableMesh mesh = new TransportTaskTableMesh(null, 26, 26, -146);
         Assert.assertEquals(TransportTaskUtils.isRMesh(mesh), true);
     }
 
+    @Ignore
     @Test
     public void findNextElementTest() {
         List<MeshNode> nodes = new ArrayList<>();

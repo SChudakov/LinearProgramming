@@ -2,6 +2,7 @@ package com.sscudakov.transport_task.table_building;
 
 import com.sschudakov.transport_task.table.TransportTaskTable;
 import com.sschudakov.transport_task.table_building.StringInput;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -19,6 +20,7 @@ public class StringInputTest {
             "5 26 7 11 " +
             "5 20 25 10";
 
+    @Ignore
     @Test
     public void inputValuesTest() {
         TransportTaskTable table = new TransportTaskTable();

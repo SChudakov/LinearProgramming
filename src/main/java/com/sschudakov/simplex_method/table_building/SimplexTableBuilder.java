@@ -1,13 +1,10 @@
 package com.sschudakov.simplex_method.table_building;
 
-import com.sschudakov.simplex_method.table.SimplexTable;
 import com.sschudakov.simplex_method.enumerable.TaskType;
-import com.sschudakov.simplex_method.table_building.BasisFinder;
-import com.sschudakov.simplex_method.table_building.MBasisBuilder;
-import com.sschudakov.simplex_method.table_building.SimplexTableModifier;
 import com.sschudakov.simplex_method.input.ConsoleValuesInput;
+import com.sschudakov.simplex_method.table.SimplexTable;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Created by Semen Chudakov on 30.09.2017.
@@ -51,9 +48,9 @@ public class SimplexTableBuilder {
     }
 
     private void buildTableVectors(SimplexTable table) {
-        Vector<Integer> basicVariables = new Vector<>();
-        Vector<Double> deltas = new Vector<>();
-        Vector<Double> simplexRatios = new Vector<>();
+        ArrayList<Integer> basicVariables = new ArrayList<>();
+        ArrayList<Double> deltas = new ArrayList<>();
+        ArrayList<Double> simplexRatios = new ArrayList<>();
 
         for (int i = 0; i < table.getNumOfEquations(); i++) {
             basicVariables.add(-1);
@@ -67,9 +64,9 @@ public class SimplexTableBuilder {
         table.setSimplexRatios(simplexRatios);
     }
 
-    private void rebuildVectors(SimplexTable table){
-        Vector<Double> deltas = table.getDeltasVector();
-        Vector<Double> simplexRatios = table.getSimplexRatios();
+    private void rebuildVectors(SimplexTable table) {
+        ArrayList<Double> deltas = table.getDeltasVector();
+        ArrayList<Double> simplexRatios = table.getSimplexRatios();
 
         for (int i = deltas.size(); i < table.getNumOfVariables(); i++) {
             deltas.add(0.0);

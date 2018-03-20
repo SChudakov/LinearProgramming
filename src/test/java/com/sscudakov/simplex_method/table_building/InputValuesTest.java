@@ -22,8 +22,9 @@ public class InputValuesTest {
     @Ignore
     @Test
     public void testInputValues() {
+        LPTable table = new LPTable();
         LPConsoleInput input = new LPConsoleInput();
-        LPTable table = input.inputValues();
+        input.inputValues(table);
         table.outputTable();
     }
 }

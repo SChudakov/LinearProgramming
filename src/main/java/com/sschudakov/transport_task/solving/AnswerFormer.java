@@ -1,6 +1,6 @@
 package com.sschudakov.transport_task.solving;
 
-import com.sschudakov.transport_task.table.TransportTaskTable;
+import com.sschudakov.transport_task.table.TTTable;
 
 import java.util.Arrays;
 
@@ -9,12 +9,12 @@ import java.util.Arrays;
  */
 public class AnswerFormer {
 
-    public static void fromAnswer(TransportTaskTable table) {
+    public static void fromAnswer(TTTable table) {
         fromTransportMatrix(table);
         fromFunctionValue(table);
     }
 
-    private static void fromTransportMatrix(TransportTaskTable table) {
+    private static void fromTransportMatrix(TTTable table) {
         int[][] transportMatrix = new int[table.getNumOfConsumers()][table.getNumOfProducers()];
         for (int i = 0; i < table.getNumOfConsumers(); i++) {
             for (int j = 0; j < table.getNumOfProducers(); j++) {
@@ -29,7 +29,7 @@ public class AnswerFormer {
         }
     }
 
-    private static void fromFunctionValue(TransportTaskTable table) {
+    private static void fromFunctionValue(TTTable table) {
         int functionValue = 0;
         for (int i = 0; i < table.getNumOfConsumers(); i++) {
             for (int j = 0; j < table.getNumOfProducers(); j++) {

@@ -20,23 +20,18 @@ public class LPConsoleInput {
     }
 
 
-    public LPTable inputValues() {
-
-        LPTable table = new LPTable();
-
+    public void inputValues(LPTable lpTable) {
         int numOfVariables = inputNumOfVariables();
         int numOfEquations = inputNumOfEquations();
 
-        table.setNumOfVariables(numOfVariables);
-        table.setNumOfEquations(numOfEquations);
+        lpTable.setNumOfVariables(numOfVariables);
+        lpTable.setNumOfEquations(numOfEquations);
 
-        table.setFunction(inputFunction(numOfVariables));
-        table.setTaskType(inputTaskType());
-        table.setMainTable(inputMainTable(numOfEquations, numOfVariables));
-        table.setEquationsSigns(inputRestrictionsSigns(numOfEquations));
-        table.setRestrictionsVector(inputRestrictions(numOfEquations));
-
-        return table;
+        lpTable.setFunction(inputFunction(numOfVariables));
+        lpTable.setTaskType(inputTaskType());
+        lpTable.setMainTable(inputMainTable(numOfEquations, numOfVariables));
+        lpTable.setEquationsSigns(inputRestrictionsSigns(numOfEquations));
+        lpTable.setRestrictionsVector(inputRestrictions(numOfEquations));
     }
 
     private int inputNumOfVariables() {

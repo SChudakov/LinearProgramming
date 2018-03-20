@@ -1,14 +1,13 @@
 package com.sscudakov.simplex_method;
 
 import com.sschudakov.simplex_method.exception.TableAlreadyOptimalException;
-import com.sschudakov.simplex_method.solver.SimplexTableSolver;
+import com.sschudakov.simplex_method.solver.LPSolver;
 import com.sschudakov.simplex_method.table.LPTable;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Semen Chudakov on 17.10.2017.
@@ -19,7 +18,7 @@ public class LPTableSolverTest {
     @Test
     public void testRecountDeltas() {
         LPTable table = new LPTable();
-        SimplexTableSolver solver = new SimplexTableSolver(table);
+        LPSolver solver = new LPSolver();
         double[][] mainTable = new double[][]{
                 {1.0, 2.0, -1.0, 2.0, 1.0, 1.0, 0.0, 0.0},
                 {-1.0, -1.0, 1.0, 3.0, -2.0, 0.0, 0.0, 1.0},
@@ -31,6 +30,7 @@ public class LPTableSolverTest {
         restrictions.add(8.0);
         restrictions.add(10.0);
         restrictions.add(4.0);
+
         ArrayList<Double> function = new ArrayList<>();
         function.add(1.0);
         function.add(-1.0);
@@ -40,6 +40,7 @@ public class LPTableSolverTest {
         function.add(0.0);
         function.add(0.0);
         function.add(11.0);
+
         ArrayList<Integer> basicVariables = new ArrayList<>();
         basicVariables.add(5);
         basicVariables.add(7);
@@ -73,7 +74,7 @@ public class LPTableSolverTest {
     public void findResolvingLineNotOptimalTest() {
 
         LPTable table = new LPTable();
-        SimplexTableSolver solver = new SimplexTableSolver(table);
+        LPSolver solver = new LPSolver();
 
         ArrayList<Double> restrictions = new ArrayList<>();
         restrictions.add(8.0);
@@ -91,7 +92,7 @@ public class LPTableSolverTest {
     public void findResolvingLineAlreadyOptimalTest() {
 
         LPTable table = new LPTable();
-        SimplexTableSolver solver = new SimplexTableSolver(table);
+        LPSolver solver = new LPSolver();
 
         ArrayList<Double> restrictions = new ArrayList<>();
         restrictions.add(8.0);
@@ -113,7 +114,7 @@ public class LPTableSolverTest {
     @Test
     public void findResolvingColumnTest() {
         LPTable table = new LPTable();
-        SimplexTableSolver solver = new SimplexTableSolver(table);
+        LPSolver solver = new LPSolver();
         double[][] mainTable = new double[][]{
                 {1.0, 2.0, -1.0, 2.0, 1.0, 1.0, 0.0, 0.0},
                 {-1.0, -1.0, 1.0, 3.0, -2.0, 0.0, 0.0, 1.0},
@@ -174,8 +175,8 @@ public class LPTableSolverTest {
     @Ignore
     @Test
     public void recountTableTest() {
-        LPTable table = new LPTable();
-        SimplexTableSolver solver = new SimplexTableSolver(table);
+        /*LPTable table = new LPTable();
+        LPSolver solver = new LPSolver();
         double[][] mainTable = new double[][]{
                 {1.0, 2.0, -1.0, 2.0, 1.0, 1.0, 0.0, 0.0},
                 {-1.0, -1.0, 1.0, 3.0, -2.0, 0.0, 0.0, 1.0},
@@ -201,7 +202,7 @@ public class LPTableSolverTest {
         for (double[] doubles : table.getMainTable()) {
             System.out.println(Arrays.toString(doubles));
         }
-        System.out.println(restrictions.toString());
+        System.out.println(restrictions.toString());*/
 
     }
 

@@ -1,11 +1,10 @@
 package com.sschudakov.simplex_method.table_building;
 
-import com.sschudakov.simplex_method.util.MainTableCopy;
+import com.sschudakov.simplex_method.util.Utils;
 import com.sschudakov.simplex_method.table.LPTable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by Semen Chudakov on 08.10.2017.
@@ -45,7 +44,7 @@ public class MBasisBuilder {
 
         double[][] result = new double[mainTable.length][mainTable[0].length + numOfYVariables];
 
-        MainTableCopy.copyTable(mainTable, result);
+        Utils.copyTable(mainTable, result);
 
 //        System.out.println("result after copy");
 //        for (double[] doubles : result) {

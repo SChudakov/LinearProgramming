@@ -1,9 +1,9 @@
 package com.sschudakov.transport_task.table_building;
 
 import com.sschudakov.transport_task.comparator.MeshNodePriceComparator;
-import com.sschudakov.transport_task.table.MeshNode;
-import com.sschudakov.transport_task.table.TransportTaskTable;
-import com.sschudakov.transport_task.table.TransportTaskTableMesh;
+import com.sschudakov.transport_task.table.TTTableNode;
+import com.sschudakov.transport_task.table.TTTable;
+import com.sschudakov.transport_task.table.TTTableMesh;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,25 +13,25 @@ import java.util.List;
  */
 public class InitialValuesFiller {
 
-    public void fillInitialValues(TransportTaskTable table) {
-        List<MeshNode> meshes = new ArrayList<>();
-        TransportTaskTableMesh[][] mainTable = table.getMainTable();
+    public void fillInitialValues(TTTable table) {
+        List<TTTableNode> meshes = new ArrayList<>();
+        TTTableMesh[][] mainTable = table.getMainTable();
         for (int i = 0; i < mainTable.length; i++) {
             for (int j = 0; j < mainTable[i].length; j++) {
-                meshes.add(new MeshNode(mainTable[i][j], i, j));
+                meshes.add(new TTTableNode(mainTable[i][j], i, j));
             }
         }
         meshes.sort(new MeshNodePriceComparator());
-        for (MeshNode node : meshes) {
+        for (TTTableNode node : meshes) {
             fillMesh(table, node.getI(), node.getJ());
         }
     }
 
-    private void fillMesh(TransportTaskTable table, int i, int j) {
+    private void fillMesh(TTTable table, int i, int j) {
         if (!rowIsFilled(table, i) && !columnIsFilled(table, j)) {
             table.getMainTable()[i][j].setValue(min(
-                    table.getConsumersVector().get(i) - TransportTaskUtils.tellRowSum(table, i),
-                    table.getProducersVector().get(j) - TransportTaskUtils.tellColumnSum(table, j),
+                    table.getConsumersVector().get(i) - TTUtils.tellRowSum(table, i),
+                    table.getProducersVector().get(j) - TTUtils.tellColumnSum(table, j),
                     table.getMainTable()[i][j].getRestriction()
             ));
         } else {
@@ -40,15 +40,15 @@ public class InitialValuesFiller {
     }
 
 
-    private boolean rowIsFilled(TransportTaskTable table, int row) {
+    private boolean rowIsFilled(TTTable table, int row) {
         int consumerValue = table.getConsumersVector().get(row);
-        int rowSum = TransportTaskUtils.tellRowSum(table, row);
+        int rowSum = TTUtils.tellRowSum(table, row);
         return consumerValue == rowSum;
     }
 
-    private boolean columnIsFilled(TransportTaskTable table, int column) {
+    private boolean columnIsFilled(TTTable table, int column) {
         int producerValue = table.getProducersVector().get(column);
-        int columnSum = TransportTaskUtils.tellColumnSum(table, column);
+        int columnSum = TTUtils.tellColumnSum(table, column);
         return producerValue == columnSum;
     }
 

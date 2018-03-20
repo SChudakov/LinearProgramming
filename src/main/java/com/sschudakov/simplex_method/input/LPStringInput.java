@@ -13,27 +13,23 @@ import java.util.Scanner;
  */
 public class LPStringInput {
 
-    public LPTable inputLP(String lpString) {
+    public void inputLP(LPTable lpTable, String lpString) {
 
         Scanner scanner = new Scanner(lpString);
-        LPTable table = new LPTable();
 
-        int numOfVariables;
-        int numOfEquations;
+        int numOfVariables = inputNumOfVariables(scanner);
+        int numOfEquations = inputNumOfEquations(scanner);
+        lpTable.setNumOfVariables(numOfVariables);
+        lpTable.setNumOfEquations(numOfEquations);
 
-        numOfVariables = inputNumOfVariables(scanner);
-        table.setNumOfVariables(numOfVariables);
+        System.out.println("num of variables: " + numOfVariables);
+        System.out.println("num of equations: " + numOfEquations);
 
-        numOfEquations = inputNumOfEquations(scanner);
-        table.setNumOfEquations(numOfEquations);
-
-        table.setFunction(inputFunction(scanner, numOfVariables));
-        table.setTaskType(inputTaskType(scanner));
-        table.setMainTable(inputMainTable(scanner, numOfEquations, numOfVariables));
-        table.setEquationsSigns(inputRestrictionsSigns(scanner, numOfEquations));
-        table.setRestrictionsVector(inputRestrictions(scanner, numOfEquations));
-
-        return table;
+        lpTable.setFunction(inputFunction(scanner, numOfVariables));
+        lpTable.setTaskType(inputTaskType(scanner));
+        lpTable.setMainTable(inputMainTable(scanner, numOfEquations, numOfVariables));
+        lpTable.setEquationsSigns(inputRestrictionsSigns(scanner, numOfEquations));
+        lpTable.setRestrictionsVector(inputRestrictions(scanner, numOfEquations));
     }
 
     private int inputNumOfVariables(Scanner scanner) {
@@ -49,6 +45,7 @@ public class LPStringInput {
         for (int i = 0; i < numOfVariables; i++) {
             result.add(scanner.nextDouble());
         }
+        System.out.println("function: " + result);
         return result;
     }
 

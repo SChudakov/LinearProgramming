@@ -2,7 +2,6 @@ package com.sschudakov.simplex_method.table_building;
 
 import com.sschudakov.simplex_method.table.LPTable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

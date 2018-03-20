@@ -1,6 +1,7 @@
 package com.sscudakov.simplex_method.table_building;
 
-import com.sschudakov.simplex_method.table_building.SimplexTableBuilder;
+import com.sschudakov.simplex_method.table.LPTable;
+import com.sschudakov.simplex_method.table_building.LPTableBuilder;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -21,9 +22,9 @@ public class SImplexTableBuilderTest {
     @Ignore
     @Test
     public void buildSimplexTableTest() {
-        SimplexTableBuilder simplexTableBuilder = new SimplexTableBuilder();
-
-        simplexTableBuilder.buildSimplexTable();
+        LPTable lpTable = new LPTable();
+        LPTableBuilder LPTableBuilder = new LPTableBuilder();
+        LPTableBuilder.buildSimplexTable(lpTable);
 
     }
 }

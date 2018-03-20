@@ -1,9 +1,9 @@
 package com.sschudakov.transport_task.solving;
 
-import com.sschudakov.transport_task.table.MeshNode;
-import com.sschudakov.transport_task.table.TransportTaskTable;
-import com.sschudakov.transport_task.table.TransportTaskTableMesh;
-import com.sschudakov.transport_task.table_building.TransportTaskUtils;
+import com.sschudakov.transport_task.table.TTTableNode;
+import com.sschudakov.transport_task.table.TTTable;
+import com.sschudakov.transport_task.table.TTTableMesh;
+import com.sschudakov.transport_task.table_building.TTUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +13,18 @@ import java.util.List;
  */
 public class SuspiciousMeshesFinder {
 
-    public static List<MeshNode> findSuspiciousMeshes(TransportTaskTable table) {
+    public static List<TTTableNode> findSuspiciousMeshes(TTTable table) {
 
-        List<MeshNode> result = new ArrayList<>();
-        TransportTaskTableMesh[][] mainTable = table.getMainTable();
+        List<TTTableNode> result = new ArrayList<>();
+        TTTableMesh[][] mainTable = table.getMainTable();
 
         for (int i = 0; i < mainTable.length; i++) {
             for (int j = 0; j < mainTable[i].length; j++) {
-                if (TransportTaskUtils.isSuspicious(mainTable[i][j])) {
-                    result.add(new MeshNode(mainTable[i][j], i, j));
+                if (TTUtils.isSuspicious(mainTable[i][j])) {
+                    result.add(new TTTableNode(mainTable[i][j], i, j));
 //                    System.out.println(mainTable[i][j]);
-//                    System.out.println("is l-mesh: " + TransportTaskUtils.isLMesh(mainTable[i][j]));
-//                    System.out.println("is r-mesh: " + TransportTaskUtils.isRMesh(mainTable[i][j]));
+//                    System.out.println("is l-mesh: " + TTUtils.isLMesh(mainTable[i][j]));
+//                    System.out.println("is r-mesh: " + TTUtils.isRMesh(mainTable[i][j]));
 
                 }
             }

@@ -1,8 +1,8 @@
 package com.sscudakov.transport_task.table_building;
 
-import com.sschudakov.transport_task.table.TransportTaskTable;
+import com.sschudakov.transport_task.table.TTTable;
 import com.sschudakov.transport_task.table_building.InitialValuesFiller;
-import com.sschudakov.transport_task.table_building.StringInput;
+import com.sschudakov.transport_task.table_building.TTStringInput;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -27,8 +27,8 @@ public class InitialValueFillerTest {
     @Ignore
     @Test
     public void buildTableTest() {
-        TransportTaskTable taskTable = new TransportTaskTable();
-        StringInput input = new StringInput();
+        TTTable taskTable = new TTTable();
+        TTStringInput input = new TTStringInput();
         InitialValuesFiller filler = new InitialValuesFiller();
 
         input.inputValues(taskTable, TASK);

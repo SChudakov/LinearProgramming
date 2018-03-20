@@ -155,7 +155,7 @@ public class LPTable {
     private void ensureCorrectTask() {
         for (Integer basicVariable : this.basicVariables) {
             if (basicVariable >= this.numOfVariables - this.numOfMVariables) {
-                throw new NoSolutionException("The multitude of appropriate solving vectors is empty");
+                throw new NoSolutionException("The set of appropriate solving vectors is empty");
             }
         }
     }

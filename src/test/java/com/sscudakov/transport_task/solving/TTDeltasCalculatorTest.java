@@ -2,8 +2,6 @@ package com.sscudakov.transport_task.solving;
 
 import com.sschudakov.transport_task.solving.TTDeltasCalculator;
 import com.sschudakov.transport_task.solving.TTPotentialsCalculator;
-import com.sschudakov.transport_task.solving.SuspiciousMeshesFinder;
-import com.sschudakov.transport_task.table.TTTableNode;
 import com.sschudakov.transport_task.table.TTBasis;
 import com.sschudakov.transport_task.table.TTTable;
 import com.sschudakov.transport_task.table_building.TTBasisBuilder;
@@ -12,12 +10,10 @@ import com.sschudakov.transport_task.table_building.TTTableBuilder;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.List;
-
 /**
- * Created by Semen Chudakov on 23.11.2017.
+ * Created by Semen Chudakov on 20.11.2017.
  */
-public class SuspiciousMeshesFinderTest {
+public class TTDeltasCalculatorTest {
     private static final String NUM_OF_CONSUMERS_AND_PRODUCERS = "3 4 ";
     private static final String CONSUMERS_VECTOR = "78 37 53 ";
     private static final String PRODUCERS_VECTOR = "38 60 30 40 ";
@@ -30,29 +26,26 @@ public class SuspiciousMeshesFinderTest {
 
     private static final String TASK = NUM_OF_CONSUMERS_AND_PRODUCERS + CONSUMERS_VECTOR
             + PRODUCERS_VECTOR + PRICES + RESTRICTIONS;
-
     @Ignore
     @Test
-    public void findSuspiciousMeshesTest() {
+    public void calculateDeltasTest() {
         TTTable ttTable = new TTTable();
 
         TTStringInput ttStringInput = new TTStringInput();
         ttStringInput.inputValues(ttTable, TASK);
 
         TTTableBuilder builder = new TTTableBuilder();
-        TTTable table = builder.buildTransportTaskTable(ttTable);
+        builder.buildTransportTaskTable(ttTable);
 
         TTBasisBuilder ttBasisBuilder = new TTBasisBuilder();
-        TTBasis basis = ttBasisBuilder.buildBasis(table);
+        TTBasis basis = ttBasisBuilder.buildBasis(ttTable);
 
-        TTPotentialsCalculator ttPotentialsCalculator = new TTPotentialsCalculator();
-        ttPotentialsCalculator.calculatePotentials(table, basis);
+        TTPotentialsCalculator ttPotentialsCalculator= new TTPotentialsCalculator();
+        ttPotentialsCalculator.calculatePotentials(ttTable, basis);
 
         TTDeltasCalculator ttDeltasCalculator = new TTDeltasCalculator();
-        ttDeltasCalculator.calculateDeltas(table, basis);
+        ttDeltasCalculator.calculateDeltas(ttTable, basis);
 
-        List<TTTableNode> suspiciousNodes = SuspiciousMeshesFinder.findSuspiciousMeshes(table);
-
-        System.out.println(suspiciousNodes);
+        ttTable.outputTable();
     }
 }

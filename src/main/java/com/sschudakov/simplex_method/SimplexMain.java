@@ -1,6 +1,6 @@
 package com.sschudakov.simplex_method;
 
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 import com.sschudakov.simplex_method.solver.SimplexTableSolver;
 import com.sschudakov.simplex_method.table_building.SimplexTableBuilder;
 
@@ -135,7 +135,7 @@ public class SimplexMain {
     public static void main(String[] args) {
 
         SimplexTableBuilder builder = new SimplexTableBuilder();
-        SimplexTable table = builder.buildSimplexTable();
+        LPTable table = builder.buildSimplexTable();
         SimplexTableSolver solver = new SimplexTableSolver(table);
         solver.solveSimplexTable();
 

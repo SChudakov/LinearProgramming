@@ -2,22 +2,23 @@ package com.sschudakov.simplex_method.table_building;
 
 import com.sschudakov.simplex_method.enumerable.Sign;
 import com.sschudakov.simplex_method.enumerable.TaskType;
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 import com.sschudakov.simplex_method.util.MainTableCopy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Semen Chudakov on 12.10.2017.
  */
 public class SimplexTableModifier {
 
-    public void modifyTable(SimplexTable table, TaskType toType) {
+    public void modifyTable(LPTable table, TaskType toType) {
         modifyFunctionType(table, toType);
         modifyInequationsToEquations(table);
     }
 
-    private void modifyFunctionType(SimplexTable table, TaskType toType) {
+    private void modifyFunctionType(LPTable table, TaskType toType) {
 
         TaskType tableTaskType = table.getTaskType();
 
@@ -28,17 +29,17 @@ public class SimplexTableModifier {
         table.setTaskType(toType);
     }
 
-    private void changeFunctionCoefficients(ArrayList<Double> function) {
+    private void changeFunctionCoefficients(List<Double> function) {
         for (int i = 0; i < function.size(); i++) {
             function.set(i, -function.get(i));
         }
     }
 
-    private void modifyInequationsToEquations(SimplexTable table) {
+    private void modifyInequationsToEquations(LPTable table) {
 
-        ArrayList<Sign> equationsSigns = table.getEquationsSigns();
+        List<Sign> equationsSigns = table.getEquationsSigns();
 
-        ArrayList<Integer> equationsForNewVariables = new ArrayList<>();
+        List<Integer> equationsForNewVariables = new ArrayList<>();
 
         for (int i = 0; i < equationsSigns.size(); i++) {
             if (table.getEquationsSigns().get(i).equals(Sign.GREATER_THAN)
@@ -56,7 +57,7 @@ public class SimplexTableModifier {
         changeInequationSignsToEqual(table);
     }
 
-    private void reverseEquationSign(SimplexTable table, int equation) {
+    private void reverseEquationSign(LPTable table, int equation) {
 
         double[][] mainTable = table.getMainTable();
 
@@ -74,7 +75,7 @@ public class SimplexTableModifier {
         }
     }
 
-    private void addVariables(SimplexTable table, ArrayList<Integer> equationsForNewVariables) {
+    private void addVariables(LPTable table, List<Integer> equationsForNewVariables) {
 
         int numOfNewVariables = equationsForNewVariables.size();
 
@@ -98,7 +99,7 @@ public class SimplexTableModifier {
         //change num of variables value in the table
     }
 
-    private void changeInequationSignsToEqual(SimplexTable table) {
+    private void changeInequationSignsToEqual(LPTable table) {
         for (int i = 0; i < table.getEquationsSigns().size(); i++) {
             table.getEquationsSigns().set(i, Sign.EQUAL);
         }

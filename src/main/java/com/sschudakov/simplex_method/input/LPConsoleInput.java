@@ -2,27 +2,27 @@ package com.sschudakov.simplex_method.input;
 
 import com.sschudakov.simplex_method.enumerable.Sign;
 import com.sschudakov.simplex_method.enumerable.TaskType;
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-import java.util.Vector;
 
 /**
  * Created by Semen Chudakov on 30.09.2017.
  */
-public class ConsoleValuesInput {
+public class LPConsoleInput {
 
     private Scanner scanner;
 
-    public ConsoleValuesInput() {
+    public LPConsoleInput() {
         this.scanner = new Scanner(System.in);
     }
 
 
-    public SimplexTable inputValues() {
+    public LPTable inputValues() {
 
-        SimplexTable table = new SimplexTable();
+        LPTable table = new LPTable();
 
         int numOfVariables = inputNumOfVariables();
         int numOfEquations = inputNumOfEquations();
@@ -51,8 +51,8 @@ public class ConsoleValuesInput {
         return result;
     }
 
-    private ArrayList<Double> inputFunction(int numOfVariables) {
-        ArrayList<Double> result = new ArrayList<>();
+    private List<Double> inputFunction(int numOfVariables) {
+        List<Double> result = new ArrayList<>();
         System.out.println("enter variables coefficients in function");
         for (int i = 0; i < numOfVariables; i++) {
             result.add(this.scanner.nextDouble());
@@ -79,7 +79,7 @@ public class ConsoleValuesInput {
         double[][] result = new double[numOfRows][numOfColumns];
 
         for (int i = 0; i < numOfRows; i++) {
-            System.out.println("input variables coefficients for " + (i + 1) + " equation");
+            System.out.println("inputILP variables coefficients for " + (i + 1) + " equation");
             for (int j = 0; j < numOfColumns; j++) {
                 result[i][j] = scanner.nextDouble();
             }
@@ -89,14 +89,14 @@ public class ConsoleValuesInput {
         return result;
     }
 
-    private ArrayList<Sign> inputRestrictionsSigns(int numOfEquations) {
+    private List<Sign> inputRestrictionsSigns(int numOfEquations) {
 
-        ArrayList<Sign> result = new ArrayList<>();
+        List<Sign> result = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
 
         for (int i = 0; i < numOfEquations; i++) {
-            System.out.println("input sign for " + (i + 1) + " equation (= <= < > >=)");
+            System.out.println("inputILP sign for " + (i + 1) + " equation (= <= < > >=)");
             result.add(inputSign(scanner));
         }
 
@@ -126,11 +126,11 @@ public class ConsoleValuesInput {
         throw new IllegalArgumentException("Input sign is not available. Available sings are: = >= > < <=");
     }
 
-    private ArrayList<Double> inputRestrictions(int numOfEquations) {
-        ArrayList<Double> result = new ArrayList<>();
+    private List<Double> inputRestrictions(int numOfEquations) {
+        List<Double> result = new ArrayList<>();
 
         for (int i = 0; i < numOfEquations; i++) {
-            System.out.println("input restriction for " + (i + 1) + " equation");
+            System.out.println("inputILP restriction for " + (i + 1) + " equation");
             result.add(this.scanner.nextDouble());
         }
 

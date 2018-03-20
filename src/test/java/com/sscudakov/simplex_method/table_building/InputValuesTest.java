@@ -1,7 +1,7 @@
 package com.sscudakov.simplex_method.table_building;
 
-import com.sschudakov.simplex_method.input.ConsoleValuesInput;
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.input.LPConsoleInput;
+import com.sschudakov.simplex_method.table.LPTable;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -22,8 +22,8 @@ public class InputValuesTest {
     @Ignore
     @Test
     public void testInputValues() {
-        ConsoleValuesInput input = new ConsoleValuesInput();
-        SimplexTable table = input.inputValues();
+        LPConsoleInput input = new LPConsoleInput();
+        LPTable table = input.inputValues();
         table.outputTable();
     }
 }

@@ -2,21 +2,21 @@ package com.sschudakov.simplex_method.input;
 
 import com.sschudakov.simplex_method.enumerable.Sign;
 import com.sschudakov.simplex_method.enumerable.TaskType;
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-import java.util.Vector;
 
 /**
  * Created by Semen Chudakov on 24.10.2017.
  */
-public class StringValuesInput {
+public class LPStringInput {
 
-    public SimplexTable inputValues(String taskString) {
+    public LPTable inputLP(String lpString) {
 
-        Scanner scanner = new Scanner(taskString);
-        SimplexTable table = new SimplexTable();
+        Scanner scanner = new Scanner(lpString);
+        LPTable table = new LPTable();
 
         int numOfVariables;
         int numOfEquations;
@@ -44,8 +44,8 @@ public class StringValuesInput {
         return scanner.nextInt();
     }
 
-    private ArrayList<Double> inputFunction(Scanner scanner, int numOfVariables) {
-        ArrayList<Double> result = new ArrayList<>(numOfVariables);
+    private List<Double> inputFunction(Scanner scanner, int numOfVariables) {
+        List<Double> result = new ArrayList<>(numOfVariables);
         for (int i = 0; i < numOfVariables; i++) {
             result.add(scanner.nextDouble());
         }
@@ -78,7 +78,7 @@ public class StringValuesInput {
         return result;
     }
 
-    private ArrayList<Sign> inputRestrictionsSigns(Scanner scanner, int numOfEquations) {
+    private List<Sign> inputRestrictionsSigns(Scanner scanner, int numOfEquations) {
 
         ArrayList<Sign> result = new ArrayList<>();
 
@@ -112,11 +112,11 @@ public class StringValuesInput {
         throw new IllegalArgumentException("Input sign is not available. Available sings are: = >= > < <=");
     }
 
-    private ArrayList<Double> inputRestrictions(Scanner scanner, int numOfEquations) {
-        ArrayList<Double> result = new ArrayList<>();
+    private List<Double> inputRestrictions(Scanner scanner, int numOfEquations) {
+        List<Double> result = new ArrayList<>();
 
         for (int i = 0; i < numOfEquations; i++) {
-            System.out.println("input restriction for " + (i + 1) + " equation");
+            System.out.println("inputILP restriction for " + (i + 1) + " equation");
             result.add(scanner.nextDouble());
         }
 

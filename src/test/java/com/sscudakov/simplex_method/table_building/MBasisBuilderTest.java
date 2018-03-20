@@ -1,13 +1,12 @@
 package com.sscudakov.simplex_method.table_building;
 
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 import com.sschudakov.simplex_method.table_building.MBasisBuilder;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.ArrayList;
 
 /**
  * Created by Semen Chudakov on 10.10.2017.
@@ -17,7 +16,7 @@ public class MBasisBuilderTest {
     @Ignore
     @Test
     public void nonZeroNumberOfYVariables() {
-        SimplexTable table = new SimplexTable();
+        LPTable table = new LPTable();
 
         MBasisBuilder basisBuilder = new MBasisBuilder();
 
@@ -57,7 +56,7 @@ public class MBasisBuilderTest {
     @Test
     public void zeroNumberOfYVariables() {
 
-        SimplexTable table = new SimplexTable();
+        LPTable table = new LPTable();
 
         MBasisBuilder basisBuilder = new MBasisBuilder();
 

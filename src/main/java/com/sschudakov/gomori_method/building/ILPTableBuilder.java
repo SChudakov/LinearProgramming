@@ -1,4 +1,4 @@
 package com.sschudakov.gomori_method.building;
 
-public class ITTableBuilder {
+public class ILPTableBuilder {
 }

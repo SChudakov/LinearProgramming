@@ -1,6 +1,6 @@
 package com.sscudakov.simplex_method.table_building;
 
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 import com.sschudakov.simplex_method.table_building.BasisFinder;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -16,7 +16,7 @@ public class BasisFinderTest {
     @Ignore
     @Test
     public void simpleTest() {
-        SimplexTable table = new SimplexTable();
+        LPTable table = new LPTable();
         BasisFinder basisFinder = new BasisFinder();
         double[][] mainTable = new double[][]{
                 {1.0, 2.0, -1.0, 2.0, 1.0, 1.0, 0.0, 0.0},
@@ -69,7 +69,7 @@ public class BasisFinderTest {
     @Ignore
     @Test
     public void hasNoBasisTest() {
-        SimplexTable table = new SimplexTable();
+        LPTable table = new LPTable();
         BasisFinder basisFinder = new BasisFinder();
         double[][] mainTable = new double[][]{
                 {1, 0, 0},

@@ -1,18 +1,18 @@
 package com.sschudakov.simplex_method.table_building;
 
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.List;
 
 /**
  * Created by Semen Chudakov on 30.09.2017.
  */
 public class BasisFinder {
 
-    public void findBasis(SimplexTable table) {
+    public void findBasis(LPTable table) {
 
-        ArrayList<Integer> basicVariables = table.getBasicVariables();
+        List<Integer> basicVariables = table.getBasicVariables();
 
         int numOfVariables = table.getNumOfVariables();
         double[][] mainTable = table.getMainTable();

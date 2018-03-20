@@ -1,15 +1,16 @@
 package com.sschudakov.simplex_method.table_building;
 
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Semen Chudakov on 16.10.2017.
  */
 public class MFinder {
 
-    public static double findM(SimplexTable table) {
+    public static double findM(LPTable table) {
         return max(maxOfMainTable(table.getMainTable()),
                 maxOfVector(table.getFunction()), maxOfVector(table.getRestrictionsVector())) + 1;
     }
@@ -26,7 +27,7 @@ public class MFinder {
         return result;
     }
 
-    private static double maxOfVector(ArrayList<Double> vector) {
+    private static double maxOfVector(List<Double> vector) {
         double result = Math.abs(vector.get(0));
         for (Double aDouble : vector) {
             if (result < Math.abs(aDouble)) {

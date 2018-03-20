@@ -6,11 +6,12 @@ import com.sschudakov.simplex_method.exception.NoSolutionException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Semen Chudakov on 10.09.2017.
  */
-public class SimplexTable {
+public class LPTable {
 
 
     private int numOfVariables;
@@ -18,22 +19,21 @@ public class SimplexTable {
 
     int numOfMVariables;
 
-    private ArrayList<Double> function;
+    private List<Double> function;
     private TaskType taskType;
     private double[][] mainTable;
 
-    private ArrayList<Sign> equationsSigns;
-    private ArrayList<Double> restrictionsVector;
+    private List<Sign> equationsSigns;
+    private List<Double> restrictionsVector;
 
-    private ArrayList<Integer> basicVariables;
+    private List<Integer> basicVariables;
 
-    private ArrayList<Double> deltasVector;
-    private ArrayList<Double> simplexRatios;
+    private List<Double> deltasVector;
+    private List<Double> simplexRatios;
 
     private double functionValue;
 
     //getters and setters
-
     public int getNumOfVariables() {
         return numOfVariables;
     }
@@ -58,11 +58,11 @@ public class SimplexTable {
         this.numOfMVariables = numOfMVariables;
     }
 
-    public ArrayList<Double> getFunction() {
+    public List<Double> getFunction() {
         return function;
     }
 
-    public void setFunction(ArrayList<Double> function) {
+    public void setFunction(List<Double> function) {
         this.function = function;
     }
 
@@ -82,43 +82,43 @@ public class SimplexTable {
         this.mainTable = mainTable;
     }
 
-    public ArrayList<Sign> getEquationsSigns() {
+    public List<Sign> getEquationsSigns() {
         return equationsSigns;
     }
 
-    public void setEquationsSigns(ArrayList<Sign> equationsSigns) {
+    public void setEquationsSigns(List<Sign> equationsSigns) {
         this.equationsSigns = equationsSigns;
     }
 
-    public ArrayList<Double> getRestrictionsVector() {
+    public List<Double> getRestrictionsVector() {
         return restrictionsVector;
     }
 
-    public void setRestrictionsVector(ArrayList<Double> restrictionsVector) {
+    public void setRestrictionsVector(List<Double> restrictionsVector) {
         this.restrictionsVector = restrictionsVector;
     }
 
-    public ArrayList<Integer> getBasicVariables() {
+    public List<Integer> getBasicVariables() {
         return basicVariables;
     }
 
-    public void setBasicVariables(ArrayList<Integer> basicVariables) {
+    public void setBasicVariables(List<Integer> basicVariables) {
         this.basicVariables = basicVariables;
     }
 
-    public ArrayList<Double> getDeltasVector() {
+    public List<Double> getDeltasVector() {
         return deltasVector;
     }
 
-    public void setDeltasVector(ArrayList<Double> deltasVector) {
+    public void setDeltasVector(List<Double> deltasVector) {
         this.deltasVector = deltasVector;
     }
 
-    public ArrayList<Double> getSimplexRatios() {
+    public List<Double> getSimplexRatios() {
         return simplexRatios;
     }
 
-    public void setSimplexRatios(ArrayList<Double> simplexRatios) {
+    public void setSimplexRatios(List<Double> simplexRatios) {
         this.simplexRatios = simplexRatios;
     }
 
@@ -130,7 +130,7 @@ public class SimplexTable {
         this.functionValue = functionValue;
     }
 
-    public SimplexTable() {
+    public LPTable() {
     }
 
     public boolean isOptimal() {

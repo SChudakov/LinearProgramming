@@ -22,7 +22,7 @@ public class TransportTaskTableBuilder {
         TransportTaskTable taskTable = new TransportTaskTable();
 
         this.input.inputValues(taskTable, string);
-        System.out.println("\nafter values input\n");
+        System.out.println("\nafter values inputILP\n");
         taskTable.outputTable();
 
         this.valuesFiller.fillInitialValues(taskTable);

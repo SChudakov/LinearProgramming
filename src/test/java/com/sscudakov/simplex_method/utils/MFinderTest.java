@@ -1,13 +1,12 @@
 package com.sscudakov.simplex_method.utils;
 
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 import com.sschudakov.simplex_method.table_building.MFinder;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  * Created by Semen Chudakosv on 16.10.2017.
@@ -17,7 +16,7 @@ public class MFinderTest {
     @Test
     public void test() {
 
-        SimplexTable table = new SimplexTable();
+        LPTable table = new LPTable();
         double[][] mainTable = new double[][]{
                 {1, 3, 234, 142},
                 {0, 3, 0, 1424},

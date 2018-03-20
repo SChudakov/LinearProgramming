@@ -1,24 +1,24 @@
 package com.sschudakov.simplex_method.util;
 
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 import com.sschudakov.simplex_method.exception.TableNotOptimalException;
 
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.List;
 
 /**
  * Created by Semen Chudakov on 20.10.2017.
  */
 public class AnswerFormer {
 
-    public static void formAnswer(SimplexTable table) {
+    public static void formAnswer(LPTable table) {
         if (!table.isDualOptimal()) {
             throw new TableNotOptimalException();
         }
 
         System.out.println("\nANSWER\n");
 
-        ArrayList<Double> answerVector = formAnswerVector(table);
+        List<Double> answerVector = formAnswerVector(table);
 
         System.out.println("Optimal value is reached on the vector: " + answerVector.toString());
         System.out.println("Where function value is: " + findFunctionValue(table.getFunction(), answerVector));
@@ -26,11 +26,11 @@ public class AnswerFormer {
 
     }
 
-    public static ArrayList<Double> formAnswerVector(SimplexTable table) {
+    public static List<Double> formAnswerVector(LPTable table) {
 
-        ArrayList<Integer> basicVariables = table.getBasicVariables();
-        ArrayList<Double> restrictions = table.getRestrictionsVector();
-        ArrayList<Double> result = new ArrayList<>();
+        List<Integer> basicVariables = table.getBasicVariables();
+        List<Double> restrictions = table.getRestrictionsVector();
+        List<Double> result = new ArrayList<>();
 
         for (int i = 0; i < table.getNumOfVariables(); i++) {
             if (hasVariable(basicVariables, i)) {
@@ -44,7 +44,7 @@ public class AnswerFormer {
         return result;
     }
 
-    private static boolean hasVariable(ArrayList<Integer> basicVariables, int variable) {
+    private static boolean hasVariable(List<Integer> basicVariables, int variable) {
         for (Integer basicVariable : basicVariables) {
             if (basicVariable == variable) {
                 return true;
@@ -53,7 +53,7 @@ public class AnswerFormer {
         return false;
     }
 
-    private static double findFunctionValue(ArrayList<Double> function, ArrayList<Double> vector) {
+    private static double findFunctionValue(List<Double> function, List<Double> vector) {
         double result = 0;
         for (int i = 0; i < function.size(); i++) {
             result += function.get(i) * vector.get(i);
@@ -61,7 +61,7 @@ public class AnswerFormer {
         return result;
     }
 
-    private static int tellBasicVariablePosition(ArrayList<Integer> basicVariable, int variable) {
+    private static int tellBasicVariablePosition(List<Integer> basicVariable, int variable) {
         for (int i = 0; i < basicVariable.size(); i++) {
             if (basicVariable.get(i) == variable) {
                 return i;

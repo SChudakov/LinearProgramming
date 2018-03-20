@@ -2,24 +2,23 @@ package com.sscudakov.simplex_method;
 
 import com.sschudakov.simplex_method.exception.TableAlreadyOptimalException;
 import com.sschudakov.simplex_method.solver.SimplexTableSolver;
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Vector;
 
 /**
  * Created by Semen Chudakov on 17.10.2017.
  */
-public class SimplexTableSolverTest {
+public class LPTableSolverTest {
 
     @Ignore
     @Test
     public void testRecountDeltas() {
-        SimplexTable table = new SimplexTable();
+        LPTable table = new LPTable();
         SimplexTableSolver solver = new SimplexTableSolver(table);
         double[][] mainTable = new double[][]{
                 {1.0, 2.0, -1.0, 2.0, 1.0, 1.0, 0.0, 0.0},
@@ -73,7 +72,7 @@ public class SimplexTableSolverTest {
     @Test
     public void findResolvingLineNotOptimalTest() {
 
-        SimplexTable table = new SimplexTable();
+        LPTable table = new LPTable();
         SimplexTableSolver solver = new SimplexTableSolver(table);
 
         ArrayList<Double> restrictions = new ArrayList<>();
@@ -91,7 +90,7 @@ public class SimplexTableSolverTest {
     @Test
     public void findResolvingLineAlreadyOptimalTest() {
 
-        SimplexTable table = new SimplexTable();
+        LPTable table = new LPTable();
         SimplexTableSolver solver = new SimplexTableSolver(table);
 
         ArrayList<Double> restrictions = new ArrayList<>();
@@ -113,7 +112,7 @@ public class SimplexTableSolverTest {
     @Ignore
     @Test
     public void findResolvingColumnTest() {
-        SimplexTable table = new SimplexTable();
+        LPTable table = new LPTable();
         SimplexTableSolver solver = new SimplexTableSolver(table);
         double[][] mainTable = new double[][]{
                 {1.0, 2.0, -1.0, 2.0, 1.0, 1.0, 0.0, 0.0},
@@ -175,7 +174,7 @@ public class SimplexTableSolverTest {
     @Ignore
     @Test
     public void recountTableTest() {
-        SimplexTable table = new SimplexTable();
+        LPTable table = new LPTable();
         SimplexTableSolver solver = new SimplexTableSolver(table);
         double[][] mainTable = new double[][]{
                 {1.0, 2.0, -1.0, 2.0, 1.0, 1.0, 0.0, 0.0},

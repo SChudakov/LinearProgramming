@@ -32,7 +32,7 @@ public class InitialValueFillerTest {
         InitialValuesFiller filler = new InitialValuesFiller();
 
         input.inputValues(taskTable, TASK);
-        System.out.println("\nafter values input\n");
+        System.out.println("\nafter values inputILP\n");
         taskTable.outputTable();
 
         filler.fillInitialValues(taskTable);

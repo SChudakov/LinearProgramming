@@ -2,42 +2,43 @@ package com.sschudakov.simplex_method.solver;
 
 import com.sschudakov.simplex_method.exception.TableAlreadyOptimalException;
 import com.sschudakov.simplex_method.exception.UnlimitedFunctionException;
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 import com.sschudakov.simplex_method.util.AnswerFormer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Semen Chudakov on 10.09.2017.
  */
 public class SimplexTableSolver {
 
-    private SimplexTable simplexTable;
+    private LPTable LPTable;
 
     //getters and setters
-    public SimplexTable getSimplexTable() {
-        return simplexTable;
+    public LPTable getLPTable() {
+        return LPTable;
     }
 
-    public void setSimplexTable(SimplexTable table) {
-        this.simplexTable = table;
+    public void setLPTable(LPTable table) {
+        this.LPTable = table;
     }
 
-    public SimplexTableSolver(SimplexTable table) {
-        this.simplexTable = table;
+    public SimplexTableSolver(LPTable table) {
+        this.LPTable = table;
     }
 
 
     public void solveSimplexTable() {
         int i = 1;
-        while (!this.simplexTable.isDualOptimal()) {
+        while (!this.LPTable.isDualOptimal()) {
             recountSimplexTable();
             System.out.println("\nrecounted " + i + " time\n");
             i++;
-            this.simplexTable.outputTable();
+            this.LPTable.outputTable();
         }
 
-        AnswerFormer.formAnswer(this.simplexTable);
+        AnswerFormer.formAnswer(this.LPTable);
     }
 
     private void recountSimplexTable() {
@@ -51,8 +52,8 @@ public class SimplexTableSolver {
     }
 
     public void recountMainTable(int resolvingLine, int resolvingColumn) {
-        double[][] mainTable = this.simplexTable.getMainTable();
-        ArrayList<Double> restrictions = this.simplexTable.getRestrictionsVector();
+        double[][] mainTable = this.LPTable.getMainTable();
+        List<Double> restrictions = this.LPTable.getRestrictionsVector();
         double resolvingElementValue = mainTable[resolvingLine][resolvingColumn];
         double[][] recountedTable = new double[mainTable.length][mainTable[0].length];
 
@@ -92,16 +93,16 @@ public class SimplexTableSolver {
             }
         }
 
-        this.simplexTable.setMainTable(recountedTable);
+        this.LPTable.setMainTable(recountedTable);
 
-        this.simplexTable.getBasicVariables().set(resolvingLine, resolvingColumn);
+        this.LPTable.getBasicVariables().set(resolvingLine, resolvingColumn);
     }
 
     private void recountDeltas() {
-        ArrayList<Double> deltas = this.simplexTable.getDeltasVector();
+        List<Double> deltas = this.LPTable.getDeltasVector();
 
         if (deltas.size() == 0) {
-            for (int i = 0; i < this.simplexTable.getNumOfVariables(); i++) {
+            for (int i = 0; i < this.LPTable.getNumOfVariables(); i++) {
                 deltas.add(recountDelta(i));
             }
         } else {
@@ -113,23 +114,23 @@ public class SimplexTableSolver {
 
     private double recountDelta(int column) {
 
-        double result = this.simplexTable.getFunction().get(column);
-        int numOfEquations = this.simplexTable.getNumOfEquations();
-        double[][] mainTable = this.simplexTable.getMainTable();
+        double result = this.LPTable.getFunction().get(column);
+        int numOfEquations = this.LPTable.getNumOfEquations();
+        double[][] mainTable = this.LPTable.getMainTable();
 
         for (int i = 0; i < numOfEquations; i++) {
-            result -= this.simplexTable.getFunction().get(
-                    this.simplexTable.getBasicVariables().get(i)) * mainTable[i][column];
+            result -= this.LPTable.getFunction().get(
+                    this.LPTable.getBasicVariables().get(i)) * mainTable[i][column];
         }
         return result;
     }
 
     private int findResolvingLine() {
 
-        if (this.simplexTable.isDualOptimal()) {
+        if (this.LPTable.isDualOptimal()) {
             throw new TableAlreadyOptimalException();
         }
-        ArrayList<Double> restrictions = this.simplexTable.getRestrictionsVector();
+        List<Double> restrictions = this.LPTable.getRestrictionsVector();
 
         int position = tellPositionOfFirstNegative(restrictions);
         double value = restrictions.get(position);
@@ -149,7 +150,7 @@ public class SimplexTableSolver {
 
         recountSimplexRatios(resolvingLine);
 
-        ArrayList<Double> simplexRatios = this.simplexTable.getSimplexRatios();
+        List<Double> simplexRatios = this.LPTable.getSimplexRatios();
         int position = 0;
         double currentRatio = simplexRatios.get(0);
 
@@ -165,13 +166,13 @@ public class SimplexTableSolver {
 
     private void recountSimplexRatios(int resolvingLine) {
 
-        if (!hasNegatives(this.simplexTable.getMainTable(), resolvingLine)) {
+        if (!hasNegatives(this.LPTable.getMainTable(), resolvingLine)) {
             throw new UnlimitedFunctionException("table is unlimited according to the line " + resolvingLine);
         }
 
-        double[][] mainTable = this.simplexTable.getMainTable();
-        ArrayList<Double> deltas = this.simplexTable.getDeltasVector();
-        ArrayList<Double> simplexRatios = this.simplexTable.getSimplexRatios();
+        double[][] mainTable = this.LPTable.getMainTable();
+        List<Double> deltas = this.LPTable.getDeltasVector();
+        List<Double> simplexRatios = this.LPTable.getSimplexRatios();
 
 
         for (int i = 0; i < mainTable[resolvingLine].length; i++) {
@@ -193,7 +194,7 @@ public class SimplexTableSolver {
         return false;
     }
 
-    private int tellPositionOfFirstNegative(ArrayList<Double> vector) {
+    private int tellPositionOfFirstNegative(List<Double> vector) {
         for (int i = 0; i < vector.size(); i++) {
             if (vector.get(i) < 0) {
                 return i;

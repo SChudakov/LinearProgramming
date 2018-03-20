@@ -1,33 +1,34 @@
 package com.sschudakov.simplex_method.table_building;
 
 import com.sschudakov.simplex_method.enumerable.TaskType;
-import com.sschudakov.simplex_method.input.ConsoleValuesInput;
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.input.LPConsoleInput;
+import com.sschudakov.simplex_method.table.LPTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Semen Chudakov on 30.09.2017.
  */
 public class SimplexTableBuilder {
 
-    private ConsoleValuesInput valuesInput;
+    private LPConsoleInput valuesInput;
     private SimplexTableModifier tableModifier;
     private BasisFinder basisFinder;
     private MBasisBuilder basisBuilder;
 
     public SimplexTableBuilder() {
-        this.valuesInput = new ConsoleValuesInput();
+        this.valuesInput = new LPConsoleInput();
         this.tableModifier = new SimplexTableModifier();
         this.basisFinder = new BasisFinder();
         this.basisBuilder = new MBasisBuilder();
     }
 
-    public SimplexTable buildSimplexTable() {
+    public LPTable buildSimplexTable() {
 
-        SimplexTable table = this.valuesInput.inputValues();
+        LPTable table = this.valuesInput.inputValues();
         buildTableVectors(table);
-        System.out.println("\nafter values input\n");
+        System.out.println("\nafter values inputILP\n");
         table.outputTable();
 
         this.tableModifier.modifyTable(table, TaskType.MIN);
@@ -47,10 +48,10 @@ public class SimplexTableBuilder {
         return table;
     }
 
-    private void buildTableVectors(SimplexTable table) {
-        ArrayList<Integer> basicVariables = new ArrayList<>();
-        ArrayList<Double> deltas = new ArrayList<>();
-        ArrayList<Double> simplexRatios = new ArrayList<>();
+    private void buildTableVectors(LPTable table) {
+        List<Integer> basicVariables = new ArrayList<>();
+        List<Double> deltas = new ArrayList<>();
+        List<Double> simplexRatios = new ArrayList<>();
 
         for (int i = 0; i < table.getNumOfEquations(); i++) {
             basicVariables.add(-1);
@@ -64,9 +65,9 @@ public class SimplexTableBuilder {
         table.setSimplexRatios(simplexRatios);
     }
 
-    private void rebuildVectors(SimplexTable table) {
-        ArrayList<Double> deltas = table.getDeltasVector();
-        ArrayList<Double> simplexRatios = table.getSimplexRatios();
+    private void rebuildVectors(LPTable table) {
+        List<Double> deltas = table.getDeltasVector();
+        List<Double> simplexRatios = table.getSimplexRatios();
 
         for (int i = deltas.size(); i < table.getNumOfVariables(); i++) {
             deltas.add(0.0);

@@ -1,9 +1,10 @@
 package com.sschudakov.simplex_method.table_building;
 
 import com.sschudakov.simplex_method.util.MainTableCopy;
-import com.sschudakov.simplex_method.table.SimplexTable;
+import com.sschudakov.simplex_method.table.LPTable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -13,7 +14,7 @@ public class MBasisBuilder {
 
     private static Double M_VALUE = Double.MAX_VALUE;
 
-    public void buildMBasis(SimplexTable table) {
+    public void buildMBasis(LPTable table) {
 
         M_VALUE = 1_000.0/*MFinder.findM(table)*/;
 
@@ -28,10 +29,10 @@ public class MBasisBuilder {
         rewriteDataInTable(table, numOfXVariables, numOfMVariables);
     }
 
-    private void rewriteDataInTable(SimplexTable table, int numOfXVariables, int numOfYVariables) {
+    private void rewriteDataInTable(LPTable table, int numOfXVariables, int numOfYVariables) {
         table.setNumOfVariables(table.getNumOfVariables() + numOfYVariables);
 
-        ArrayList<Integer> basicVariables = table.getBasicVariables();
+        List<Integer> basicVariables = table.getBasicVariables();
 
         double[][] mainTable = table.getMainTable();
 
@@ -40,7 +41,7 @@ public class MBasisBuilder {
         }
     }
 
-    private double[][] rebuildMainTable(double[][] mainTable, ArrayList<Integer> basicVariables, int numOfYVariables) {
+    private double[][] rebuildMainTable(double[][] mainTable, List<Integer> basicVariables, int numOfYVariables) {
 
         double[][] result = new double[mainTable.length][mainTable[0].length + numOfYVariables];
 
@@ -56,12 +57,12 @@ public class MBasisBuilder {
         return result;
     }
 
-    private void initializeYVariables(double[][] result, ArrayList<Integer> basicVariables, int numOfXVariables) {
+    private void initializeYVariables(double[][] result, List<Integer> basicVariables, int numOfXVariables) {
 
         int numOfEquations = result.length;
         int totalAmountOfVariables = result[0].length;
 
-        Vector<Boolean> equationHasBasicVector = new Vector<>();
+        List<Boolean> equationHasBasicVector = new ArrayList<>();
 
         for (int i = 0; i < numOfEquations; i++) {
             equationHasBasicVector.add(false);
@@ -94,16 +95,16 @@ public class MBasisBuilder {
         throw new RuntimeException("there is no 1 in " + column + " column");
     }
 
-    private void rebuildFunction(ArrayList<Double> function, int numOfYVariables) {
+    private void rebuildFunction(List<Double> function, int numOfYVariables) {
         for (int i = 0; i < numOfYVariables; i++) {
             function.add(M_VALUE);
         }
     }
 
-    private int tellNumOfMVariables(SimplexTable table){
+    private int tellNumOfMVariables(LPTable table){
         int result = 0;
 
-        ArrayList<Integer> basicVariables = table.getBasicVariables();
+        List<Integer> basicVariables = table.getBasicVariables();
 
         for (Integer basicVariable : basicVariables) {
             if(basicVariable == -1){

@@ -22,9 +22,6 @@ public class LPStringInput {
         lpTable.setNumOfVariables(numOfVariables);
         lpTable.setNumOfEquations(numOfEquations);
 
-        System.out.println("num of variables: " + numOfVariables);
-        System.out.println("num of equations: " + numOfEquations);
-
         lpTable.setFunction(inputFunction(scanner, numOfVariables));
         lpTable.setTaskType(inputTaskType(scanner));
         lpTable.setMainTable(inputMainTable(scanner, numOfEquations, numOfVariables));
@@ -45,7 +42,6 @@ public class LPStringInput {
         for (int i = 0; i < numOfVariables; i++) {
             result.add(scanner.nextDouble());
         }
-        System.out.println("function: " + result);
         return result;
     }
 
@@ -113,7 +109,6 @@ public class LPStringInput {
         List<Double> result = new ArrayList<>();
 
         for (int i = 0; i < numOfEquations; i++) {
-            System.out.println("inputILP restriction for " + (i + 1) + " equation");
             result.add(scanner.nextDouble());
         }
 

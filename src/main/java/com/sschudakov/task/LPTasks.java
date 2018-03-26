@@ -28,7 +28,7 @@ public class LPTasks {
                     " >= >=" +
                     " 2 3";
     public static final String LINEAR_TASK_4 =
-            " 4 3 " +
+            "4 3 " +
                     " 0 3 5 8" +
                     " min" +
                     " -2 0 0 -2" +
@@ -47,7 +47,7 @@ public class LPTasks {
                     " <= <= <= <=" +
                     " -20 -12 2 1";
     public static final String LINEAR_TASK_6 = //18.0
-            " 3 3 " +
+            "3 3 " +
                     " 15 7 12" +
                     " min" +
                     " -1 -1 -2" +

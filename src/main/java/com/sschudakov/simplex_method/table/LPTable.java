@@ -54,7 +54,7 @@ public class LPTable {
         return numOfMVariables;
     }
 
-    public void setNumOfMVariables(int numOfMVariables) {
+    public void setNumOfMVariables(Integer numOfMVariables) {
         this.numOfMVariables = numOfMVariables;
     }
 

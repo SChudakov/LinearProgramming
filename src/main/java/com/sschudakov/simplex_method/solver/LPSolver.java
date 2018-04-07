@@ -12,16 +12,16 @@ import java.util.List;
 public class LPSolver {
 
 
-    public void solveSimplexTable(LPTable lpTable) {
+    public LPSolution solveLP(LPTable lpTable) {
         int i = 1;
         while (!lpTable.isDualOptimal()) {
             recountSimplexTable(lpTable);
-            System.out.println("\nrecounted " + i + " time\n");
+            System.out.println("\nrecounted for the " + i + " time\n");
             i++;
             lpTable.outputTable();
         }
 
-        AnswerFormer.formAnswer(lpTable);
+        return AnswerFormer.formAnswer(lpTable);
     }
 
     private void recountSimplexTable(LPTable lpTable) {

@@ -91,34 +91,11 @@ public class LPConsoleInput {
         Scanner scanner = new Scanner(System.in);
 
         for (int i = 0; i < numOfEquations; i++) {
-            System.out.println("inputILP sign for " + (i + 1) + " equation (= <= < > >=)");
-            result.add(inputSign(scanner));
+            String sign = scanner.next();
+            result.add(InputUtils.inputSign(sign));
         }
 
         return result;
-    }
-
-    private Sign inputSign(Scanner scanner) {
-
-        String sing = scanner.next();
-
-        if (sing.equals("=")) {
-            return Sign.EQUAL;
-        }
-        if (sing.equals(">=")) {
-            return Sign.GREATER_THAN_OR_EQUAL_TO;
-        }
-        if (sing.equals(">")) {
-            return Sign.GREATER_THAN;
-        }
-        if (sing.equals("<=")) {
-            return Sign.LESS_THAN_OR_EQUAL_TO;
-        }
-        if (sing.equals("<")) {
-            return Sign.LESS_THAN;
-        }
-
-        throw new IllegalArgumentException("Input sign is not available. Available sings are: = >= > < <=");
     }
 
     private List<Double> inputRestrictions(int numOfEquations) {

@@ -16,9 +16,8 @@ public class LPSolution {
     }
 
 
-    public LPSolution(List<Double> solutionVector, Double solution) {
+    LPSolution(List<Double> solutionVector, Double solution) {
         this.solutionVector = solutionVector;
         this.solution = solution;
     }
-
 }

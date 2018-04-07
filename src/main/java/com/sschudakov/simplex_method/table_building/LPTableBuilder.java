@@ -23,8 +23,9 @@ public class LPTableBuilder {
 
     public LPTable buildSimplexTable(LPTable lpTable) {
         System.out.println("\nafter building table lists\n");
-        lpTable.outputTable();
         buildTableLists(lpTable);
+        lpTable.outputTable();
+
 
         this.tableModifier.modifyTable(lpTable, TaskType.MIN);
         rebuildTableLists(lpTable);

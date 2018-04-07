@@ -11,20 +11,19 @@ import java.util.List;
  */
 public class AnswerFormer {
 
-    public static LPSolution formAnswer(LPTable table) {
+    public static LPSolution formSolution(LPTable table) {
         if (!table.isDualOptimal()) {
             throw new TableNotDualOptimalException();
         }
 
         List<Double> solutionVector = formSolutionVector(table);
-        LPSolution lpSolution = new LPSolution(
+        return new LPSolution(
                 solutionVector,
                 calculateFunctionValue(table.getFunction(), solutionVector)
         );
-        return lpSolution;
     }
 
-    public static List<Double> formSolutionVector(LPTable table) {
+    private static List<Double> formSolutionVector(LPTable table) {
 
         List<Integer> basicVariables = table.getBasicVariables();
         List<Double> restrictions = table.getRestrictionsVector();

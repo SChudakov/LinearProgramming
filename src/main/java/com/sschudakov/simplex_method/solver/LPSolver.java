@@ -21,7 +21,7 @@ public class LPSolver {
             lpTable.outputTable();
         }
 
-        return AnswerFormer.formAnswer(lpTable);
+        return AnswerFormer.formSolution(lpTable);
     }
 
     private void recountSimplexTable(LPTable lpTable) {

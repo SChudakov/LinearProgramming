@@ -13,6 +13,9 @@ import java.util.List;
  */
 public class LPTableModifier {
 
+    private static final int LESS_THAN_INEQUATION_NORMALIZER_COEFFICIENT = 1;
+    private static final int GREATER_INEQUATION_NORMALIZER_COEFFICIENT = -1;
+
     public void modifyTable(LPTable table, TaskType toType) {
         modifyFunctionType(table, toType);
         modifyInequationsToEquations(table);
@@ -73,6 +76,12 @@ public class LPTableModifier {
         if (table.getEquationsSigns().get(equation).equals(Sign.GREATER_THAN_OR_EQUAL_TO)) {
             table.getEquationsSigns().set(equation, Sign.LESS_THAN_OR_EQUAL_TO);
         }
+        if (table.getEquationsSigns().get(equation).equals(Sign.LESS_THAN)) {
+            table.getEquationsSigns().set(equation, Sign.GREATER_THAN);
+        }
+        if (table.getEquationsSigns().get(equation).equals(Sign.LESS_THAN_OR_EQUAL_TO)) {
+            table.getEquationsSigns().set(equation, Sign.GREATER_THAN_OR_EQUAL_TO);
+        }
     }
 
     private void addVariables(LPTable table, List<Integer> equationsForNewVariables) {
@@ -80,23 +89,36 @@ public class LPTableModifier {
         int numOfNewVariables = equationsForNewVariables.size();
 
         double[][] mainTable = table.getMainTable();
-        double[][] newTable = new double[mainTable.length][mainTable[0].length + numOfNewVariables];
+        double[][] copiedTable = new double[mainTable.length][mainTable[0].length + numOfNewVariables];
 
-        Utils.copyTable(mainTable, newTable);
+        Utils.copyTable(mainTable, copiedTable);
 
         for (int i = 0; i < numOfNewVariables; i++) {
-            newTable[equationsForNewVariables.get(i)][mainTable[0].length + i] = 1;
+            if (table.getEquationsSigns()
+                    .get(equationsForNewVariables.get(i)).equals(Sign.LESS_THAN) ||
+                    table.getEquationsSigns()
+                            .get(equationsForNewVariables.get(i)).equals(Sign.LESS_THAN_OR_EQUAL_TO)) {
+
+                copiedTable[equationsForNewVariables.get(i)][mainTable[0].length + i]
+                        = LESS_THAN_INEQUATION_NORMALIZER_COEFFICIENT;
+
+            }
+            if (table.getEquationsSigns()
+                    .get(equationsForNewVariables.get(i)).equals(Sign.GREATER_THAN) ||
+                    table.getEquationsSigns()
+                            .get(equationsForNewVariables.get(i)).equals(Sign.GREATER_THAN_OR_EQUAL_TO)) {
+
+                copiedTable[equationsForNewVariables.get(i)][mainTable[0].length + i]
+                        = GREATER_INEQUATION_NORMALIZER_COEFFICIENT;
+
+            }
+
             table.getFunction().add(0.0);
         }
 
-        table.setMainTable(newTable);
+        table.setMainTable(copiedTable);
 
         table.setNumOfVariables(table.getNumOfVariables() + equationsForNewVariables.size());
-
-        //copy table
-        //initialize variables according to the their positions
-        //add them ti the function
-        //change num of variables value in the table
     }
 
     private void changeInequationSignsToEqual(LPTable table) {

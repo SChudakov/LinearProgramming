@@ -1,11 +1,11 @@
 package com.sscudakov.transport_task.solving;
 
-import com.sschudakov.transport_task.solving.TTPotentialsCalculator;
-import com.sschudakov.transport_task.table.TTBasis;
-import com.sschudakov.transport_task.table.TTTable;
-import com.sschudakov.transport_task.table_building.TTBasisBuilder;
-import com.sschudakov.transport_task.table_building.TTStringInput;
-import com.sschudakov.transport_task.table_building.TTTableBuilder;
+import com.sschudakov.transporttask.solving.TTPotentialsCalculator;
+import com.sschudakov.transporttask.table.TTBasis;
+import com.sschudakov.transporttask.table.TTTable;
+import com.sschudakov.transporttask.table_building.TTBasisBuilder;
+import com.sschudakov.transporttask.table_building.TTStringInput;
+import com.sschudakov.transporttask.table_building.TTTableBuilder;
 import org.junit.Ignore;
 import org.junit.Test;
 

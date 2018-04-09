@@ -1,8 +1,8 @@
 package com.sscudakov.transport_task.table_building;
 
-import com.sschudakov.transport_task.table.TTTable;
-import com.sschudakov.transport_task.table_building.InitialValuesFiller;
-import com.sschudakov.transport_task.table_building.TTStringInput;
+import com.sschudakov.transporttask.table.TTTable;
+import com.sschudakov.transporttask.table_building.InitialValuesFiller;
+import com.sschudakov.transporttask.table_building.TTStringInput;
 import org.junit.Ignore;
 import org.junit.Test;
 

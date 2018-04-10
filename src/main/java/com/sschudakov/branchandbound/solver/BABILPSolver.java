@@ -1,6 +1,6 @@
 package com.sschudakov.branchandbound.solver;
 
-import com.sschudakov.branchandbound.building.CuttingConditionAdder;
+import com.sschudakov.branchandbound.building.TaskSplitter;
 import com.sschudakov.branchandbound.table.ILPTable;
 import com.sschudakov.branchandbound.util.Utils;
 import com.sschudakov.simplexmethod.enumerable.TaskType;
@@ -20,7 +20,7 @@ public class BABILPSolver {
      * Is used to add new conditions on the non-integer variables
      * ad split the {@code ILPTask}.
      */
-    private CuttingConditionAdder cuttingConditionAdder;
+    private TaskSplitter taskSplitter;
     /**
      * Is used to solve generated tasks.
      */
@@ -37,7 +37,7 @@ public class BABILPSolver {
      * Constructor.
      */
     public BABILPSolver() {
-        this.cuttingConditionAdder = new CuttingConditionAdder();
+        this.taskSplitter = new TaskSplitter();
         this.lpSolver = new LPSolver();
         this.tasksSolutions = new ArrayList<>();
     }
@@ -73,7 +73,7 @@ public class BABILPSolver {
                     int nonIntegerBasicVariableIndex = findFirstNonIntegerBasicVariableIndex(table);
 
                     if (nonIntegerBasicVariableIndex != -1) {
-                        splitTables.addAll(this.cuttingConditionAdder.splitTask(table, nonIntegerBasicVariableIndex));
+                        splitTables.addAll(this.taskSplitter.splitTask(table, nonIntegerBasicVariableIndex));
                         taskSplit = true;
                     }
                 }
@@ -81,32 +81,37 @@ public class BABILPSolver {
             this.tasksSolutions.add(solutions);
             tables = splitTables;
         }
-        return findFinalSolution(ilpTable, this.tasksSolutions.get(this.tasksSolutions.size() - 1));
+        return findFinalSolution(ilpTable.getTaskType(), this.tasksSolutions.get(this.tasksSolutions.size() - 1));
     }
 
     /**
      * Finds solutions with min \ max function value
      * among the elements of the {@code solutions} list
-     * @param ilpTable
-     * @param solutions
-     * @return
+     *
+     * @param taskType  task type of the table
+     * @param solutions solutions the final one should be found among
+     * @return solutions with min or max value of the function
+     * @see LPSolution
+     * @see TaskType
      */
-    private LPSolution findFinalSolution(ILPTable ilpTable, List<LPSolution> solutions) {
-        if (ilpTable.getTaskType().equals(TaskType.MIN)) {
-            return Collections.min(solutions, Comparator.comparingDouble(LPSolution::getFunctionValue));
+    private LPSolution findFinalSolution(TaskType taskType, List<LPSolution> solutions) {
+        if (taskType.equals(TaskType.MIN)) {
+            return Collections.min(solutions, Comparator.nullsLast(
+                    Comparator.comparingDouble(LPSolution::getFunctionValue)));
         }
 
-        if (ilpTable.getTaskType().equals(TaskType.MAX)) {
-            return Collections.max(solutions, Comparator.comparingDouble(LPSolution::getFunctionValue));
+        if (taskType.equals(TaskType.MAX)) {
+            return Collections.max(solutions, Comparator.nullsFirst(
+                    Comparator.comparingDouble(LPSolution::getFunctionValue)));
         }
-        throw new IllegalArgumentException("Unnown task type: " + ilpTable.getTaskType());
+        throw new IllegalArgumentException("Unknown task type: " + taskType);
     }
 
     /**
      * This method finds the index of the first variable in the basis
      *
-     * @param ilpTable
-     * @return
+     * @param ilpTable variable index should be found for
+     * @return index of the first basic variable the has non-integer value
      */
     private int findFirstNonIntegerBasicVariableIndex(ILPTable ilpTable) {
 

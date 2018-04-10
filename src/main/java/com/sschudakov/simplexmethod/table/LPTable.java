@@ -13,10 +13,10 @@ import java.util.List;
 public class LPTable {
 
 
-    private int numOfVariables;
-    private int numOfEquations;
+    private Integer numOfVariables;
+    private Integer numOfEquations;
 
-    int numOfMVariables;
+    private Integer numOfMVariables;
 
     private List<Double> function;
     private TaskType taskType;
@@ -30,26 +30,26 @@ public class LPTable {
     private List<Double> deltasVector;
     private List<Double> simplexRatios;
 
-    private double functionValue;
+    private Double functionValue;
 
     //getters and setters
-    public int getNumOfVariables() {
+    public Integer getNumOfVariables() {
         return numOfVariables;
     }
 
-    public void setNumOfVariables(int numOfVariables) {
+    public void setNumOfVariables(Integer numOfVariables) {
         this.numOfVariables = numOfVariables;
     }
 
-    public int getNumOfEquations() {
+    public Integer getNumOfEquations() {
         return numOfEquations;
     }
 
-    public void setNumOfEquations(int numOfEquations) {
+    public void setNumOfEquations(Integer numOfEquations) {
         this.numOfEquations = numOfEquations;
     }
 
-    public int getNumOfMVariables() {
+    public Integer getNumOfMVariables() {
         return numOfMVariables;
     }
 
@@ -121,11 +121,11 @@ public class LPTable {
         this.simplexRatios = simplexRatios;
     }
 
-    public double getFunctionValue() {
+    public Double getFunctionValue() {
         return functionValue;
     }
 
-    public void setFunctionValue(double functionValue) {
+    public void setFunctionValue(Double functionValue) {
         this.functionValue = functionValue;
     }
 

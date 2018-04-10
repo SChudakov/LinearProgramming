@@ -25,8 +25,6 @@ public class LPSolutionFormer {
     }
 
     public LPSolution formSolution(LPTable lpTable, Exception exception) {
-        ensureIsOptimal(lpTable);
-
         return new LPSolution(
                 lpTable,
                 exception

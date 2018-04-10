@@ -6,14 +6,14 @@ import java.util.List;
 
 public class ILPTable extends LPTable {
 
-    int numOfInitialVariables;
+    private Integer numOfInitialVariables;
     private List<Integer> integerVariables;
 
-    public int getNumOfInitialVariables() {
+    public Integer getNumOfInitialVariables() {
         return numOfInitialVariables;
     }
 
-    public void setNumOfInitialVariables(int numOfInitialVariables) {
+    public void setNumOfInitialVariables(Integer numOfInitialVariables) {
         this.numOfInitialVariables = numOfInitialVariables;
     }
 

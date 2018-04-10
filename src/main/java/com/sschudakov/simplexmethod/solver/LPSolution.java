@@ -43,6 +43,6 @@ public class LPSolution {
 
 
     public boolean endedWithException() {
-        return this.solvingException == null;
+        return this.solvingException != null;
     }
 }

@@ -13,15 +13,28 @@ public class Utils {
         for (int i = 0; i < from.length; i++) {
             if (from[i].length > to[i].length) {
                 throw new IllegalArgumentException("from[" + i + "] length (" + from[i].length
-                        + ") is greater than to[" + i + "] length ("  + to[i].length + ")");
+                        + ") is greater than to[" + i + "] length (" + to[i].length + ")");
             }
         }
 
 
         for (int i = 0; i < from.length; i++) {
-            for (int j = 0; j < from[i].length; j++) {
-                to[i][j] = from[i][j];
-            }
+            System.arraycopy(from[i], 0, to[i], 0, from[i].length);
         }
+    }
+
+    public static double[][] copyTable(double[][] from) {
+        double[][] result = createEmptyTable(from);
+        copyTable(from, result);
+        return result;
+    }
+
+
+    private static double[][] createEmptyTable(double[][] table) {
+        double[][] result = new double[table.length][];
+        for (int i = 0; i < table.length; i++) {
+            result[i] = new double[table[i].length];
+        }
+        return result;
     }
 }

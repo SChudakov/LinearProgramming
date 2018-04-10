@@ -29,16 +29,13 @@ class LPSolverSpec extends Specification {
                     " <= = >=" +
                     " 8 10 4"
     String task_3 =
-            "2 5" +
+            "2 2" +
                     " -1 -3" +
                     " min" +
                     " 1 4" +
                     " 2 3" +
-                    " 1 0" +
-                    " 0 1" +
-                    " 1 0"+
-                    " <= <= >= >= <=" +
-                    " 14 12 0 0 1"
+                    " <= <=" +
+                    " 14 12"
 
 
     @Shared
@@ -73,10 +70,11 @@ class LPSolverSpec extends Specification {
         builder.buildSimplexTable(table)
 
         when:
-        this.lpSolver.solveLP(table)
+        def solution = this.lpSolver.solveLP(table)
 
         then:
-        thrown(NoSolutionException)
+        solution.endedWithException()
+        solution.getSolvingException() instanceof NoSolutionException
     }
 
     def "solver test 3"() {

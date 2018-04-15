@@ -3,7 +3,7 @@ package com.sschudakov.simplexmethod.solver
 import com.sschudakov.simplexmethod.exception.NoSolutionException
 import com.sschudakov.simplexmethod.input.LPStringInput
 import com.sschudakov.simplexmethod.table.LPTable
-import com.sschudakov.simplexmethod.table_building.LPTableBuilder
+import com.sschudakov.simplexmethod.building.LPTableBuilder
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -57,7 +57,7 @@ class LPSolverSpec extends Specification {
         def solution = this.lpSolver.solveLP(table)
 
         then:
-        solution.getSolutionVector() == [0.5, 1.5, 0.0, 0.0, 0.0, 3.0]
+        solution.getSolutionVector() == [0.5D, 1.5D, 0.0D, 0.0D, 0.0D, 3.0D]
         solution.getFunctionValue() == 18
     }
 

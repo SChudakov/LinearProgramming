@@ -55,7 +55,6 @@ public class BABILPSolver {
     public LPSolution solve(ILPTable ilpTable) {
         List<ILPTable> tables = new ArrayList<>();
         tables.add(ilpTable);
-        List<ILPTable> splitTables = new ArrayList<>();
 
         boolean taskSplit = true;
 
@@ -63,6 +62,7 @@ public class BABILPSolver {
 
             taskSplit = false;
             List<LPSolution> solutions = new ArrayList<>();
+            List<ILPTable> splitTables = new ArrayList<>();
 
             for (ILPTable table : tables) {
 
@@ -78,8 +78,11 @@ public class BABILPSolver {
                     }
                 }
             }
+
             this.tasksSolutions.add(solutions);
+
             tables = splitTables;
+
         }
         return findFinalSolution(ilpTable.getTaskType(), this.tasksSolutions.get(this.tasksSolutions.size() - 1));
     }

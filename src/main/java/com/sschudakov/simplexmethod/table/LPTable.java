@@ -14,9 +14,10 @@ public class LPTable {
 
 
     private Integer numOfVariables;
+    private Integer numOfInitialVariables;
+    private Integer numOfMVariables;
     private Integer numOfEquations;
 
-    private Integer numOfMVariables;
 
     private List<Double> function;
     private TaskType taskType;
@@ -39,6 +40,14 @@ public class LPTable {
 
     public void setNumOfVariables(Integer numOfVariables) {
         this.numOfVariables = numOfVariables;
+    }
+
+    public Integer getNumOfInitialVariables() {
+        return numOfInitialVariables;
+    }
+
+    public void setNumOfInitialVariables(Integer numOfInitialVariables) {
+        this.numOfInitialVariables = numOfInitialVariables;
     }
 
     public Integer getNumOfEquations() {

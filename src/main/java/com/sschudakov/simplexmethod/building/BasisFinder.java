@@ -1,4 +1,4 @@
-package com.sschudakov.simplexmethod.table_building;
+package com.sschudakov.simplexmethod.building;
 
 import com.sschudakov.simplexmethod.table.LPTable;
 
@@ -11,6 +11,8 @@ public class BasisFinder {
 
     public void findBasis(LPTable table) {
 
+        setNegariveBasicVariablesCoefficients(table);
+
         List<Integer> basicVariables = table.getBasicVariables();
 
         int numOfVariables = table.getNumOfVariables();
@@ -18,8 +20,17 @@ public class BasisFinder {
 
         for (int i = 0; i < numOfVariables; i++) {
             if (isBasicColumn(mainTable, i)) {
-                basicVariables.set(tellPositionOfOne(mainTable, i), i);
+                int positionOfOne = tellPositionOfOne(mainTable, i);
+                if (basicVariables.get(positionOfOne) == -1) {
+                    basicVariables.set(positionOfOne, i);
+                }
             }
+        }
+    }
+
+    private void setNegariveBasicVariablesCoefficients(LPTable lpTable) {
+        for (int i = 0; i < lpTable.getBasicVariables().size(); i++) {
+            lpTable.getBasicVariables().set(i, -1);
         }
     }
 

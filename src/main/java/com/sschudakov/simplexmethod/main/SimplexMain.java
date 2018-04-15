@@ -4,7 +4,7 @@ import com.sschudakov.simplexmethod.input.LPStringInput;
 import com.sschudakov.simplexmethod.solver.LPSolution;
 import com.sschudakov.simplexmethod.table.LPTable;
 import com.sschudakov.simplexmethod.solver.LPSolver;
-import com.sschudakov.simplexmethod.table_building.LPTableBuilder;
+import com.sschudakov.simplexmethod.building.LPTableBuilder;
 import com.sschudakov.task.LPTasks;
 
 public class SimplexMain {

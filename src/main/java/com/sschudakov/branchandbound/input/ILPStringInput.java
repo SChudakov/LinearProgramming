@@ -17,8 +17,6 @@ public class ILPStringInput {
     public void inputILP(ILPTable ilpTable, String lpString, String nonNegativeVariables) {
         this.lpStringInput.inputLP(ilpTable, lpString);
 
-        ilpTable.setNumOfInitialVariables(ilpTable.getNumOfVariables());
-
         Scanner scanner = new Scanner(nonNegativeVariables);
         ilpTable.setIntegerVariables(inputNonNegativeVariables(scanner));
     }

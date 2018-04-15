@@ -73,7 +73,7 @@ public class LPSolutionFormer {
                 return i;
             }
         }
-        throw new IllegalArgumentException("Vector " + basicVariable.toString() + " hasn`t variable " + variable);
+        throw new IllegalArgumentException("Vector " + basicVariable.toString() + " has not variable " + variable);
     }
 
     private static void ensureIsOptimal(LPTable lpTable) {

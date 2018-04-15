@@ -37,6 +37,7 @@ public class LPStringInput {
         int numOfEquations = inputNumOfEquations(scanner);
 
         lpTable.setNumOfVariables(numOfVariables);
+        lpTable.setNumOfInitialVariables(numOfVariables);
         lpTable.setNumOfEquations(numOfEquations);
 
         lpTable.setFunction(inputFunction(scanner, numOfVariables));

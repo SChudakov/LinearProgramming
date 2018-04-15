@@ -1,4 +1,4 @@
-package com.sschudakov.simplexmethod.table_building;
+package com.sschudakov.simplexmethod.building;
 
 import com.sschudakov.simplexmethod.enumerable.TaskType;
 import com.sschudakov.simplexmethod.table.LPTable;
@@ -22,52 +22,55 @@ public class LPTableBuilder {
     }
 
     public LPTable buildSimplexTable(LPTable lpTable) {
-        System.out.println("\nafter building table lists\n");
-        buildTableLists(lpTable);
-        lpTable.outputTable();
-
+        initializeTableLists(lpTable);
 
         this.tableModifier.modifyTable(lpTable, TaskType.MIN);
-        rebuildTableLists(lpTable);
-        System.out.println("\nafter table modification\n");
+        System.out.println("\nafter table modification and lists rebuilding\n");
         lpTable.outputTable();
 
+        buildBasicVariablesList(lpTable);
         this.basisFinder.findBasis(lpTable);
         System.out.println("\nafter finding basis\n");
         lpTable.outputTable();
 
         this.basisBuilder.buildMBasis(lpTable);
-        rebuildTableLists(lpTable);
+        buildDeltasAndSimplexRatiosLists(lpTable);
         System.out.println("\nafter mbasis building\n");
         lpTable.outputTable();
 
         return lpTable;
     }
 
-    private void buildTableLists(LPTable table) {
-        List<Integer> basicVariables = new ArrayList<>();
-        List<Double> deltas = new ArrayList<>();
-        List<Double> simplexRatios = new ArrayList<>();
+    private void buildBasicVariablesList(LPTable table) {
+        List<Integer> basicVariables = table.getBasicVariables();
 
-        for (int i = 0; i < table.getNumOfEquations(); i++) {
+        for (int i = basicVariables.size(); i < table.getNumOfEquations(); i++) {
             basicVariables.add(-1);
         }
-        for (int i = 0; i < table.getNumOfVariables(); i++) {
-            deltas.add(0.0);
-            simplexRatios.add(0.0);
-        }
-        table.setBasicVariables(basicVariables);
-        table.setDeltasVector(deltas);
-        table.setSimplexRatios(simplexRatios);
     }
 
-    private void rebuildTableLists(LPTable table) {
+
+    private void buildDeltasAndSimplexRatiosLists(LPTable table) {
         List<Double> deltas = table.getDeltasVector();
         List<Double> simplexRatios = table.getSimplexRatios();
 
         for (int i = deltas.size(); i < table.getNumOfVariables(); i++) {
             deltas.add(0.0);
+        }
+        for (int i = simplexRatios.size(); i < table.getNumOfVariables(); i++) {
             simplexRatios.add(0.0);
+        }
+    }
+
+    private void initializeTableLists(LPTable table) {
+        if (table.getBasicVariables() == null) {
+            table.setBasicVariables(new ArrayList<>());
+        }
+        if (table.getDeltasVector() == null) {
+            table.setDeltasVector(new ArrayList<>());
+        }
+        if (table.getSimplexRatios() == null) {
+            table.setSimplexRatios(new ArrayList<>());
         }
     }
 }

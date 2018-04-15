@@ -1,4 +1,4 @@
-package com.sschudakov.simplexmethod.table_building;
+package com.sschudakov.simplexmethod.building;
 
 import com.sschudakov.simplexmethod.enumerable.Sign;
 import com.sschudakov.simplexmethod.enumerable.TaskType;
@@ -43,7 +43,7 @@ public class LPTableModifier {
         List<Integer> equationsForNewVariables = new ArrayList<>();
 
         for (int i = 0; i < table.getNumOfEquations(); i++) {
-            if (table.getRestrictionsVector().get(i) > 0) {
+            if (table.getRestrictionsVector().get(i) > 0 && !table.getEquationsSigns().get(i).equals(Sign.EQUAL)) {
                 reverseEquationSign(table, i);
             }
         }
@@ -55,6 +55,9 @@ public class LPTableModifier {
 
         addVariables(table, equationsForNewVariables);
         changeInequationSignsToEqual(table);
+        table.setNumOfInitialVariables(
+                table.getNumOfInitialVariables() + equationsForNewVariables.size()//!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        );
     }
 
     private void reverseEquationSign(LPTable table, int equation) {

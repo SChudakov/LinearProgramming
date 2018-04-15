@@ -25,6 +25,7 @@ public class LPConsoleInput {
         int numOfEquations = inputNumOfEquations();
 
         lpTable.setNumOfVariables(numOfVariables);
+        lpTable.setNumOfInitialVariables(numOfVariables);
         lpTable.setNumOfEquations(numOfEquations);
 
         lpTable.setFunction(inputFunction(numOfVariables));

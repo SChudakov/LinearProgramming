@@ -1,4 +1,4 @@
-package com.sschudakov.simplexmethod.table_building;
+package com.sschudakov.simplexmethod.building;
 
 import com.sschudakov.simplexmethod.table.LPTable;
 

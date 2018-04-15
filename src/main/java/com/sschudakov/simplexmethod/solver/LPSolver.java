@@ -25,8 +25,8 @@ public class LPSolver {
             while (!lpTable.isDualOptimal()) {
                 recountSimplexTable(lpTable);
                 System.out.println("\nrecounted for the " + iteration + " time\n");
-                iteration++;
                 lpTable.outputTable();
+                iteration++;
             }
             result = this.solutionFormer.formSolution(lpTable);
         } catch (Exception e) {

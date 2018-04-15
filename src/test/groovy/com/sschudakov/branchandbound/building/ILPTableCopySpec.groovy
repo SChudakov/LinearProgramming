@@ -31,11 +31,11 @@ class ILPTableCopySpec extends Specification {
         this.ilpTable.integerVariables = [0, 1]
 
 
-        this.ilpTable.function = [-1, -3]
+        this.ilpTable.function = [-1.0D, -3.0D]
         this.ilpTable.taskType = TaskType.MIN
         this.ilpTable.mainTable = [
-                [1.0, 4.0],
-                [2.0, 3.0]
+                [1.0D, 4.0D],
+                [2.0D, 3.0D]
         ]
 
         this.ilpTable.equationsSigns = [Sign.LESS_THAN_OR_EQUAL_TO, Sign.LESS_THAN_OR_EQUAL_TO]
@@ -58,15 +58,15 @@ class ILPTableCopySpec extends Specification {
             numOfMVariables == null
             integerVariables == [0, 1]
 
-            function == [-1, -3]
+            function == [-1.0D, -3.0D]
             taskType == TaskType.MIN
             mainTable == [
-                    [1, 4],
-                    [2, 3]
+                    [1.0D, 4.0D],
+                    [2.0D, 3.0D]
             ]
 
             equationsSigns == [Sign.LESS_THAN_OR_EQUAL_TO, Sign.LESS_THAN_OR_EQUAL_TO]
-            restrictionsVector == [14, 12]
+            restrictionsVector == [14.0D, 12.0D]
 
             basicVariables == null
 

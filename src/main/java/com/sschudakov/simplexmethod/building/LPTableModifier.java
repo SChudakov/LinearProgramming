@@ -72,16 +72,20 @@ public class LPTableModifier {
 
         if (table.getEquationsSigns().get(equation).equals(Sign.GREATER_THAN)) {
             table.getEquationsSigns().set(equation, Sign.LESS_THAN);
+        } else {
+            if (table.getEquationsSigns().get(equation).equals(Sign.GREATER_THAN_OR_EQUAL_TO)) {
+                table.getEquationsSigns().set(equation, Sign.LESS_THAN_OR_EQUAL_TO);
+            } else {
+                if (table.getEquationsSigns().get(equation).equals(Sign.LESS_THAN)) {
+                    table.getEquationsSigns().set(equation, Sign.GREATER_THAN);
+                } else {
+                    if (table.getEquationsSigns().get(equation).equals(Sign.LESS_THAN_OR_EQUAL_TO)) {
+                        table.getEquationsSigns().set(equation, Sign.GREATER_THAN_OR_EQUAL_TO);
+                    }
+                }
+            }
         }
-        if (table.getEquationsSigns().get(equation).equals(Sign.GREATER_THAN_OR_EQUAL_TO)) {
-            table.getEquationsSigns().set(equation, Sign.LESS_THAN_OR_EQUAL_TO);
-        }
-        if (table.getEquationsSigns().get(equation).equals(Sign.LESS_THAN)) {
-            table.getEquationsSigns().set(equation, Sign.GREATER_THAN);
-        }
-        if (table.getEquationsSigns().get(equation).equals(Sign.LESS_THAN_OR_EQUAL_TO)) {
-            table.getEquationsSigns().set(equation, Sign.GREATER_THAN_OR_EQUAL_TO);
-        }
+
     }
 
     private void addVariables(LPTable table, List<Integer> equationsForNewVariables) {

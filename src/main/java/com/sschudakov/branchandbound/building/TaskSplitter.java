@@ -17,9 +17,8 @@ public class TaskSplitter {
         this.LPRestrictionAdd = new LPRestrictionAdd();
     }
 
-    public List<ILPTable> splitTask(ILPTable ilpTable, Integer basicVariableIndex) {
-        List<LPRestriction> restrictions = this.restrictionsBuilder
-                .buildCuttingRestrictions(ilpTable, basicVariableIndex);
+    public List<ILPTable> splitTask(ILPTable ilpTable, Integer basicVariableIndex, Integer basicVariable, Double basicVariableValue) {
+        List<LPRestriction> restrictions = this.restrictionsBuilder.buildCuttingRestrictions(ilpTable, basicVariableIndex, basicVariable, basicVariableValue);
 
         ILPTable firstTable = this.tableCopy.copy(ilpTable);
         ILPTable secondTable = this.tableCopy.copy(ilpTable);
@@ -29,7 +28,7 @@ public class TaskSplitter {
 
         List<ILPTable> result = new ArrayList<>();
         result.add(firstTable);
-        result.add(firstTable);
+        result.add(secondTable);
 
         return result;
     }

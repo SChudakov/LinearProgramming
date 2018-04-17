@@ -1,9 +1,9 @@
 package com.sschudakov.simplexmethod.solver
 
+import com.sschudakov.simplexmethod.building.LPTableBuilder
 import com.sschudakov.simplexmethod.exception.NoSolutionException
 import com.sschudakov.simplexmethod.input.LPStringInput
 import com.sschudakov.simplexmethod.table.LPTable
-import com.sschudakov.simplexmethod.building.LPTableBuilder
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -36,6 +36,15 @@ class LPSolverSpec extends Specification {
                     " 2 3" +
                     " <= <=" +
                     " 14 12"
+    String task_4 =
+            "2 3" +
+                    " -1 -3" +
+                    " min" +
+                    " 1 4" +
+                    " 2 3" +
+                    " 1 0" +
+                    " <= <= >=" +
+                    " 14 12 2"
 
 
     @Shared
@@ -45,7 +54,7 @@ class LPSolverSpec extends Specification {
         this.lpSolver = new LPSolver()
     }
 
-    def "solver test 1"() {
+    def "solving task 1"() {
         given:
         LPTable table = new LPTable()
         LPStringInput lpStringInput = new LPStringInput()
@@ -61,7 +70,7 @@ class LPSolverSpec extends Specification {
         solution.getFunctionValue() == 18
     }
 
-    def "solver test 2"() {
+    def "solving task 2"() {
         given:
         LPTable table = new LPTable()
         LPStringInput lpStringInput = new LPStringInput()
@@ -77,7 +86,7 @@ class LPSolverSpec extends Specification {
         solution.getSolvingException() instanceof NoSolutionException
     }
 
-    def "solver test 3"() {
+    def "solving task 3"() {
         given:
         LPTable table = new LPTable()
         LPStringInput lpStringInput = new LPStringInput()
@@ -90,7 +99,25 @@ class LPSolverSpec extends Specification {
 
         then:
         notThrown(Exception)
-        println "functionValue vector: " + solution.getSolutionVector()
-        println "functionValue: " + solution.getFunctionValue()
+        println "functionValue vector: ${solution.solutionVector}"
+        println "functionValue: ${solution.functionValue}"
+    }
+
+    def "solving task 4"() {
+        given:
+        LPTable table = new LPTable()
+        LPStringInput lpStringInput = new LPStringInput()
+        lpStringInput.inputLP(table, task_4)
+        LPTableBuilder builder = new LPTableBuilder()
+        builder.buildSimplexTable(table)
+
+        when:
+        def solution = this.lpSolver.solveLP(table)
+
+        then:
+        !solution.endedWithException()
+        println "exception: ${solution.solvingException}"
+        println "functionValue vector: ${solution.solutionVector}"
+        println "functionValue: ${solution.functionValue}"
     }
 }

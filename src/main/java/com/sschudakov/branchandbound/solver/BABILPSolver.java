@@ -1,8 +1,10 @@
 package com.sschudakov.branchandbound.solver;
 
+import com.sschudakov.branchandbound.building.ILPTableCopy;
 import com.sschudakov.branchandbound.building.TaskSplitter;
 import com.sschudakov.branchandbound.table.ILPTable;
 import com.sschudakov.branchandbound.util.Utils;
+import com.sschudakov.simplexmethod.building.LPTableBuilder;
 import com.sschudakov.simplexmethod.enumerable.TaskType;
 import com.sschudakov.simplexmethod.solver.LPSolution;
 import com.sschudakov.simplexmethod.solver.LPSolver;
@@ -16,6 +18,10 @@ import java.util.List;
  * Implements solving process of the integer linear programming task.
  */
 public class BABILPSolver {
+
+    private ILPTableCopy ilpTableCopy;
+    private LPTableBuilder lpTableBuilder;
+
     /**
      * Is used to add new conditions on the non-integer variables
      * ad split the {@code ILPTask}.
@@ -37,6 +43,8 @@ public class BABILPSolver {
      * Constructor.
      */
     public BABILPSolver() {
+        this.ilpTableCopy = new ILPTableCopy();
+        this.lpTableBuilder = new LPTableBuilder();
         this.taskSplitter = new TaskSplitter();
         this.lpSolver = new LPSolver();
         this.tasksSolutions = new ArrayList<>();
@@ -58,32 +66,64 @@ public class BABILPSolver {
 
         boolean taskSplit = true;
 
+        int iteration = 1;
         while (taskSplit) {
 
             taskSplit = false;
             List<LPSolution> solutions = new ArrayList<>();
             List<ILPTable> splitTables = new ArrayList<>();
 
+
+            System.out.println("\n\nITERATION: " + iteration++ + "\n\n");
+
             for (ILPTable table : tables) {
 
+                System.out.println("\n\nTABLE\n\n");
+                table.outputTable();
+
+                ILPTable copiedTable = this.ilpTableCopy.copy(table);
+                this.lpTableBuilder.buildSimplexTable(table);
                 LPSolution solution = this.lpSolver.solveLP(table);
-                solutions.add(solution);
+
+                System.out.println();
+                System.out.println();
+                System.out.println("solution vector: " + solution.getSolutionVector());
+                System.out.println("function value: " + solution.getFunctionValue());
+                System.out.println("exception: " + solution.getSolvingException());
 
                 if (!solution.endedWithException()) {
-                    int nonIntegerBasicVariableIndex = findFirstNonIntegerBasicVariableIndex(table);
+                    int nonIntegerBasicVariablePosition = findFirstNonIntegerBasicVariable(table);
 
-                    if (nonIntegerBasicVariableIndex != -1) {
-                        splitTables.addAll(this.taskSplitter.splitTask(table, nonIntegerBasicVariableIndex));
+                    System.out.println("\n\nNON-INTEGER VARIABLE INDEX: " + nonIntegerBasicVariablePosition + "\n\n");
+
+                    if (nonIntegerBasicVariablePosition != -1) {
+                        splitTables.addAll(this.taskSplitter.splitTask(
+                                copiedTable,
+                                nonIntegerBasicVariablePosition,
+                                table.getBasicVariables().get(nonIntegerBasicVariablePosition),
+                                table.getRestrictionsVector().get(nonIntegerBasicVariablePosition)
+                        ));
                         taskSplit = true;
+                    }else {
+                        solutions.add(solution);
                     }
                 }
             }
+            System.out.println("\n\nSPLIT TABLES\n\n");
+            for (ILPTable splitTable : splitTables) {
+                splitTable.outputTable();
+            }
 
             this.tasksSolutions.add(solutions);
-
             tables = splitTables;
 
         }
+
+        System.out.println("\nEND\n");
+        System.out.println("\nSOLUTIONS\n");
+
+        System.out.println(tasksSolutions);
+
         return findFinalSolution(ilpTable.getTaskType(), this.tasksSolutions.get(this.tasksSolutions.size() - 1));
     }
 
@@ -116,12 +156,13 @@ public class BABILPSolver {
      * @param ilpTable variable index should be found for
      * @return index of the first basic variable the has non-integer value
      */
-    private int findFirstNonIntegerBasicVariableIndex(ILPTable ilpTable) {
-
+    private int findFirstNonIntegerBasicVariable(ILPTable ilpTable) {
         List<Double> restrictions = ilpTable.getRestrictionsVector();
+        System.out.println("restrictions vector: " + restrictions);
         int result = -1;
         for (int i = 0; i < restrictions.size(); i++) {
-            if (Utils.isInteger(restrictions.get(i)) && i < ilpTable.getNumOfInitialVariables()) {
+            if (Utils.isNonInteger(restrictions.get(i))
+                    && ilpTable.getIntegerVariables().contains(ilpTable.getBasicVariables().get(i))) {
                 result = i;
                 break;
             }

@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 class CuttingRestrictionsBuilder {
-    public List<LPRestriction> buildCuttingRestrictions(ILPTable ilpTable, Integer basicVariableIndex) {
-        Double variableValue = ilpTable.getRestrictionsVector().get(basicVariableIndex);
+    public List<LPRestriction> buildCuttingRestrictions(ILPTable ilpTable, Integer basicVariableIndex, Integer basicVariable, Double basicVariableValue) {
+        Double variableValue = basicVariableValue/*ilpTable.getRestrictionsVector().get(basicVariableIndex)*/;
         List<Double> restrictionsRightParts = convertToDoubleArray(splitRestrictionRightPart(variableValue));
 
-        Integer basicVariableNumber = ilpTable.getBasicVariables().get(basicVariableIndex);
+        Integer basicVariableNumber = basicVariable/*ilpTable.getBasicVariables().get(basicVariableIndex)*/;
         List<Double> firstCondition = formCondition(ilpTable, basicVariableNumber);
         List<Double> secondCondition = formCondition(ilpTable, basicVariableNumber);
 

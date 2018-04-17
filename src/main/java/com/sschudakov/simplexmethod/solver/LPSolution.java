@@ -1,6 +1,8 @@
 package com.sschudakov.simplexmethod.solver;
 
 import com.sschudakov.simplexmethod.table.LPTable;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.List;
 
@@ -44,5 +46,14 @@ public class LPSolution {
 
     public boolean endedWithException() {
         return this.solvingException != null;
+    }
+
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
+                .append(this.solutionVector)
+                .append(this.functionValue)
+                .append(this.solvingException).build();
     }
 }

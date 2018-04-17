@@ -11,11 +11,11 @@ import java.util.List;
  *
  * @see ILPTable
  */
-class ILPTableCopy {
+public class ILPTableCopy {
     /**
      * Constructor.
      */
-    ILPTableCopy() {
+    public ILPTableCopy() {
     }
 
     /**

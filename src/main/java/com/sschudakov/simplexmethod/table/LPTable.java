@@ -172,6 +172,8 @@ public class LPTable {
     public void outputTable() {
 
         System.out.println("\nnum of variables: " + this.numOfVariables);
+        System.out.println("num of initial variables: " + this.numOfInitialVariables);
+        System.out.println("num of M variables: " + this.numOfMVariables);
         System.out.println("num of equations: " + this.numOfEquations + "\n");
 
         System.out.println("function: " + this.function.toString());

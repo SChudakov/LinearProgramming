@@ -1,6 +1,8 @@
 package com.sschudakov.branchandbound.building;
 
 import com.sschudakov.simplexmethod.enumerable.Sign;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.List;
 
@@ -25,5 +27,13 @@ public class LPRestriction {
 
     public Double getRightPartValue() {
         return rightPartValue;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
+                .append(this.condition)
+                .append(this.sign)
+                .append(this.rightPartValue).build();
     }
 }

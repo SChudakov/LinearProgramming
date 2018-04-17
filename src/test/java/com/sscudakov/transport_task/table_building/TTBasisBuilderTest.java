@@ -1,10 +1,10 @@
 package com.sscudakov.transport_task.table_building;
 
-import com.sschudakov.transporttask.table.TTBasis;
-import com.sschudakov.transporttask.table.TTTable;
-import com.sschudakov.transporttask.table_building.TTBasisBuilder;
-import com.sschudakov.transporttask.table_building.TTStringInput;
-import com.sschudakov.transporttask.table_building.TTTableBuilder;
+import com.sschudakov.lp.transporttask.table.TTBasis;
+import com.sschudakov.lp.transporttask.table.TTTable;
+import com.sschudakov.lp.transporttask.table_building.TTBasisBuilder;
+import com.sschudakov.lp.transporttask.table_building.TTStringInput;
+import com.sschudakov.lp.transporttask.table_building.TTTableBuilder;
 import org.junit.Ignore;
 import org.junit.Test;
 

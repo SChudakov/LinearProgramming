@@ -1,9 +1,9 @@
 package com.sscudakov.transport_task.table_building;
 
-import com.sschudakov.transporttask.table.TTTableNode;
-import com.sschudakov.transporttask.table.TTBasis;
-import com.sschudakov.transporttask.table.TTTableMesh;
-import com.sschudakov.transporttask.table_building.TTUtils;
+import com.sschudakov.lp.transporttask.table.TTTableNode;
+import com.sschudakov.lp.transporttask.table.TTBasis;
+import com.sschudakov.lp.transporttask.table.TTTableMesh;
+import com.sschudakov.lp.transporttask.table_building.TTUtils;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;

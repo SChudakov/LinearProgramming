@@ -1,7 +1,7 @@
 package com.sscudakov.simplex_method.utils;
 
-import com.sschudakov.simplexmethod.table.LPTable;
-import com.sschudakov.simplexmethod.building.MFinder;
+import com.sschudakov.lp.simplexmethod.table.LPTable;
+import com.sschudakov.lp.simplexmethod.building.MFinder;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -39,8 +39,6 @@ public class MFinderTest {
         table.setRestrictionsVector(restrictions);
 
         Assert.assertEquals(12313 + 1, (int) MFinder.findM(table));
-
-
     }
 
 }

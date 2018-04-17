@@ -1,8 +1,8 @@
 package com.sscudakov.simplex_method;
 
-import com.sschudakov.simplexmethod.exception.TableAlreadyOptimalException;
-import com.sschudakov.simplexmethod.solver.LPSolver;
-import com.sschudakov.simplexmethod.table.LPTable;
+import com.sschudakov.lp.simplexmethod.exception.TableAlreadyOptimalException;
+import com.sschudakov.lp.simplexmethod.solver.LPSolver;
+import com.sschudakov.lp.simplexmethod.table.LPTable;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;

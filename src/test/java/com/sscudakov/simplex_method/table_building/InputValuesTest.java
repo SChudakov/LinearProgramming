@@ -1,7 +1,7 @@
 package com.sscudakov.simplex_method.table_building;
 
-import com.sschudakov.simplexmethod.input.LPConsoleInput;
-import com.sschudakov.simplexmethod.table.LPTable;
+import com.sschudakov.lp.simplexmethod.input.LPConsoleInput;
+import com.sschudakov.lp.simplexmethod.table.LPTable;
 import org.junit.Ignore;
 import org.junit.Test;
 

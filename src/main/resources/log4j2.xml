@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <!--[%t] %logger{36}-->
+        <Console name="console_appender_all" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%highlight{%4p}]  - %msg%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="console_appender_all"/>
+        </Root>
+    </Loggers>
+</Configuration>

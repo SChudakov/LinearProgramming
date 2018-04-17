@@ -1,10 +1,10 @@
 package com.sscudakov.transport_task.solving;
 
-import com.sschudakov.task.TTTasks;
-import com.sschudakov.transporttask.solving.TTSolver;
-import com.sschudakov.transporttask.table.TTTable;
-import com.sschudakov.transporttask.table_building.TTStringInput;
-import com.sschudakov.transporttask.table_building.TTTableBuilder;
+import com.sschudakov.lp.task.TTTasks;
+import com.sschudakov.lp.transporttask.solving.TTSolver;
+import com.sschudakov.lp.transporttask.table.TTTable;
+import com.sschudakov.lp.transporttask.table_building.TTStringInput;
+import com.sschudakov.lp.transporttask.table_building.TTTableBuilder;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;

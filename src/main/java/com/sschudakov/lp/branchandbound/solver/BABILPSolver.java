@@ -42,6 +42,7 @@ public class BABILPSolver {
      * the solving process is was generated on.
      */
     private List<List<LPSolution>> tasksSolutions;
+    private List<List<LPSolution>> integerSolutions;
     /**
      * Cope tables while solving.
      */
@@ -61,6 +62,7 @@ public class BABILPSolver {
         this.taskSplitter = new TaskSplitter();
         this.lpSolver = new LPSolver();
         this.tasksSolutions = new ArrayList<>();
+        this.integerSolutions = new ArrayList<>();
     }
 
 
@@ -77,11 +79,14 @@ public class BABILPSolver {
         List<ILPTable> tables = new ArrayList<>();
         tables.add(ilpTable);
         int iteration = 1;
-        while (tables.size() != 0) {
+        boolean integerSolutionFound = false;
+        while (tables.size() != 0 && !integerSolutionFound)
+            /*for (int i = 0; i < 5; i++)*/ {
 
             logger.info("ITERATION " + iteration++);
 
             List<LPSolution> solutions = new ArrayList<>();
+            List<LPSolution> intSolutions = new ArrayList<>();
             List<ILPTable> splitTables = new ArrayList<>();
 
             for (ILPTable table : tables) {
@@ -91,7 +96,7 @@ public class BABILPSolver {
                 ILPTable copiedTable = this.ilpTableCopy.copy(table);
                 this.lpTableBuilder.buildSimplexTable(table);
                 LPSolution solution = this.lpSolver.solveLP(table);
-
+                solutions.add(solution);
                 logger.info("SOLUTION\n");
                 logger.info("solution vector: " + solution.getSolutionVector());
                 logger.info("function value: " + solution.getFunctionValue());
@@ -99,7 +104,7 @@ public class BABILPSolver {
 
                 if (!solution.endedWithException()) {
                     int nonIntegerBasicVariablePosition = findFirstNonIntegerBasicVariable(table);
-                    logger.info("ono-integer basic variable index: " + nonIntegerBasicVariablePosition);
+                    logger.info("non-integer basic variable index: " + nonIntegerBasicVariablePosition);
                     if (nonIntegerBasicVariablePosition != -1) {
                         splitTables.addAll(this.taskSplitter.splitTask(
                                 copiedTable,
@@ -107,7 +112,8 @@ public class BABILPSolver {
                                 table.getRestrictionsVector().get(nonIntegerBasicVariablePosition)
                         ));
                     } else {
-                        solutions.add(solution);
+                        intSolutions.add(solution);
+                        integerSolutionFound = true;
                     }
                 }
             }
@@ -119,8 +125,18 @@ public class BABILPSolver {
 
             this.tasksSolutions.add(solutions);
             tables = splitTables;
+
+            this.integerSolutions.add(intSolutions);
         }
-        return findFinalSolution(ilpTable.getTaskType(), this.tasksSolutions.get(this.tasksSolutions.size() - 1));
+
+
+        logger.info("SOLUTIONS: ");
+        for (int i = 0; i < this.integerSolutions.size(); i++) {
+            System.out.println("ITERATION: " + (i + 1));
+            System.out.println(integerSolutions.get(i));
+        }
+
+        return findFinalSolution(ilpTable.getTaskType(), this.integerSolutions.get(this.integerSolutions.size() - 1));
     }
 
     /**
@@ -135,14 +151,19 @@ public class BABILPSolver {
      */
     private LPSolution findFinalSolution(TaskType taskType, List<LPSolution> solutions) {
         if (taskType.equals(TaskType.MIN)) {
-            return Collections.min(solutions, Comparator.nullsLast(
-                    Comparator.comparingDouble(LPSolution::getFunctionValue)));
+            return Collections.min(solutions,
+                    Comparator.nullsLast((o1, o2) ->
+                            Comparator.nullsLast(Double::compareTo).compare(o1.getFunctionValue(), o2.getFunctionValue()))
+            );
         }
 
         if (taskType.equals(TaskType.MAX)) {
-            return Collections.max(solutions, Comparator.nullsFirst(
-                    Comparator.comparingDouble(LPSolution::getFunctionValue)));
+            return Collections.max(solutions,
+                    Comparator.nullsLast((o1, o2) ->
+                            Comparator.nullsFirst(Double::compareTo).compare(o1.getFunctionValue(), o2.getFunctionValue()))
+            );
         }
+
         throw new IllegalArgumentException("Unknown task type: " + taskType);
     }
 

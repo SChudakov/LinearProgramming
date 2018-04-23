@@ -27,6 +27,9 @@ public class LPTableModifier {
 
         if (!tableTaskType.equals(toType)) {
             changeFunctionCoefficients(table.getFunction());
+            table.setModified(true);
+        } else {
+            table.setModified(false);
         }
 
         table.setTaskType(toType);

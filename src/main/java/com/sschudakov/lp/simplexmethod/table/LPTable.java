@@ -21,6 +21,7 @@ public class LPTable {
 
     private List<Double> function;
     private TaskType taskType;
+    private Boolean modified;
     private double[][] mainTable;
 
     private List<Sign> equationsSigns;
@@ -80,6 +81,14 @@ public class LPTable {
 
     public void setTaskType(TaskType taskType) {
         this.taskType = taskType;
+    }
+
+    public Boolean getModified() {
+        return modified;
+    }
+
+    public void setModified(Boolean modified) {
+        this.modified = modified;
     }
 
     public double[][] getMainTable() {

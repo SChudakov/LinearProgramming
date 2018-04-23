@@ -15,7 +15,12 @@ public class LPSolutionFormer {
         ensureIsOptimal(lpTable);
 
         List<Double> solutionVector = formSolutionVector(lpTable);
-        Double functionValue = calculateFunctionValue(lpTable.getFunction(), solutionVector);
+        Double functionValue;
+        if (lpTable.getModified()) {
+            functionValue = -calculateFunctionValue(lpTable.getFunction(), solutionVector);
+        } else {
+            functionValue = calculateFunctionValue(lpTable.getFunction(), solutionVector);
+        }
 
         return new LPSolution(
                 lpTable,
@@ -40,7 +45,9 @@ public class LPSolutionFormer {
 
         for (int i = 0; i < lpTable.getNumOfVariables(); i++) {
             if (hasVariable(basicVariables, i)) {
-                result.add(restrictions.get(tellBasicVariablePosition(basicVariables, i)));
+                Double variableValue = restrictions.get(tellBasicVariablePosition(basicVariables, i));
+                Double roundedValue = (double) Math.round(variableValue);
+                result.add(roundedValue);
             } else {
                 result.add(0.0);
             }
@@ -58,8 +65,8 @@ public class LPSolutionFormer {
         return false;
     }
 
-    private double calculateFunctionValue(List<Double> function, List<Double> vector) {
-        double result = 0;
+    private Double calculateFunctionValue(List<Double> function, List<Double> vector) {
+        Double result = 0.0D;
         for (int i = 0; i < function.size(); i++) {
             result += function.get(i) * vector.get(i);
         }

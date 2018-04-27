@@ -10,6 +10,7 @@ public class LPRestriction {
     private List<Double> condition;
     private Sign sign;
     private Double rightPartValue;
+    private Integer basicVariable;
 
     public List<Double> getCondition() {
         return condition;
@@ -35,20 +36,28 @@ public class LPRestriction {
         this.rightPartValue = rightPartValue;
     }
 
+    public Integer getBasicVariable() {
+        return basicVariable;
+    }
+
+    public void setBasicVariable(Integer basicVariable) {
+        this.basicVariable = basicVariable;
+    }
 
     public LPRestriction() {
     }
 
-    public LPRestriction(List<Double> condition, Sign sign, Double rightPartValue) {
+    public LPRestriction(List<Double> condition, Sign sign, Double rightPartValue, Integer basicVariable) {
         this.condition = condition;
         this.sign = sign;
         this.rightPartValue = rightPartValue;
+        this.basicVariable = basicVariable;
     }
-
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
+                .append(this.basicVariable)
                 .append(this.condition)
                 .append(this.sign)
                 .append(this.rightPartValue).build();

@@ -19,12 +19,14 @@ class CuttingRestrictionsBuilder {
         LPRestriction firstRestriction = new LPRestriction(
                 firstCondition,
                 Sign.LESS_THAN_OR_EQUAL_TO,
-                Collections.min(restrictionsRightParts)
+                Collections.min(restrictionsRightParts),
+                null
         );
         LPRestriction secondRestriction = new LPRestriction(
                 secondCondition,
                 Sign.GREATER_THAN_OR_EQUAL_TO,
-                Collections.max(restrictionsRightParts)
+                Collections.max(restrictionsRightParts),
+                null
         );
 
         List<LPRestriction> result = new ArrayList<>();

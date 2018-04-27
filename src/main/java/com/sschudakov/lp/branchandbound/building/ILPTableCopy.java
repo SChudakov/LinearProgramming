@@ -41,12 +41,9 @@ public class ILPTableCopy {
         result.setTaskType(ilpTable.getTaskType());
         result.setMainTable(copyMainTable(ilpTable.getMainTable()));
 
-        result.setBasicVariables(copyList(ilpTable.getBasicVariables()));
 
         result.setDeltasVector(copyList(ilpTable.getDeltasVector()));
         result.setSimplexRatios(copyList(ilpTable.getSimplexRatios()));
-
-        result.setFunctionValue(ilpTable.getFunctionValue());
 
         return result;
     }
@@ -57,7 +54,8 @@ public class ILPTableCopy {
             result.add(new LPRestriction(
                     copyList(lpRestriction.getCondition()),
                     lpRestriction.getSign(),
-                    lpRestriction.getRightPartValue()
+                    lpRestriction.getRightPartValue(),
+                    lpRestriction.getBasicVariable()
             ));
         }
         return result;

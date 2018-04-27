@@ -40,15 +40,12 @@ public class LPSolutionFormer {
 
 
     private List<Double> formSolutionVector(LPTable lpTable) {
-
-        List<Integer> basicVariables = lpTable.getBasicVariables();
         List<Double> restrictions = lpTable.getMainTable().stream().map(LPRestriction::getRightPartValue).collect(Collectors.toList());
         List<Double> result = new ArrayList<>();
 
         for (int i = 0; i < lpTable.getNumOfVariables(); i++) {
-            if (hasVariable(basicVariables, i)) {
-                Double variableValue = restrictions.get(tellBasicVariablePosition(basicVariables, i));
-                /*Double roundedValue = (double) Math.round(variableValue);*/
+            if (hasVariable(lpTable.getMainTable(), i)) {
+                Double variableValue = restrictions.get(tellBasicVariablePosition(lpTable.getMainTable(), i));
                 result.add(variableValue);
             } else {
                 result.add(0.0);
@@ -58,8 +55,14 @@ public class LPSolutionFormer {
         return result;
     }
 
-    private boolean hasVariable(List<Integer> basicVariables, int variable) {
-        return basicVariables.contains(variable);
+    private boolean hasVariable(List<LPRestriction> mainTable, int variable) {
+        boolean result = false;
+        for (LPRestriction lpRestriction : mainTable) {
+            if (lpRestriction.getBasicVariable() == variable) {
+                result = true;
+            }
+        }
+        return result;
     }
 
     private Double calculateFunctionValue(List<Double> function, List<Double> vector) {
@@ -70,13 +73,13 @@ public class LPSolutionFormer {
         return result;
     }
 
-    private int tellBasicVariablePosition(List<Integer> basicVariable, int variable) {
-        for (int i = 0; i < basicVariable.size(); i++) {
-            if (basicVariable.get(i) == variable) {
+    private int tellBasicVariablePosition(List<LPRestriction> mainTable, int variable) {
+        for (int i = 0; i < mainTable.size(); i++) {
+            if (mainTable.get(i).getBasicVariable() == variable) {
                 return i;
             }
         }
-        throw new IllegalArgumentException("Vector " + basicVariable + " has not variable " + variable);
+        throw new IllegalArgumentException("Vector " + mainTable + " has not variable " + variable);
     }
 
     private static void ensureIsOptimal(LPTable lpTable) {

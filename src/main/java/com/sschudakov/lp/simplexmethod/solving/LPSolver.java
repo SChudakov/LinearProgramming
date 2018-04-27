@@ -65,7 +65,7 @@ public class LPSolver {
         recountOtherElementsInTable(mainTable, recountedTable, resolvingLine, resolvingColumn, resolvingElementValue);
 
         lpTable.setMainTable(recountedTable);
-        lpTable.getBasicVariables().set(resolvingLine, resolvingColumn);
+        lpTable.getMainTable().get(resolvingLine).setBasicVariable(resolvingColumn);
     }
 
     private List<LPRestriction> createTableWithTheSameSize(List<LPRestriction> table) {
@@ -78,7 +78,8 @@ public class LPSolver {
             result.add(new LPRestriction(
                     condition,
                     lpRestriction.getSign(),
-                    lpRestriction.getRightPartValue()
+                    lpRestriction.getRightPartValue(),
+                    lpRestriction.getBasicVariable()
             ));
         }
         return result;
@@ -205,7 +206,7 @@ public class LPSolver {
         int numOfEquations = lpTable.getNumOfEquations();
 
         for (int i = 0; i < numOfEquations; i++) {
-            result -= lpTable.getFunction().get(lpTable.getBasicVariables().get(i))
+            result -= lpTable.getFunction().get(lpTable.getMainTable().get(i).getBasicVariable())
                     * lpTable.getMainTable().get(i).getCondition().get(column);
         }
         return result;

@@ -8,7 +8,7 @@ import com.sschudakov.lp.simplexmethod.table.LPRestriction
 import spock.lang.Shared
 import spock.lang.Specification
 
-class BABILPSolverSpec extends Specification {
+class BABILPSolverTest extends Specification {
     /**
      * Object of the solving to be tested.
      */
@@ -36,9 +36,9 @@ class BABILPSolverSpec extends Specification {
         ilpTable.taskType = TaskType.MAX
 
         ilpTable.mainTable = [
-                new LPRestriction([2.0D, 11.0D], Sign.LESS_THAN_OR_EQUAL_TO, 36.0D),
-                new LPRestriction([1.0D, 1.0D], Sign.LESS_THAN_OR_EQUAL_TO, 7.0D),
-                new LPRestriction([4.0D, -5.0D], Sign.LESS_THAN_OR_EQUAL_TO, 5.0D)
+                new LPRestriction([2.0D, 11.0D], Sign.LESS_THAN_OR_EQUAL_TO, 36.0D, null),
+                new LPRestriction([1.0D, 1.0D], Sign.LESS_THAN_OR_EQUAL_TO, 7.0D, null),
+                new LPRestriction([4.0D, -5.0D], Sign.LESS_THAN_OR_EQUAL_TO, 5.0D, null)
         ]
 
         ilpTable.integerVariables = [0, 1]
@@ -66,9 +66,9 @@ class BABILPSolverSpec extends Specification {
         ilpTable.taskType = TaskType.MIN
 
         ilpTable.mainTable = [
-                new LPRestriction([6.0D, 4.0D], Sign.LESS_THAN_OR_EQUAL_TO, 24.0D),
-                new LPRestriction([1.0D, -1.0D], Sign.LESS_THAN_OR_EQUAL_TO, 3.0D),
-                new LPRestriction([-1.0D, 3.0D], Sign.LESS_THAN_OR_EQUAL_TO, 3.0D)
+                new LPRestriction([6.0D, 4.0D], Sign.LESS_THAN_OR_EQUAL_TO, 24.0D, null),
+                new LPRestriction([1.0D, -1.0D], Sign.LESS_THAN_OR_EQUAL_TO, 3.0D, null),
+                new LPRestriction([-1.0D, 3.0D], Sign.LESS_THAN_OR_EQUAL_TO, 3.0D, null)
         ]
         ilpTable.integerVariables = [0, 1]
 
@@ -95,9 +95,9 @@ class BABILPSolverSpec extends Specification {
         ilpTable.taskType = TaskType.MIN
 
         ilpTable.mainTable = [
-                new LPRestriction([2.0D, 1.0D], Sign.GREATER_THAN_OR_EQUAL_TO, 3.0D),
-                new LPRestriction([1.0D, -2.0D], Sign.LESS_THAN_OR_EQUAL_TO, 2.0D),
-                new LPRestriction([3.0D, 2.0D], Sign.GREATER_THAN_OR_EQUAL_TO, 1.0D)
+                new LPRestriction([2.0D, 1.0D], Sign.GREATER_THAN_OR_EQUAL_TO, 3.0D, null),
+                new LPRestriction([1.0D, -2.0D], Sign.LESS_THAN_OR_EQUAL_TO, 2.0D, null),
+                new LPRestriction([3.0D, 2.0D], Sign.GREATER_THAN_OR_EQUAL_TO, 1.0D, null)
         ]
         ilpTable.integerVariables = [0, 1]
 
@@ -124,9 +124,9 @@ class BABILPSolverSpec extends Specification {
         ilpTable.taskType = TaskType.MIN
 
         ilpTable.mainTable = [
-                new LPRestriction([-1.0D, -1.0D], Sign.LESS_THAN_OR_EQUAL_TO, -1.0D),
-                new LPRestriction([-2.0D, 2.0D], Sign.LESS_THAN_OR_EQUAL_TO, -2.0D),
-                new LPRestriction([-4.0D, 2.0D], Sign.LESS_THAN_OR_EQUAL_TO, -1.0D)
+                new LPRestriction([-1.0D, -1.0D], Sign.LESS_THAN_OR_EQUAL_TO, -1.0D, null),
+                new LPRestriction([-2.0D, 2.0D], Sign.LESS_THAN_OR_EQUAL_TO, -2.0D, null),
+                new LPRestriction([-4.0D, 2.0D], Sign.LESS_THAN_OR_EQUAL_TO, -1.0D, null)
         ]
         ilpTable.integerVariables = [0, 1]
 
@@ -153,9 +153,9 @@ class BABILPSolverSpec extends Specification {
         ilpTable.taskType = TaskType.MIN
 
         ilpTable.mainTable = [
-                new LPRestriction([-10.0D, 1.0D], Sign.LESS_THAN_OR_EQUAL_TO, -16.0D),
-                new LPRestriction([-3.0D, -3.0D], Sign.LESS_THAN_OR_EQUAL_TO, -12.0D),
-                new LPRestriction([-6.0D, -2.0D], Sign.LESS_THAN_OR_EQUAL_TO, -17.0D)
+                new LPRestriction([-10.0D, 1.0D], Sign.LESS_THAN_OR_EQUAL_TO, -16.0D, null),
+                new LPRestriction([-3.0D, -3.0D], Sign.LESS_THAN_OR_EQUAL_TO, -12.0D, null),
+                new LPRestriction([-6.0D, -2.0D], Sign.LESS_THAN_OR_EQUAL_TO, -17.0D, null)
         ]
         ilpTable.integerVariables = [0, 1]
 
@@ -182,9 +182,9 @@ class BABILPSolverSpec extends Specification {
         ilpTable.taskType = TaskType.MAX
 
         ilpTable.mainTable = [
-                new LPRestriction([2.0D, 1.0D], Sign.LESS_THAN_OR_EQUAL_TO, 8.0D),
-                new LPRestriction([1.0D, 3.0D], Sign.GREATER_THAN_OR_EQUAL_TO, 6.0D),
-                new LPRestriction([3.0D, 2.0D], Sign.GREATER_THAN_OR_EQUAL_TO, 3.0D)
+                new LPRestriction([2.0D, 1.0D], Sign.LESS_THAN_OR_EQUAL_TO, 8.0D, null),
+                new LPRestriction([1.0D, 3.0D], Sign.GREATER_THAN_OR_EQUAL_TO, 6.0D, null),
+                new LPRestriction([3.0D, 2.0D], Sign.GREATER_THAN_OR_EQUAL_TO, 3.0D, null)
         ]
         ilpTable.integerVariables = [0, 1]
 
@@ -211,8 +211,8 @@ class BABILPSolverSpec extends Specification {
         ilpTable.taskType = TaskType.MIN
 
         ilpTable.mainTable = [
-                new LPRestriction([1.0D, 4.0D], Sign.LESS_THAN_OR_EQUAL_TO, 14.0D),
-                new LPRestriction([2.0D, 3.0D], Sign.LESS_THAN_OR_EQUAL_TO, 12.0D)
+                new LPRestriction([1.0D, 4.0D], Sign.LESS_THAN_OR_EQUAL_TO, 14.0D, null),
+                new LPRestriction([2.0D, 3.0D], Sign.LESS_THAN_OR_EQUAL_TO, 12.0D, null)
         ]
         ilpTable.integerVariables = [0, 1]
 

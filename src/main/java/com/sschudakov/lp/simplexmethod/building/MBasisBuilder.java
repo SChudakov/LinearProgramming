@@ -20,66 +20,64 @@ public class MBasisBuilder {
         int numOfMVariables = tellNumOfMVariables(table);
         int firstMVariable = table.getNumOfVariables();
 
-        rebuildMainTable(table.getMainTable(), table.getBasicVariables(), numOfMVariables);
-
+        rebuildMainTable(table, numOfMVariables);
         rebuildFunction(table.getFunction(), numOfMVariables);
         rewriteDataInTable(table, firstMVariable, numOfMVariables);
     }
 
     private void rewriteDataInTable(LPTable table, int firstMVariable, int numOfMVariables) {
-        List<Integer> basicVariables = table.getBasicVariables();
-
-        List<LPRestriction> mainTable = table.getMainTable();
-
-        for (int i = firstMVariable; i < firstMVariable + numOfMVariables; i++) {
-            basicVariables.set(tellPositionOfOne(mainTable, i), i);
-        }
-
         Integer initialNumberOfMVariable = table.getNumOfMVariables() == null ? 0 : table.getNumOfMVariables();
 
         table.setNumOfVariables(table.getNumOfVariables() + numOfMVariables);
         table.setNumOfMVariables(initialNumberOfMVariable + numOfMVariables);
     }
 
-    private void rebuildMainTable(List<LPRestriction> mainTable, List<Integer> basicVariables, int numOfMVariables) {
-        int numOfXVariables = mainTable.get(0).getCondition().size();
-        enlargeMainTable(mainTable, numOfMVariables);
-        initializeMVariablesInTable(mainTable, basicVariables, numOfXVariables);
+    private void rebuildMainTable(LPTable table, int numOfMVariables) {
+        int numOfXVariables = table.getNumOfVariables();
+        enlargeMainTable(table.getMainTable(), numOfMVariables);
+        initializeMVariablesInTable(table.getMainTable(), numOfXVariables, numOfMVariables);
+        fillBasicVariables(table.getMainTable(), numOfXVariables, numOfMVariables);
     }
 
-    private void enlargeMainTable(List<LPRestriction> maintable, int numOfMVariables) {
-        for (LPRestriction lpRestriction : maintable) {
+    private void enlargeMainTable(List<LPRestriction> mainTable, int numOfMVariables) {
+        for (LPRestriction lpRestriction : mainTable) {
             for (int i = 0; i < numOfMVariables; i++) {
                 lpRestriction.getCondition().add(0.0);
             }
         }
     }
 
-    private void initializeMVariablesInTable(List<LPRestriction> mainTable, List<Integer> basicVariables, int numOfXVariables) {
+    private void initializeMVariablesInTable(List<LPRestriction> mainTable, int numOfXVariables, int numOfMVariables) {
 
         int numOfEquations = mainTable.size();
-        int totalAmountOfVariables = mainTable.get(0).getCondition().size();
+        int numOfVariables = numOfXVariables + numOfMVariables;
 
         List<Boolean> equationHasBasicVariable = new ArrayList<>();
 
         for (int i = 0; i < numOfEquations; i++) {
             equationHasBasicVariable.add(false);
         }
-        for (int i = 0; i < basicVariables.size(); i++) {
-            if (basicVariables.get(i) != -1) {
-                equationHasBasicVariable.set(tellPositionOfOne(mainTable, basicVariables.get(i)), true);
+        for (int i = 0; i < mainTable.size(); i++) {
+            if (mainTable.get(i).getBasicVariable() != -1) {
+                equationHasBasicVariable.set(
+                        tellPositionOfOne(mainTable, mainTable.get(i).getBasicVariable()),
+                        true);
             }
         }
-
-        for (int i = numOfXVariables; i < totalAmountOfVariables; i++) {
+        for (int i = numOfXVariables; i < numOfVariables; i++) {
             for (int j = 0; j < numOfEquations; j++) {
                 if (!equationHasBasicVariable.get(j)) {
-
                     mainTable.get(j).getCondition().set(i, 1.0);
                     equationHasBasicVariable.set(j, true);
                     break;
                 }
             }
+        }
+    }
+
+    private void fillBasicVariables(List<LPRestriction> mainTable, int numOfXVariables, int numOfMVariables) {
+        for (int i = numOfXVariables; i < numOfXVariables + numOfMVariables; i++) {
+            mainTable.get(tellPositionOfOne(mainTable, i)).setBasicVariable(i);
         }
     }
 
@@ -100,11 +98,8 @@ public class MBasisBuilder {
 
     private int tellNumOfMVariables(LPTable table) {
         int result = 0;
-
-        List<Integer> basicVariables = table.getBasicVariables();
-
-        for (Integer basicVariable : basicVariables) {
-            if (basicVariable == -1) {
+        for (LPRestriction lpRestriction : table.getMainTable()) {
+            if (lpRestriction.getBasicVariable() == -1) {
                 result++;
             }
         }

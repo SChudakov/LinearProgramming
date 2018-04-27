@@ -115,7 +115,7 @@ public class BABILPSolver {
                     if (nonIntegerBasicVariablePosition != -1) {
                         splitTables.addAll(this.taskSplitter.splitTask(
                                 copiedTable,
-                                table.getBasicVariables().get(nonIntegerBasicVariablePosition),
+                                table.getMainTable().get(nonIntegerBasicVariablePosition).getBasicVariable(),
                                 table.getMainTable().get(nonIntegerBasicVariablePosition).getRightPartValue()
                         ));
                     } else {
@@ -183,7 +183,7 @@ public class BABILPSolver {
         int result = -1;
         for (int i = 0; i < ilpTable.getMainTable().size(); i++) {
             if (Utils.isNonInteger(ilpTable.getMainTable().get(i).getRightPartValue())
-                    && ilpTable.getIntegerVariables().contains(ilpTable.getBasicVariables().get(i))) {
+                    && ilpTable.getIntegerVariables().contains(ilpTable.getMainTable().get(i).getBasicVariable())) {
                 result = i;
                 break;
             }

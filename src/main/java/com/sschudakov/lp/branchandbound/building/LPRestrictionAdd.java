@@ -7,7 +7,6 @@ public class LPRestrictionAdd {
     public void addRestriction(LPTable lpTable, LPRestriction restriction) {
         increaseNumOfEquations(lpTable);
         lpTable.getMainTable().add(restriction);
-        lpTable.getBasicVariables().add(-1);
     }
 
     private void increaseNumOfEquations(LPTable lpTable) {

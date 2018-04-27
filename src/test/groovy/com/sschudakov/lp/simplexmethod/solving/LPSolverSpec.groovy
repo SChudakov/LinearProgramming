@@ -8,9 +8,6 @@ import com.sschudakov.lp.simplexmethod.table.LPRestriction
 import com.sschudakov.lp.simplexmethod.table.LPTable
 import spock.lang.Shared
 import spock.lang.Specification
-import spock.lang.Timeout
-
-import java.util.concurrent.TimeUnit
 
 class LPSolverSpec extends Specification {
 
@@ -36,9 +33,9 @@ class LPSolverSpec extends Specification {
         table.taskType = TaskType.MIN
 
         table.mainTable = [
-                new LPRestriction([-1.0D, -1.0D, -2.0D], Sign.LESS_THAN_OR_EQUAL_TO, -2.0D),
-                new LPRestriction([-3.0D, -1.0D, -1.0D], Sign.LESS_THAN_OR_EQUAL_TO, -3.0D),
-                new LPRestriction([-5.0D, -1.0D, -4.0D], Sign.LESS_THAN_OR_EQUAL_TO, -1.0D)
+                new LPRestriction([-1.0D, -1.0D, -2.0D], Sign.LESS_THAN_OR_EQUAL_TO, -2.0D, null),
+                new LPRestriction([-3.0D, -1.0D, -1.0D], Sign.LESS_THAN_OR_EQUAL_TO, -3.0D, null),
+                new LPRestriction([-5.0D, -1.0D, -4.0D], Sign.LESS_THAN_OR_EQUAL_TO, -1.0D, null)
         ]
 
         LPTableBuilder builder = new LPTableBuilder()
@@ -66,8 +63,8 @@ class LPSolverSpec extends Specification {
         table.taskType = TaskType.MIN
 
         table.mainTable = [
-                new LPRestriction([1.0D, 4.0D], Sign.LESS_THAN_OR_EQUAL_TO, 14.0D),
-                new LPRestriction([2.0D, 3.0D], Sign.LESS_THAN_OR_EQUAL_TO, 12.0D)
+                new LPRestriction([1.0D, 4.0D], Sign.LESS_THAN_OR_EQUAL_TO, 14.0D, null),
+                new LPRestriction([2.0D, 3.0D], Sign.LESS_THAN_OR_EQUAL_TO, 12.0D, null)
         ]
 
         LPTableBuilder builder = new LPTableBuilder()
@@ -95,9 +92,9 @@ class LPSolverSpec extends Specification {
         table.taskType = TaskType.MIN
 
         table.mainTable = [
-                new LPRestriction([1.0D, 2.0D, -1.0D, 2.0D, 1.0D], Sign.LESS_THAN_OR_EQUAL_TO, 8.0D),
-                new LPRestriction([-1.0D, -1.0D, 1.0D, -3.0D, -2.0D], Sign.EQUAL, 10.0D),
-                new LPRestriction([2.0D, -1.0D, 3.0D, -1.0D, 2.0D], Sign.GREATER_THAN_OR_EQUAL_TO, 4.0D)
+                new LPRestriction([1.0D, 2.0D, -1.0D, 2.0D, 1.0D], Sign.LESS_THAN_OR_EQUAL_TO, 8.0D, null),
+                new LPRestriction([-1.0D, -1.0D, 1.0D, -3.0D, -2.0D], Sign.EQUAL, 10.0D, null),
+                new LPRestriction([2.0D, -1.0D, 3.0D, -1.0D, 2.0D], Sign.GREATER_THAN_OR_EQUAL_TO, 4.0D, null)
         ]
 
         LPTableBuilder builder = new LPTableBuilder()

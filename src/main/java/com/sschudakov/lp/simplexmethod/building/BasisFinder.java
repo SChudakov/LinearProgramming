@@ -14,24 +14,22 @@ public class BasisFinder {
 
         setNegariveBasicVariablesCoefficients(table);
 
-        List<Integer> basicVariables = table.getBasicVariables();
-
         int numOfVariables = table.getNumOfVariables();
         List<LPRestriction> mainTable = table.getMainTable();
 
         for (int i = 0; i < numOfVariables; i++) {
             if (isBasicColumn(mainTable, i)) {
                 int positionOfOne = tellPositionOfOne(mainTable, i);
-                if (basicVariables.get(positionOfOne) == -1) {
-                    basicVariables.set(positionOfOne, i);
+                if (table.getMainTable().get(positionOfOne).getBasicVariable() == -1) {
+                    table.getMainTable().get(positionOfOne).setBasicVariable(i);
                 }
             }
         }
     }
 
     private void setNegariveBasicVariablesCoefficients(LPTable lpTable) {
-        for (int i = 0; i < lpTable.getBasicVariables().size(); i++) {
-            lpTable.getBasicVariables().set(i, -1);
+        for (int i = 0; i < lpTable.getMainTable().size(); i++) {
+            lpTable.getMainTable().get(i).setBasicVariable(-1);
         }
     }
 

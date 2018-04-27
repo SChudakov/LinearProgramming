@@ -119,7 +119,7 @@ public class LPStringInput {
             Sign parsedSign = InputUtils.parseSign(sign);
             Double restriction = scanner.nextDouble();
 
-            result.add(new LPRestriction(condition, parsedSign, restriction));
+            result.add(new LPRestriction(condition, parsedSign, restriction, null));
         }
 
         return result;

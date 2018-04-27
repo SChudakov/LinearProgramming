@@ -24,12 +24,8 @@ public class LPTable {
     private Boolean modified;
     private List<LPRestriction> mainTable;
 
-    private List<Integer> basicVariables;
-
     private List<Double> deltasVector;
     private List<Double> simplexRatios;
-
-    private Double functionValue;
 
     //getters and setters
     public Integer getNumOfVariables() {
@@ -96,14 +92,6 @@ public class LPTable {
         this.mainTable = mainTable;
     }
 
-    public List<Integer> getBasicVariables() {
-        return basicVariables;
-    }
-
-    public void setBasicVariables(List<Integer> basicVariables) {
-        this.basicVariables = basicVariables;
-    }
-
     public List<Double> getDeltasVector() {
         return deltasVector;
     }
@@ -120,18 +108,10 @@ public class LPTable {
         this.simplexRatios = simplexRatios;
     }
 
-    public Double getFunctionValue() {
-        return functionValue;
-    }
-
-    public void setFunctionValue(Double functionValue) {
-        this.functionValue = functionValue;
-    }
 
     public LPTable() {
         this.function = new ArrayList<>();
         this.mainTable = new ArrayList<>();
-        this.basicVariables = new ArrayList<>();
         this.deltasVector = new ArrayList<>();
         this.simplexRatios = new ArrayList<>();
     }
@@ -156,8 +136,8 @@ public class LPTable {
     }
 
     private void ensureCorrectTask() {
-        for (Integer basicVariable : this.basicVariables) {
-            if (basicVariable >= this.numOfVariables - this.numOfMVariables) {
+        for (LPRestriction lpRestriction : this.mainTable) {
+            if (lpRestriction.getBasicVariable() >= this.numOfVariables - this.numOfMVariables) {
                 throw new NoSolutionException("The set of appropriate solving vectors is empty");
             }
         }
@@ -174,7 +154,6 @@ public class LPTable {
         for (LPRestriction lpRestriction : this.mainTable) {
             System.out.println(lpRestriction);
         }
-        System.out.println("basic variables: " + this.basicVariables);
         System.out.println("deltas: " + this.deltasVector);
         System.out.println("simplex ratios: " + this.simplexRatios);
     }

@@ -26,13 +26,11 @@ public class LPTableBuilder {
     }
 
     public LPTable buildSimplexTable(LPTable lpTable) {
-        initializeTableLists(lpTable);
 
         this.tableModifier.modifyTable(lpTable, TaskType.MIN);
         logger.info("after table modification and lists rebuilding\n");
         lpTable.outputTable();
 
-        buildBasicVariablesList(lpTable);
         this.basisFinder.findBasis(lpTable);
         logger.info("after finding basis\n");
         lpTable.outputTable();
@@ -44,16 +42,6 @@ public class LPTableBuilder {
 
         return lpTable;
     }
-
-    private void buildBasicVariablesList(LPTable table) {
-        List<Integer> basicVariables = table.getBasicVariables();
-
-        for (int i = basicVariables.size(); i < table.getNumOfEquations(); i++) {
-            basicVariables.add(-1);
-        }
-    }
-
-
     private void buildDeltasAndSimplexRatiosLists(LPTable table) {
         List<Double> deltas = table.getDeltasVector();
         List<Double> simplexRatios = table.getSimplexRatios();
@@ -63,18 +51,6 @@ public class LPTableBuilder {
         }
         for (int i = simplexRatios.size(); i < table.getNumOfVariables(); i++) {
             simplexRatios.add(0.0);
-        }
-    }
-
-    private void initializeTableLists(LPTable table) {
-        if (table.getBasicVariables() == null) {
-            table.setBasicVariables(new ArrayList<>());
-        }
-        if (table.getDeltasVector() == null) {
-            table.setDeltasVector(new ArrayList<>());
-        }
-        if (table.getSimplexRatios() == null) {
-            table.setSimplexRatios(new ArrayList<>());
         }
     }
 }

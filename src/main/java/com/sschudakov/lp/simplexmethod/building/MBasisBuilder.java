@@ -1,7 +1,7 @@
 package com.sschudakov.lp.simplexmethod.building;
 
+import com.sschudakov.lp.simplexmethod.table.LPRestriction;
 import com.sschudakov.lp.simplexmethod.table.LPTable;
-import com.sschudakov.lp.simplexmethod.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +18,9 @@ public class MBasisBuilder {
         M_VALUE = 1_000.0/*MFinder.findM(table)*/;
 
         int numOfMVariables = tellNumOfMVariables(table);
-
         int firstMVariable = table.getNumOfVariables();
 
-        double[][] rebuiltTable = rebuildMainTable(table.getMainTable(), table.getBasicVariables(), numOfMVariables);
-        table.setMainTable(rebuiltTable);
+        rebuildMainTable(table.getMainTable(), table.getBasicVariables(), numOfMVariables);
 
         rebuildFunction(table.getFunction(), numOfMVariables);
         rewriteDataInTable(table, firstMVariable, numOfMVariables);
@@ -31,7 +29,7 @@ public class MBasisBuilder {
     private void rewriteDataInTable(LPTable table, int firstMVariable, int numOfMVariables) {
         List<Integer> basicVariables = table.getBasicVariables();
 
-        double[][] mainTable = table.getMainTable();
+        List<LPRestriction> mainTable = table.getMainTable();
 
         for (int i = firstMVariable; i < firstMVariable + numOfMVariables; i++) {
             basicVariables.set(tellPositionOfOne(mainTable, i), i);
@@ -43,20 +41,24 @@ public class MBasisBuilder {
         table.setNumOfMVariables(initialNumberOfMVariable + numOfMVariables);
     }
 
-    private double[][] rebuildMainTable(double[][] mainTable, List<Integer> basicVariables, int numOfMVariables) {
-
-        double[][] result = new double[mainTable.length][mainTable[0].length + numOfMVariables];
-        Utils.copyTable(mainTable, result);
-
-        initializeMVariablesInTable(result, basicVariables, mainTable[0].length);
-
-        return result;
+    private void rebuildMainTable(List<LPRestriction> mainTable, List<Integer> basicVariables, int numOfMVariables) {
+        int numOfXVariables = mainTable.get(0).getCondition().size();
+        enlargeMainTable(mainTable, numOfMVariables);
+        initializeMVariablesInTable(mainTable, basicVariables, numOfXVariables);
     }
 
-    private void initializeMVariablesInTable(double[][] mainTable, List<Integer> basicVariables, int numOfXVariables) {
+    private void enlargeMainTable(List<LPRestriction> maintable, int numOfMVariables) {
+        for (LPRestriction lpRestriction : maintable) {
+            for (int i = 0; i < numOfMVariables; i++) {
+                lpRestriction.getCondition().add(0.0);
+            }
+        }
+    }
 
-        int numOfEquations = mainTable.length;
-        int totalAmountOfVariables = mainTable[0].length;
+    private void initializeMVariablesInTable(List<LPRestriction> mainTable, List<Integer> basicVariables, int numOfXVariables) {
+
+        int numOfEquations = mainTable.size();
+        int totalAmountOfVariables = mainTable.get(0).getCondition().size();
 
         List<Boolean> equationHasBasicVariable = new ArrayList<>();
 
@@ -72,8 +74,8 @@ public class MBasisBuilder {
         for (int i = numOfXVariables; i < totalAmountOfVariables; i++) {
             for (int j = 0; j < numOfEquations; j++) {
                 if (!equationHasBasicVariable.get(j)) {
-                    mainTable[j][i] = 1;
 
+                    mainTable.get(j).getCondition().set(i, 1.0);
                     equationHasBasicVariable.set(j, true);
                     break;
                 }
@@ -81,9 +83,9 @@ public class MBasisBuilder {
         }
     }
 
-    private int tellPositionOfOne(double[][] mainTable, int column) {
-        for (int i = 0; i < mainTable.length; i++) {
-            if (mainTable[i][column] == 1.0) {
+    private int tellPositionOfOne(List<LPRestriction> mainTable, int column) {
+        for (int i = 0; i < mainTable.size(); i++) {
+            if (mainTable.get(i).getCondition().get(column) == 1.0) {
                 return i;
             }
         }

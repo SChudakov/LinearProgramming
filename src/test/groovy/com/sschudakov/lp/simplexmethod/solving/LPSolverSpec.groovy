@@ -1,12 +1,16 @@
-package com.sschudakov.lp.simplexmethod.solver
+package com.sschudakov.lp.simplexmethod.solving
 
 import com.sschudakov.lp.simplexmethod.building.LPTableBuilder
 import com.sschudakov.lp.simplexmethod.enumerable.Sign
 import com.sschudakov.lp.simplexmethod.enumerable.TaskType
 import com.sschudakov.lp.simplexmethod.exception.NoSolutionException
+import com.sschudakov.lp.simplexmethod.table.LPRestriction
 import com.sschudakov.lp.simplexmethod.table.LPTable
 import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.Timeout
+
+import java.util.concurrent.TimeUnit
 
 class LPSolverSpec extends Specification {
 
@@ -20,7 +24,7 @@ class LPSolverSpec extends Specification {
         this.lpSolver = new LPSolver()
     }
 
-    def "solution exists test 1"() {
+    def "test  solution correct"() {
         given:
         LPTable table = new LPTable()
         table.numOfVariables = 3
@@ -32,14 +36,11 @@ class LPSolverSpec extends Specification {
         table.taskType = TaskType.MIN
 
         table.mainTable = [
-                [-1.0D, -1.0D, -2.0D],
-                [-3.0D, -1.0D, -1.0D],
-                [-5.0D, -1.0D, -4.0D]
+                new LPRestriction([-1.0D, -1.0D, -2.0D], Sign.LESS_THAN_OR_EQUAL_TO, -2.0D),
+                new LPRestriction([-3.0D, -1.0D, -1.0D], Sign.LESS_THAN_OR_EQUAL_TO, -3.0D),
+                new LPRestriction([-5.0D, -1.0D, -4.0D], Sign.LESS_THAN_OR_EQUAL_TO, -1.0D)
         ]
 
-        table.equationsSigns = [Sign.LESS_THAN_OR_EQUAL_TO, Sign.LESS_THAN_OR_EQUAL_TO, Sign.LESS_THAN_OR_EQUAL_TO]
-
-        table.restrictionsVector = [-2.0D, -3.0D, -1.0D]
         LPTableBuilder builder = new LPTableBuilder()
         builder.buildSimplexTable(table)
 
@@ -54,13 +55,7 @@ class LPSolverSpec extends Specification {
 
     def "solution exists test 2"() {
         given:
-        /* "2 2" +
-                " -1 -3" +
-                " min" +
-                " 1 4" +
-                " 2 3" +
-                " <= <=" +
-                " 14 12"*/
+
         LPTable table = new LPTable()
         table.numOfVariables = 2
         table.numOfInitialVariables = 2
@@ -71,13 +66,10 @@ class LPSolverSpec extends Specification {
         table.taskType = TaskType.MIN
 
         table.mainTable = [
-                [1.0D, 4.0D],
-                [2.0D, 3.0D]
+                new LPRestriction([1.0D, 4.0D], Sign.LESS_THAN_OR_EQUAL_TO, 14.0D),
+                new LPRestriction([2.0D, 3.0D], Sign.LESS_THAN_OR_EQUAL_TO, 12.0D)
         ]
 
-        table.equationsSigns = [Sign.LESS_THAN_OR_EQUAL_TO, Sign.LESS_THAN_OR_EQUAL_TO]
-
-        table.restrictionsVector = [14.0D, 12.0D]
         LPTableBuilder builder = new LPTableBuilder()
         builder.buildSimplexTable(table)
 
@@ -103,14 +95,11 @@ class LPSolverSpec extends Specification {
         table.taskType = TaskType.MIN
 
         table.mainTable = [
-                [1.0D, 2.0D, -1.0D, 2.0D, 1.0D],
-                [-1.0D, -1.0D, 1.0D, -3.0D, -2.0D],
-                [2.0D, -1.0D, 3.0D, -1.0D, 2.0D]
+                new LPRestriction([1.0D, 2.0D, -1.0D, 2.0D, 1.0D], Sign.LESS_THAN_OR_EQUAL_TO, 8.0D),
+                new LPRestriction([-1.0D, -1.0D, 1.0D, -3.0D, -2.0D], Sign.EQUAL, 10.0D),
+                new LPRestriction([2.0D, -1.0D, 3.0D, -1.0D, 2.0D], Sign.GREATER_THAN_OR_EQUAL_TO, 4.0D)
         ]
 
-        table.equationsSigns = [Sign.LESS_THAN_OR_EQUAL_TO, Sign.EQUAL, Sign.GREATER_THAN_OR_EQUAL_TO]
-
-        table.restrictionsVector = [8.0D, 10.0D, 4.0D]
         LPTableBuilder builder = new LPTableBuilder()
         builder.buildSimplexTable(table)
 

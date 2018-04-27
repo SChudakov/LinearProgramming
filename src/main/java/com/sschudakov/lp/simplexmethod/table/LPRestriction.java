@@ -11,23 +11,40 @@ public class LPRestriction {
     private Sign sign;
     private Double rightPartValue;
 
-   public LPRestriction(List<Double> condition, Sign sign, Double rightPartValue) {
-        this.condition = condition;
-        this.sign = sign;
-        this.rightPartValue = rightPartValue;
-    }
-
     public List<Double> getCondition() {
         return condition;
+    }
+
+    public void setCondition(List<Double> condition) {
+        this.condition = condition;
     }
 
     public Sign getSign() {
         return sign;
     }
 
+    public void setSign(Sign sign) {
+        this.sign = sign;
+    }
+
     public Double getRightPartValue() {
         return rightPartValue;
     }
+
+    public void setRightPartValue(Double rightPartValue) {
+        this.rightPartValue = rightPartValue;
+    }
+
+
+    public LPRestriction() {
+    }
+
+    public LPRestriction(List<Double> condition, Sign sign, Double rightPartValue) {
+        this.condition = condition;
+        this.sign = sign;
+        this.rightPartValue = rightPartValue;
+    }
+
 
     @Override
     public String toString() {

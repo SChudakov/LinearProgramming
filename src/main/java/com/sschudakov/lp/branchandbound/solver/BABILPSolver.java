@@ -6,8 +6,8 @@ import com.sschudakov.lp.branchandbound.table.ILPTable;
 import com.sschudakov.lp.branchandbound.util.Utils;
 import com.sschudakov.lp.simplexmethod.building.LPTableBuilder;
 import com.sschudakov.lp.simplexmethod.enumerable.TaskType;
-import com.sschudakov.lp.simplexmethod.solver.LPSolution;
-import com.sschudakov.lp.simplexmethod.solver.LPSolver;
+import com.sschudakov.lp.simplexmethod.solving.LPSolution;
+import com.sschudakov.lp.simplexmethod.solving.LPSolver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -65,7 +65,6 @@ public class BABILPSolver {
         this.integerSolutions = new ArrayList<>();
     }
 
-
     /**
      * Executes the process of the branch and bounds
      * solving process.
@@ -76,12 +75,14 @@ public class BABILPSolver {
      * @see ILPTable
      */
     public LPSolution solve(ILPTable ilpTable) {
+
         List<ILPTable> tables = new ArrayList<>();
         tables.add(ilpTable);
+
         int iteration = 1;
         boolean integerSolutionFound = false;
-        while (tables.size() != 0 && !integerSolutionFound)
-            /*for (int i = 0; i < 5; i++)*/ {
+
+        while (tables.size() != 0 && !integerSolutionFound) {
 
             logger.info("ITERATION " + iteration++);
 
@@ -96,7 +97,11 @@ public class BABILPSolver {
                 ILPTable copiedTable = this.ilpTableCopy.copy(table);
                 this.lpTableBuilder.buildSimplexTable(table);
                 LPSolution solution = this.lpSolver.solveLP(table);
+                if (!solution.endedWithException()) {
+                    fixSolution(solution);
+                }
                 solutions.add(solution);
+
                 logger.info("SOLUTION\n");
                 logger.info("solution vector: " + solution.getSolutionVector());
                 logger.info("function value: " + solution.getFunctionValue());
@@ -104,12 +109,14 @@ public class BABILPSolver {
 
                 if (!solution.endedWithException()) {
                     int nonIntegerBasicVariablePosition = findFirstNonIntegerBasicVariable(table);
-                    logger.info("non-integer basic variable index: " + nonIntegerBasicVariablePosition);
+
+                    logger.info("NON-INTEGER BASIC VARIABLE INDEX: " + nonIntegerBasicVariablePosition);
+
                     if (nonIntegerBasicVariablePosition != -1) {
                         splitTables.addAll(this.taskSplitter.splitTask(
                                 copiedTable,
                                 table.getBasicVariables().get(nonIntegerBasicVariablePosition),
-                                table.getRestrictionsVector().get(nonIntegerBasicVariablePosition)
+                                table.getMainTable().get(nonIntegerBasicVariablePosition).getRightPartValue()
                         ));
                     } else {
                         intSolutions.add(solution);
@@ -125,10 +132,8 @@ public class BABILPSolver {
 
             this.tasksSolutions.add(solutions);
             tables = splitTables;
-
             this.integerSolutions.add(intSolutions);
         }
-
 
         logger.info("SOLUTIONS: ");
         for (int i = 0; i < this.integerSolutions.size(); i++) {
@@ -175,16 +180,25 @@ public class BABILPSolver {
      * @return index of the first basic variable the has non-integer value
      */
     private int findFirstNonIntegerBasicVariable(ILPTable ilpTable) {
-        List<Double> restrictions = ilpTable.getRestrictionsVector();
-        System.out.println("restrictions vector: " + restrictions);
         int result = -1;
-        for (int i = 0; i < restrictions.size(); i++) {
-            if (Utils.isNonInteger(restrictions.get(i))
+        for (int i = 0; i < ilpTable.getMainTable().size(); i++) {
+            if (Utils.isNonInteger(ilpTable.getMainTable().get(i).getRightPartValue())
                     && ilpTable.getIntegerVariables().contains(ilpTable.getBasicVariables().get(i))) {
                 result = i;
                 break;
             }
         }
         return result;
+    }
+
+    private void fixSolution(LPSolution solution) {
+        for (int i = 0; i < solution.getSolutionVector().size(); i++) {
+            if (!Utils.isNonInteger(solution.getSolutionVector().get(i))) {
+                solution.getSolutionVector().set(i, (double) Math.round(solution.getSolutionVector().get(i)));
+            }
+        }
+        if (!Utils.isNonInteger(solution.getFunctionValue())) {
+            solution.setFunctionValue((double) Math.round(solution.getFunctionValue()));
+        }
     }
 }

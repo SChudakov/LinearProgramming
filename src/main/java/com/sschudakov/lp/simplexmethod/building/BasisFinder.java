@@ -1,5 +1,6 @@
 package com.sschudakov.lp.simplexmethod.building;
 
+import com.sschudakov.lp.simplexmethod.table.LPRestriction;
 import com.sschudakov.lp.simplexmethod.table.LPTable;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class BasisFinder {
         List<Integer> basicVariables = table.getBasicVariables();
 
         int numOfVariables = table.getNumOfVariables();
-        double[][] mainTable = table.getMainTable();
+        List<LPRestriction> mainTable = table.getMainTable();
 
         for (int i = 0; i < numOfVariables; i++) {
             if (isBasicColumn(mainTable, i)) {
@@ -34,13 +35,14 @@ public class BasisFinder {
         }
     }
 
-    private boolean isBasicColumn(double[][] mainTable, int column) {
+    private boolean isBasicColumn(List<LPRestriction> mainTable, int column) {
         boolean hasOne = false;
-        for (double[] equation : mainTable) {
-            if (equation[column] != 1.0 && equation[column] != 0.0) {
+        for (LPRestriction lpRestriction : mainTable) {
+            if (lpRestriction.getCondition().get(column) != 1.0
+                    && lpRestriction.getCondition().get(column) != 0.0) {
                 return false;
             }
-            if (equation[column] == 1.0) {
+            if (lpRestriction.getCondition().get(column) == 1.0) {
                 if (hasOne) {
                     return false;
                 } else {
@@ -51,9 +53,9 @@ public class BasisFinder {
         return true;
     }
 
-    private int tellPositionOfOne(double[][] mainTable, int column) {
-        for (int i = 0; i < mainTable.length; i++) {
-            if (mainTable[i][column] == 1.0) {
+    private int tellPositionOfOne(List<LPRestriction> mainTable, int column) {
+        for (int i = 0; i < mainTable.size(); i++) {
+            if (mainTable.get(i).getCondition().get(column) == 1.0) {
                 return i;
             }
         }

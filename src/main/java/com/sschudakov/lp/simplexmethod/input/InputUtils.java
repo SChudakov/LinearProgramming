@@ -16,7 +16,7 @@ class InputUtils {
      * @return sign
      * @see Sign
      */
-    public static Sign inputSign(String sign) {
+    public static Sign parseSign(String sign) {
         if (sign.equals(EQUAL)) {
             return Sign.EQUAL;
         }

@@ -4,7 +4,7 @@ import com.sschudakov.lp.simplexmethod.enumerable.Sign;
 import com.sschudakov.lp.simplexmethod.enumerable.TaskType;
 import com.sschudakov.lp.simplexmethod.exception.NoSolutionException;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,10 +22,7 @@ public class LPTable {
     private List<Double> function;
     private TaskType taskType;
     private Boolean modified;
-    private double[][] mainTable;
-
-    private List<Sign> equationsSigns;
-    private List<Double> restrictionsVector;
+    private List<LPRestriction> mainTable;
 
     private List<Integer> basicVariables;
 
@@ -91,28 +88,12 @@ public class LPTable {
         this.modified = modified;
     }
 
-    public double[][] getMainTable() {
+    public List<LPRestriction> getMainTable() {
         return mainTable;
     }
 
-    public void setMainTable(double[][] mainTable) {
+    public void setMainTable(List<LPRestriction> mainTable) {
         this.mainTable = mainTable;
-    }
-
-    public List<Sign> getEquationsSigns() {
-        return equationsSigns;
-    }
-
-    public void setEquationsSigns(List<Sign> equationsSigns) {
-        this.equationsSigns = equationsSigns;
-    }
-
-    public List<Double> getRestrictionsVector() {
-        return restrictionsVector;
-    }
-
-    public void setRestrictionsVector(List<Double> restrictionsVector) {
-        this.restrictionsVector = restrictionsVector;
     }
 
     public List<Integer> getBasicVariables() {
@@ -148,6 +129,11 @@ public class LPTable {
     }
 
     public LPTable() {
+        this.function = new ArrayList<>();
+        this.mainTable = new ArrayList<>();
+        this.basicVariables = new ArrayList<>();
+        this.deltasVector = new ArrayList<>();
+        this.simplexRatios = new ArrayList<>();
     }
 
     public boolean isOptimal() {
@@ -160,8 +146,8 @@ public class LPTable {
     }
 
     public boolean isDualOptimal() {
-        for (Double aDouble : restrictionsVector) {
-            if (aDouble < 0) {
+        for (LPRestriction lpRestriction : this.mainTable) {
+            if (lpRestriction.getRightPartValue() < 0) {
                 return false;
             }
         }
@@ -177,41 +163,19 @@ public class LPTable {
         }
     }
 
-
     public void outputTable() {
-
         System.out.println("\nnum of variables: " + this.numOfVariables);
         System.out.println("num of initial variables: " + this.numOfInitialVariables);
         System.out.println("num of M variables: " + this.numOfMVariables);
-        System.out.println("num of equations: " + this.numOfEquations + "\n");
-
-        System.out.println("function: " + this.function.toString());
-
+        System.out.println("num of equations: " + this.numOfEquations);
+        System.out.println();
+        System.out.println("function: " + this.function);
         System.out.println("task type: " + this.taskType);
-
-        for (double[] row : mainTable) {
-            System.out.println(Arrays.toString(row));
+        for (LPRestriction lpRestriction : this.mainTable) {
+            System.out.println(lpRestriction);
         }
-
-        System.out.println("signs: " + this.equationsSigns.toString());
-
-        System.out.println("restrictions: " + this.restrictionsVector.toString());
-
-        if (this.basicVariables != null) {
-            System.out.println("basic variables: " + this.basicVariables.toString());
-        }
-
-        if (this.deltasVector != null) {
-            System.out.println("deltas: " + this.deltasVector.toString());
-        }
-
-        if (this.simplexRatios != null) {
-            System.out.println("simplex ratios: " + this.simplexRatios.toString());
-        }
-
-//        if (this.basicVariablesCoefficients != null) {
-//            System.out.println("basic variables coefficients: " + this.basicVariablesCoefficients.toString());
-//        }
+        System.out.println("basic variables: " + this.basicVariables);
+        System.out.println("deltas: " + this.deltasVector);
+        System.out.println("simplex ratios: " + this.simplexRatios);
     }
-
 }

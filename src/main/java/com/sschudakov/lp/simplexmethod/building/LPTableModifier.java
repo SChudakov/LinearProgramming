@@ -2,8 +2,8 @@ package com.sschudakov.lp.simplexmethod.building;
 
 import com.sschudakov.lp.simplexmethod.enumerable.Sign;
 import com.sschudakov.lp.simplexmethod.enumerable.TaskType;
+import com.sschudakov.lp.simplexmethod.table.LPRestriction;
 import com.sschudakov.lp.simplexmethod.table.LPTable;
-import com.sschudakov.lp.simplexmethod.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class LPTableModifier {
 
-    private static final int LESS_THAN_INEQUATION_NORMALIZER_COEFFICIENT = 1;
-    private static final int GREATER_INEQUATION_NORMALIZER_COEFFICIENT = -1;
+    private static final Double LESS_THAN_INEQUATION_NORMALIZER_COEFFICIENT = 1.0;
+    private static final Double GREATER_INEQUATION_NORMALIZER_COEFFICIENT = -1.0;
 
     public void modifyTable(LPTable table, TaskType toType) {
         modifyFunctionType(table, toType);
@@ -42,16 +42,16 @@ public class LPTableModifier {
     }
 
     private void modifyInequationsToEquations(LPTable table) {
-
+        List<LPRestriction> mainTable = table.getMainTable();
         List<Integer> equationsForNewVariables = new ArrayList<>();
 
-        for (int i = 0; i < table.getNumOfEquations(); i++) {
-            if (table.getRestrictionsVector().get(i) > 0 && !table.getEquationsSigns().get(i).equals(Sign.EQUAL)) {
+        for (int i = 0; i < mainTable.size(); i++) {
+            if (mainTable.get(i).getRightPartValue() > 0 && !mainTable.get(i).getSign().equals(Sign.EQUAL)) {
                 reverseEquationSign(table, i);
             }
         }
-        for (int i = 0; i < table.getNumOfEquations(); i++) {
-            if (!table.getEquationsSigns().get(i).equals(Sign.EQUAL)) {
+        for (int i = 0; i < table.getMainTable().size(); i++) {
+            if (!mainTable.get(i).getSign().equals(Sign.EQUAL)) {
                 equationsForNewVariables.add(i);
             }
         }
@@ -65,25 +65,30 @@ public class LPTableModifier {
 
     private void reverseEquationSign(LPTable table, int equation) {
 
-        double[][] mainTable = table.getMainTable();
+        List<LPRestriction> mainTable = table.getMainTable();
 
-        for (int i = 0; i < mainTable[equation].length; i++) {
-            mainTable[equation][i] = -mainTable[equation][i];
+        for (int i = 0; i < mainTable.get(equation).getCondition().size(); i++) {
+            Double recountedValue = -mainTable.get(equation).getCondition().get(i);
+            mainTable.get(equation).getCondition().set(
+                    i,
+                    recountedValue);
         }
 
-        table.getRestrictionsVector().set(equation, -table.getRestrictionsVector().get(equation));
+        mainTable.get(equation).setRightPartValue(
+                -mainTable.get(equation).getRightPartValue()
+        );
 
-        if (table.getEquationsSigns().get(equation).equals(Sign.GREATER_THAN)) {
-            table.getEquationsSigns().set(equation, Sign.LESS_THAN);
+        if (mainTable.get(equation).getSign().equals(Sign.GREATER_THAN)) {
+            mainTable.get(equation).setSign(Sign.LESS_THAN);
         } else {
-            if (table.getEquationsSigns().get(equation).equals(Sign.GREATER_THAN_OR_EQUAL_TO)) {
-                table.getEquationsSigns().set(equation, Sign.LESS_THAN_OR_EQUAL_TO);
+            if (mainTable.get(equation).getSign().equals(Sign.GREATER_THAN_OR_EQUAL_TO)) {
+                mainTable.get(equation).setSign(Sign.LESS_THAN_OR_EQUAL_TO);
             } else {
-                if (table.getEquationsSigns().get(equation).equals(Sign.LESS_THAN)) {
-                    table.getEquationsSigns().set(equation, Sign.GREATER_THAN);
+                if (mainTable.get(equation).getSign().equals(Sign.LESS_THAN)) {
+                    mainTable.get(equation).setSign(Sign.GREATER_THAN);
                 } else {
-                    if (table.getEquationsSigns().get(equation).equals(Sign.LESS_THAN_OR_EQUAL_TO)) {
-                        table.getEquationsSigns().set(equation, Sign.GREATER_THAN_OR_EQUAL_TO);
+                    if (mainTable.get(equation).getSign().equals(Sign.LESS_THAN_OR_EQUAL_TO)) {
+                        mainTable.get(equation).setSign(Sign.GREATER_THAN_OR_EQUAL_TO);
                     }
                 }
             }
@@ -95,43 +100,40 @@ public class LPTableModifier {
 
         int numOfNewVariables = equationsForNewVariables.size();
 
-        double[][] mainTable = table.getMainTable();
-        double[][] copiedTable = new double[mainTable.length][mainTable[0].length + numOfNewVariables];
+        List<LPRestriction> mainTable = table.getMainTable();
 
-        Utils.copyTable(mainTable, copiedTable);
+        //make main table larger
+        for (LPRestriction lpRestriction : mainTable) {
+            for (int i = 0; i < equationsForNewVariables.size(); i++) {
+                lpRestriction.getCondition().add(0.0);
+            }
+        }
 
         for (int i = 0; i < numOfNewVariables; i++) {
-            if (table.getEquationsSigns()
-                    .get(equationsForNewVariables.get(i)).equals(Sign.LESS_THAN) ||
-                    table.getEquationsSigns()
-                            .get(equationsForNewVariables.get(i)).equals(Sign.LESS_THAN_OR_EQUAL_TO)) {
+            if (mainTable.get(equationsForNewVariables.get(i)).getSign().equals(Sign.LESS_THAN) ||
+                    mainTable.get(equationsForNewVariables.get(i)).getSign().equals(Sign.LESS_THAN_OR_EQUAL_TO)) {
 
-                copiedTable[equationsForNewVariables.get(i)][mainTable[0].length + i]
-                        = LESS_THAN_INEQUATION_NORMALIZER_COEFFICIENT;
+                List<Double> condition = mainTable.get(equationsForNewVariables.get(i)).getCondition();
 
+                condition.set(condition.size() - equationsForNewVariables.size() + i, LESS_THAN_INEQUATION_NORMALIZER_COEFFICIENT);
             }
-            if (table.getEquationsSigns()
-                    .get(equationsForNewVariables.get(i)).equals(Sign.GREATER_THAN) ||
-                    table.getEquationsSigns()
-                            .get(equationsForNewVariables.get(i)).equals(Sign.GREATER_THAN_OR_EQUAL_TO)) {
+            if (mainTable.get(equationsForNewVariables.get(i)).getSign().equals(Sign.GREATER_THAN) ||
+                    mainTable.get(equationsForNewVariables.get(i)).getSign().equals(Sign.GREATER_THAN_OR_EQUAL_TO)) {
 
-                copiedTable[equationsForNewVariables.get(i)][mainTable[0].length + i]
-                        = GREATER_INEQUATION_NORMALIZER_COEFFICIENT;
+                List<Double> condition = mainTable.get(equationsForNewVariables.get(i)).getCondition();
+
+                condition.set(condition.size() - equationsForNewVariables.size() + i, GREATER_INEQUATION_NORMALIZER_COEFFICIENT);
 
             }
 
             table.getFunction().add(0.0);
         }
-
-        table.setMainTable(copiedTable);
-
         table.setNumOfVariables(table.getNumOfVariables() + equationsForNewVariables.size());
     }
 
     private void changeInequationSignsToEqual(LPTable table) {
-        for (int i = 0; i < table.getEquationsSigns().size(); i++) {
-            table.getEquationsSigns().set(i, Sign.EQUAL);
+        for (int i = 0; i < table.getMainTable().size(); i++) {
+            table.getMainTable().get(i).setSign(Sign.EQUAL);
         }
     }
-
 }

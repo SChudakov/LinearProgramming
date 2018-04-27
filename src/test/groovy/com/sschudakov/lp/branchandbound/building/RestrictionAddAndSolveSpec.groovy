@@ -2,8 +2,8 @@ package com.sschudakov.lp.branchandbound.building
 
 import com.sschudakov.lp.simplexmethod.enumerable.Sign
 import com.sschudakov.lp.simplexmethod.input.LPStringInput
-import com.sschudakov.lp.simplexmethod.solver.LPSolution
-import com.sschudakov.lp.simplexmethod.solver.LPSolver
+import com.sschudakov.lp.simplexmethod.solving.LPSolution
+import com.sschudakov.lp.simplexmethod.solving.LPSolver
 import com.sschudakov.lp.simplexmethod.table.LPRestriction
 import com.sschudakov.lp.simplexmethod.table.LPTable
 import com.sschudakov.lp.simplexmethod.building.LPTableBuilder

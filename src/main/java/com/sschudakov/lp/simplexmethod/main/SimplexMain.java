@@ -1,9 +1,9 @@
 package com.sschudakov.lp.simplexmethod.main;
 
 import com.sschudakov.lp.simplexmethod.input.LPStringInput;
-import com.sschudakov.lp.simplexmethod.solver.LPSolution;
+import com.sschudakov.lp.simplexmethod.solving.LPSolution;
 import com.sschudakov.lp.simplexmethod.table.LPTable;
-import com.sschudakov.lp.simplexmethod.solver.LPSolver;
+import com.sschudakov.lp.simplexmethod.solving.LPSolver;
 import com.sschudakov.lp.simplexmethod.building.LPTableBuilder;
 import com.sschudakov.lp.task.LPTasks;
 

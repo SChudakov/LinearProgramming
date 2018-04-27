@@ -2,6 +2,7 @@ package com.sschudakov.lp.simplexmethod.input;
 
 import com.sschudakov.lp.simplexmethod.enumerable.Sign;
 import com.sschudakov.lp.simplexmethod.enumerable.TaskType;
+import com.sschudakov.lp.simplexmethod.table.LPRestriction;
 import com.sschudakov.lp.simplexmethod.table.LPTable;
 
 import java.util.ArrayList;
@@ -43,8 +44,8 @@ public class LPStringInput {
         lpTable.setFunction(inputFunction(scanner, numOfVariables));
         lpTable.setTaskType(inputTaskType(scanner));
         lpTable.setMainTable(inputMainTable(scanner, numOfEquations, numOfVariables));
-        lpTable.setEquationsSigns(inputRestrictionsSigns(scanner, numOfEquations));
-        lpTable.setRestrictionsVector(inputRestrictions(scanner, numOfEquations));
+        /*lpTable.setEquationsSigns(inputRestrictionsSigns(scanner, numOfEquations));
+        lpTable.setRestrictionsVector(inputRestrictions(scanner, numOfEquations));*/
     }
 
     /**
@@ -105,16 +106,21 @@ public class LPStringInput {
      * @param scanner scanner of a lp task string
      * @return main table
      */
-    private double[][] inputMainTable(Scanner scanner, int numOfRows, int numOfColumns) {
+    private List<LPRestriction> inputMainTable(Scanner scanner, int numOfEquations, int numOfVariables) {
 
-        double[][] result = new double[numOfRows][numOfColumns];
+        List<LPRestriction> result = new ArrayList<>();
 
-        for (int i = 0; i < numOfRows; i++) {
-            for (int j = 0; j < numOfColumns; j++) {
-                result[i][j] = scanner.nextDouble();
+        for (int i = 0; i < numOfEquations; i++) {
+            List<Double> condition = new ArrayList<>();
+            for (int j = 0; j < numOfVariables; j++) {
+                condition.add(scanner.nextDouble());
             }
-        }
+            String sign = scanner.next();
+            Sign parsedSign = InputUtils.parseSign(sign);
+            Double restriction = scanner.nextDouble();
 
+            result.add(new LPRestriction(condition, parsedSign, restriction));
+        }
 
         return result;
     }
@@ -122,30 +128,30 @@ public class LPStringInput {
     /**
      * This method parses restrictions signs list using {@code scanner}
      * <p>
-     * Invokes inputSign() method {@code numOfEquations} times.
+     * Invokes parseSign() method {@code numOfEquations} times.
      *
      * @param scanner scanner of a lp task string
      * @return restrictions signs list
-     */
+     *//*
     private List<Sign> inputRestrictionsSigns(Scanner scanner, int numOfEquations) {
 
         ArrayList<Sign> result = new ArrayList<>();
 
         for (int i = 0; i < numOfEquations; i++) {
             String sign = scanner.next();
-            result.add(InputUtils.inputSign(sign));
+            result.add(InputUtils.parseSign(sign));
         }
 
         return result;
     }
 
 
-    /**
+    *//**
      * This method parses restrictions right part values list using {@code scanner}
      *
      * @param scanner scanner of a lp task string
      * @return list of restrictions values
-     */
+     *//*
     private List<Double> inputRestrictions(Scanner scanner, int numOfEquations) {
         List<Double> result = new ArrayList<>();
 
@@ -154,5 +160,5 @@ public class LPStringInput {
         }
 
         return result;
-    }
+    }*/
 }

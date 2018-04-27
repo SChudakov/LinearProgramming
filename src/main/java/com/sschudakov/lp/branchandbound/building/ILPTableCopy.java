@@ -1,7 +1,7 @@
 package com.sschudakov.lp.branchandbound.building;
 
 import com.sschudakov.lp.branchandbound.table.ILPTable;
-import com.sschudakov.lp.simplexmethod.util.Utils;
+import com.sschudakov.lp.simplexmethod.table.LPRestriction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +39,7 @@ public class ILPTableCopy {
 
         result.setFunction(copyList(ilpTable.getFunction()));
         result.setTaskType(ilpTable.getTaskType());
-        result.setMainTable(Utils.copyTable(ilpTable.getMainTable()));
-
-        result.setRestrictionsVector(copyList(ilpTable.getRestrictionsVector()));
-        result.setEquationsSigns(copyList(ilpTable.getEquationsSigns()));
+        result.setMainTable(copyMainTable(ilpTable.getMainTable()));
 
         result.setBasicVariables(copyList(ilpTable.getBasicVariables()));
 
@@ -51,6 +48,18 @@ public class ILPTableCopy {
 
         result.setFunctionValue(ilpTable.getFunctionValue());
 
+        return result;
+    }
+
+    public List<LPRestriction> copyMainTable(List<LPRestriction> mainTable) {
+        List<LPRestriction> result = new ArrayList<>();
+        for (LPRestriction lpRestriction : mainTable) {
+            result.add(new LPRestriction(
+                    copyList(lpRestriction.getCondition()),
+                    lpRestriction.getSign(),
+                    lpRestriction.getRightPartValue()
+            ));
+        }
         return result;
     }
 

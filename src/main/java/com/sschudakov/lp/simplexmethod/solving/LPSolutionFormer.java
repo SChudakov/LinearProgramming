@@ -1,10 +1,12 @@
-package com.sschudakov.lp.simplexmethod.solver;
+package com.sschudakov.lp.simplexmethod.solving;
 
 import com.sschudakov.lp.simplexmethod.exception.TableNotDualOptimalException;
+import com.sschudakov.lp.simplexmethod.table.LPRestriction;
 import com.sschudakov.lp.simplexmethod.table.LPTable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Semen Chudakov on 20.10.2017.
@@ -40,14 +42,14 @@ public class LPSolutionFormer {
     private List<Double> formSolutionVector(LPTable lpTable) {
 
         List<Integer> basicVariables = lpTable.getBasicVariables();
-        List<Double> restrictions = lpTable.getRestrictionsVector();
+        List<Double> restrictions = lpTable.getMainTable().stream().map(LPRestriction::getRightPartValue).collect(Collectors.toList());
         List<Double> result = new ArrayList<>();
 
         for (int i = 0; i < lpTable.getNumOfVariables(); i++) {
             if (hasVariable(basicVariables, i)) {
                 Double variableValue = restrictions.get(tellBasicVariablePosition(basicVariables, i));
-                Double roundedValue = (double) Math.round(variableValue);
-                result.add(roundedValue);
+                /*Double roundedValue = (double) Math.round(variableValue);*/
+                result.add(variableValue);
             } else {
                 result.add(0.0);
             }
@@ -57,12 +59,7 @@ public class LPSolutionFormer {
     }
 
     private boolean hasVariable(List<Integer> basicVariables, int variable) {
-        for (Integer basicVariable : basicVariables) {
-            if (basicVariable == variable) {
-                return true;
-            }
-        }
-        return false;
+        return basicVariables.contains(variable);
     }
 
     private Double calculateFunctionValue(List<Double> function, List<Double> vector) {

@@ -2,7 +2,9 @@ package com.sschudakov.lp.simplexmethod.building;
 
 import com.sschudakov.lp.simplexmethod.table.LPTable;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 /**
  * Created by Semen Chudakov on 16.10.2017.
@@ -10,40 +12,37 @@ import java.util.List;
 public class MFinder {
 
     public static double findM(LPTable table) {
-        return max(maxOfMainTable(table.getMainTable()),
-                maxOfVector(table.getFunction()), maxOfVector(table.getRestrictionsVector())) + 1;
+        return max(
+                maxOfConditionsCoefficients(table),
+                maxOfRestrictions(table),
+                maxOfFunction(table)
+        ) + 1;
     }
 
-    private static double maxOfMainTable(double[][] mainTable) {
-        double result = Math.abs(mainTable[0][0]);
-        for (double[] doubles : mainTable) {
-            for (double aDouble : doubles) {
-                if (result < Math.abs(aDouble)) {
-                    result = Math.abs(aDouble);
-                }
-            }
-        }
-        return result;
+    private static Double maxOfFunction(LPTable table) {
+        return Collections.max(
+                table.getFunction().stream().map(Math::abs).collect(Collectors.toList())
+        );
     }
 
-    private static double maxOfVector(List<Double> vector) {
-        double result = Math.abs(vector.get(0));
-        for (Double aDouble : vector) {
-            if (result < Math.abs(aDouble)) {
-                result = Math.abs(aDouble);
-            }
-        }
-        return result;
+    private static Double maxOfConditionsCoefficients(LPTable table) {
+
+        return Math.abs(
+                Collections.max(
+                        table.getMainTable().stream()
+                                .map(r -> Math.abs(Collections.max(r.getCondition()))).collect(Collectors.toList())
+                )
+        );
     }
 
-    private static double max(double... values) {
-        double result = Math.abs(values[0]);
-        for (double value : values) {
-            if (result < Math.abs(value)) {
-                result = Math.abs(value);
-            }
-        }
-        return result;
+    private static Double maxOfRestrictions(LPTable table) {
+        return Collections.max(
+                table.getMainTable().stream()
+                        .map(r -> Math.abs(r.getRightPartValue())).collect(Collectors.toList())
+        );
     }
 
+    private static Double max(Double... values) {
+        return Collections.max(Arrays.asList(values));
+    }
 }

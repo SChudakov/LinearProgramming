@@ -1,26 +1,15 @@
-package com.sschudakov.lp.simplexmethod.solving;
+package com.sschudakov.lp.simplexmethod.table;
 
-import com.sschudakov.lp.simplexmethod.table.LPTable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.List;
 
 public class LPSolution {
-    private LPTable lpTable;
-
     private List<Double> solutionVector;
     private Double functionValue;
 
     private Exception solvingException;
-
-    public LPTable getLpTable() {
-        return lpTable;
-    }
-
-    public void setLpTable(LPTable lpTable) {
-        this.lpTable = lpTable;
-    }
 
     public List<Double> getSolutionVector() {
         return solutionVector;
@@ -46,14 +35,12 @@ public class LPSolution {
         this.solvingException = solvingException;
     }
 
-    LPSolution(LPTable lpTable, List<Double> solutionVector, Double functionValue) {
-        this.lpTable = lpTable;
+    public LPSolution(List<Double> solutionVector, Double functionValue) {
         this.solutionVector = solutionVector;
         this.functionValue = functionValue;
     }
 
-    LPSolution(LPTable lpTable, Exception solvingException) {
-        this.lpTable = lpTable;
+    public LPSolution(Exception solvingException) {
         this.solvingException = solvingException;
     }
 

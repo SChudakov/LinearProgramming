@@ -6,8 +6,11 @@ import com.sschudakov.lp.branchandbound.table.ILPTable;
 import com.sschudakov.lp.branchandbound.util.Utils;
 import com.sschudakov.lp.simplexmethod.building.LPTableBuilder;
 import com.sschudakov.lp.simplexmethod.enumerable.TaskType;
-import com.sschudakov.lp.simplexmethod.solving.LPSolution;
 import com.sschudakov.lp.simplexmethod.solving.LPSolver;
+import com.sschudakov.lp.simplexmethod.table.LPSolution;
+import com.sschudakov.lp.simplexmethod.table.LPTable;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,7 +44,7 @@ public class BABILPSolver {
      * the solutions list steds for the iterations of
      * the solving process is was generated on.
      */
-    private List<List<LPSolution>> tasksSolutions;
+    private List<List<SolutionAndTable>> tasksSolutions;
     private List<List<LPSolution>> integerSolutions;
     /**
      * Cope tables while solving.
@@ -52,6 +55,9 @@ public class BABILPSolver {
      */
     private LPTableBuilder lpTableBuilder;
 
+    public List<List<SolutionAndTable>> getTasksSolutions() {
+        return tasksSolutions;
+    }
 
     /**
      * Constructor.
@@ -82,36 +88,31 @@ public class BABILPSolver {
         int iteration = 1;
         boolean integerSolutionFound = false;
 
-        while (tables.size() != 0 && !integerSolutionFound) {
+        while (!tables.isEmpty() && !integerSolutionFound) {
 
             logger.info("ITERATION " + iteration++);
 
-            List<LPSolution> solutions = new ArrayList<>();
+            List<SolutionAndTable> solutions = new ArrayList<>();
             List<LPSolution> intSolutions = new ArrayList<>();
             List<ILPTable> splitTables = new ArrayList<>();
 
             for (ILPTable table : tables) {
                 logger.info("TABLE\n");
                 table.outputTable();
-
                 ILPTable copiedTable = this.ilpTableCopy.copy(table);
                 this.lpTableBuilder.buildSimplexTable(table);
                 LPSolution solution = this.lpSolver.solveLP(table);
                 if (!solution.endedWithException()) {
                     fixSolution(solution);
                 }
-                solutions.add(solution);
-
+                solutions.add(new SolutionAndTable(copiedTable, solution));
                 logger.info("SOLUTION\n");
                 logger.info("solution vector: " + solution.getSolutionVector());
                 logger.info("function value: " + solution.getFunctionValue());
                 logger.info("exception: " + solution.getSolvingException());
-
                 if (!solution.endedWithException()) {
                     int nonIntegerBasicVariablePosition = findFirstNonIntegerBasicVariable(table);
-
                     logger.info("NON-INTEGER BASIC VARIABLE INDEX: " + nonIntegerBasicVariablePosition);
-
                     if (nonIntegerBasicVariablePosition != -1) {
                         splitTables.addAll(this.taskSplitter.splitTask(
                                 copiedTable,
@@ -124,23 +125,14 @@ public class BABILPSolver {
                     }
                 }
             }
-
             logger.info("SPLIT TABLES\n");
             for (ILPTable splitTable : splitTables) {
                 splitTable.outputTable();
             }
-
             this.tasksSolutions.add(solutions);
             tables = splitTables;
             this.integerSolutions.add(intSolutions);
         }
-
-        logger.info("SOLUTIONS: ");
-        for (int i = 0; i < this.integerSolutions.size(); i++) {
-            System.out.println("ITERATION: " + (i + 1));
-            System.out.println(integerSolutions.get(i));
-        }
-
         return findFinalSolution(ilpTable.getTaskType(), this.integerSolutions.get(this.integerSolutions.size() - 1));
     }
 
@@ -199,6 +191,39 @@ public class BABILPSolver {
         }
         if (!Utils.isNonInteger(solution.getFunctionValue())) {
             solution.setFunctionValue((double) Math.round(solution.getFunctionValue()));
+        }
+    }
+
+    public static class SolutionAndTable {
+        private LPTable table;
+        private LPSolution solution;
+
+        public LPTable getTable() {
+            return table;
+        }
+
+        public void setTable(LPTable table) {
+            this.table = table;
+        }
+
+        public LPSolution getSolution() {
+            return solution;
+        }
+
+        public void setSolution(LPSolution solution) {
+            this.solution = solution;
+        }
+
+        SolutionAndTable(LPTable table, LPSolution solution) {
+            this.table = table;
+            this.solution = solution;
+        }
+
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
+                    .append(this.solution)
+                    .build();
         }
     }
 }

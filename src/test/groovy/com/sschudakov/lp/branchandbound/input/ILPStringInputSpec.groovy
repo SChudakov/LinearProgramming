@@ -13,7 +13,7 @@ class ILPStringInputSpec extends Specification {
     ILPStringInput ilpStringInput
 
     /**
-     * Linear task the object will be tested on.
+     * Linear TASK the object will be tested on.
      */
     def linear_task = "5 3" +
             " 1 -1 1 -3 2" +
@@ -59,7 +59,7 @@ class ILPStringInputSpec extends Specification {
     /**
      * This test checks the content of an {@link ILPTable}
      * object after it is passed by parameter to a {@link ILPStringInput#inputILP}
-     * method with (@code linear_task) and {@code integerVariables} as task parameters.
+     * method with (@code linear_task) and {@code integerVariables} as TASK parameters.
      */
     def "test input table content"() {
         given:

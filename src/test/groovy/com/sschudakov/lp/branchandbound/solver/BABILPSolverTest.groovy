@@ -3,7 +3,7 @@ package com.sschudakov.lp.branchandbound.solver
 import com.sschudakov.lp.branchandbound.table.ILPTable
 import com.sschudakov.lp.simplexmethod.enumerable.Sign
 import com.sschudakov.lp.simplexmethod.enumerable.TaskType
-import com.sschudakov.lp.simplexmethod.solving.LPSolution
+import com.sschudakov.lp.simplexmethod.table.LPSolution
 import com.sschudakov.lp.simplexmethod.table.LPRestriction
 import spock.lang.Shared
 import spock.lang.Specification

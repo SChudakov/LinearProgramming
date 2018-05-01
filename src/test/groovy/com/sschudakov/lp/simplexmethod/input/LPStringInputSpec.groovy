@@ -17,7 +17,7 @@ class LPStringInputSpec extends Specification {
      */
     LPStringInput lpStringInput
     /**
-     * Linear task the object will be tested on.
+     * Linear TASK the object will be tested on.
      */
     def linear_task = "5 3" +
             " 1 -1 1 -3 2" +
@@ -53,7 +53,7 @@ class LPStringInputSpec extends Specification {
     /**
      * This test checks the content of an {@link LPTable}
      * object after it is passed by parameter to a {@link LPStringInput#inputLP}
-     * method with (@code linear_task) as task parameter.
+     * method with (@code linear_task) as TASK parameter.
      */
     def "table content is correct"() {
         given:

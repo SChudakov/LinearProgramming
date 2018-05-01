@@ -2,6 +2,7 @@ package com.sschudakov.lp.simplexmethod.solving;
 
 import com.sschudakov.lp.simplexmethod.exception.TableNotDualOptimalException;
 import com.sschudakov.lp.simplexmethod.table.LPRestriction;
+import com.sschudakov.lp.simplexmethod.table.LPSolution;
 import com.sschudakov.lp.simplexmethod.table.LPTable;
 
 import java.util.ArrayList;
@@ -25,15 +26,13 @@ public class LPSolutionFormer {
         }
 
         return new LPSolution(
-                lpTable,
                 solutionVector,
                 functionValue
         );
     }
 
-    public LPSolution formSolution(LPTable lpTable, Exception exception) {
+    public LPSolution formSolution(Exception exception) {
         return new LPSolution(
-                lpTable,
                 exception
         );
     }

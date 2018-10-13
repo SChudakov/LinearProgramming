@@ -11,32 +11,59 @@ import java.awt.BorderLayout;
 
 public class BABMain {
 
-    private static final String TASK_1 = "2 2" +
-            " -1 -3" +
-            " min" +
-            " 1 4 <= 14" +
-            " 2 3 <= 12";
+    private static final String TASK_1 = "2 3" +
+            " 1 1" +
+            " max" +
+            " 2 11 <= 36" +
+            " 1 1 <= 7" +
+            " 4 -5 <= 5";
 
     private static final String TASK_2 = "2 3" +
-            " 5 7" +
-            " min" +
-            " -10 1 <= -16" +
-            " -3 -3 <= -12" +
-            " -6 -2 <= -17";
-
-    private static final String TASK_3 = "2 3" +
             " -2 -1" +
             " min" +
             " 6 4 <= 24" +
             " 1 -1 <= 3" +
             " -1 3 <= 3";
 
+    private static final String TASK_3 = "2 3" +
+            " 6 4" +
+            " min" +
+            " 2 1 >= 3" +
+            " 1 -2 <= 2" +
+            " 3 2 >= 1";
+
     private static final String TASK_4 = "2 3" +
             " 1 1" +
+            " min" +
+            " -1 -1 <= -1" +
+            " -2 2 <= -2" +
+            " -4 2 <= -1";
+
+    private static final String TASK_5 = "2 3" +
+            " 5 7" +
+            " min" +
+            " -10 1 <= -16" +
+            " -3 -3 <= -12" +
+            " -6 -2 <= -17";
+
+    private static final String TASK_6 = "2 3" +
+            " 2 -1" +
             " max" +
-            " 2 11 <= 36" +
-            " 1 1 <= 7" +
-            " 4 -5 <= 5";
+            " 2 1 <= 8" +
+            " 1 3 >= 6" +
+            " 3 2 >= 3";
+
+    private static final String TASK_7 = "2 2" +
+            " -1 -3" +
+            " min" +
+            " 1 4 <= 14" +
+            " 2 3 <= 12";
+
+    /*private static final String TASK_7 = "2 2" +
+            " -1 -3" +
+            " min" +
+            " 1 4 <= 14" +
+            " 2 3 <= 12";*/
 
 
     private static final String INTEGER_VARIABLES = "0 1";
@@ -45,7 +72,7 @@ public class BABMain {
 
         ILPStringInput ilpStringInput = new ILPStringInput();
         ILPTable ilpTable = new ILPTable();
-        ilpStringInput.inputILP(ilpTable, TASK_4, INTEGER_VARIABLES);
+        ilpStringInput.inputILP(ilpTable, TASK_2, INTEGER_VARIABLES);
         BABILPSolver babilpSolver = new BABILPSolver();
 
         LPSolution integerSolution = babilpSolver.solve(ilpTable);

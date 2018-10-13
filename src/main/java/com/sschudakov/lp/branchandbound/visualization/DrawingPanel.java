@@ -8,16 +8,19 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DrawingPanel extends JPanel {
 
     private static final int AXISES_ARROWS_LENGTH = 10;
     private static final int SCALE = 50;
-    private static final int SLEEP_TIME = 4000;
+    private static final int SLEEP_TIME = 1000;
 
     private List<List<BABILPSolver.SolutionAndTable>> solvingIterations;
     private LPSolution integerSolution;
+    private List<String> xLabels;
+    private List<String> yLabels;
 
     public void setSolvingIterations(List<List<BABILPSolver.SolutionAndTable>> solvingIterations) {
         this.solvingIterations = solvingIterations;
@@ -29,19 +32,20 @@ public class DrawingPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics graphics) {
+        this.xLabels = new ArrayList<>();
+        this.yLabels = new ArrayList<>();
         super.paintComponent(graphics);
         visualizeSolvingProcess(graphics, this.solvingIterations);
-
     }
 
     private void visualizeSolvingProcess(Graphics graphics, List<List<BABILPSolver.SolutionAndTable>> iterations) {
         drawCoordinateAxises(graphics);
         drawInitialTableRestrictions(graphics, iterations.get(0).get(0).getTable().getMainTable());
         drawSolutionVector(graphics, iterations.get(0).get(0).getSolution().getSolutionVector(), Color.BLACK);
-        iterations.get(0).remove(0);
+        /*iterations.get(0).remove(0);*/
 
-        for (List<BABILPSolver.SolutionAndTable> iteration : iterations) {
-            drawSolvingIteration(graphics, iteration);
+        for (int i = 1; i < iterations.size(); i++) {
+            drawSolvingIteration(graphics, iterations.get(i));
         }
 
         drawSolutionVector(graphics, this.integerSolution.getSolutionVector(), Color.GREEN);
@@ -116,39 +120,39 @@ public class DrawingPanel extends JPanel {
         double xAxisCrossingPoint = restriction.getRightPartValue() / restriction.getCondition().get(0);
         double yAxisCrossingPoint = restriction.getRightPartValue() / restriction.getCondition().get(1);
 
-
-        String xAxisLabel;
-        String yAxisLabel;
-
-        if ((int) xAxisCrossingPoint == xAxisCrossingPoint) {
-            xAxisLabel = formatDoubleWithIntegerValue(xAxisCrossingPoint);
-        } else {
-            xAxisLabel = String.format("%.2f", xAxisCrossingPoint);
-        }
-
-        if ((int) yAxisCrossingPoint == yAxisCrossingPoint) {
-            yAxisLabel = formatDoubleWithIntegerValue(yAxisCrossingPoint);
-        } else {
-            yAxisLabel = String.format("%.2f", yAxisCrossingPoint);
-        }
-
         graphics.setColor(Color.BLACK);
 
-        graphics.drawString(
-                xAxisLabel,
-                recountX(scale(xAxisCrossingPoint)),
-                recountY(scale(0)) + 10
-        );
-        graphics.drawString(
-                yAxisLabel,
-                recountX(scale(0)) - 10,
-                recountY(scale(yAxisCrossingPoint))
-        );
+        String xLabel = formatLabelValue(xAxisCrossingPoint);
+        String yLabel = formatLabelValue(yAxisCrossingPoint);
+
+        if (!this.xLabels.contains(xLabel)) {
+            graphics.drawString(
+                    xLabel,
+                    recountX(scale(xAxisCrossingPoint)),
+                    recountY(scale(0)) + 10
+            );
+            this.xLabels.add(xLabel);
+        }
+        if (!this.yLabels.contains(yLabel)) {
+            graphics.drawString(
+                    yLabel,
+                    recountX(scale(0)) - 20,
+                    recountY(scale(yAxisCrossingPoint))
+            );
+            this.yLabels.add(yLabel);
+        }
     }
 
-    private String formatDoubleWithIntegerValue(double number) {
-        StringBuilder result = new StringBuilder().append(number);
-        return result.substring(0,result.length() - 2);
+    private String formatLabelValue(double number) {
+        String result;
+        if ((int) number == number) {
+            StringBuilder label = new StringBuilder().append(number);
+            label.substring(0, label.length() - 2);
+            result = label.toString();
+        } else {
+            result = String.format("%.2f", number);
+        }
+        return result;
     }
 
 
@@ -171,7 +175,6 @@ public class DrawingPanel extends JPanel {
     }
 
     private void drawSolutionVector(Graphics graphics, List<Double> solutionVector, Color color) {
-        System.out.println("SOLUTION: " + solutionVector);
         double xCentre = solutionVector.get(0);
         double yCentre = solutionVector.get(1);
 
@@ -179,7 +182,9 @@ public class DrawingPanel extends JPanel {
         double recountedY = recountY(scale(yCentre));
 
         drawCircle(graphics, recountedX, recountedY, color);
+
         /*drawPointLabel(graphics, recountedX, recountedY, xCentre, yCentre);*/
+        drawSolutionAxisesLabels(graphics, xCentre, yCentre, recountedX, recountedY);
     }
 
     private void drawCircle(Graphics graphics, double x, double y, Color color) {
@@ -190,6 +195,32 @@ public class DrawingPanel extends JPanel {
                 (int) (y - 4),
                 8,
                 8);
+    }
+
+    private void drawSolutionAxisesLabels(Graphics graphics, double xAxisLabelValue, double yAxisLabelValue,
+                                          double recountedX, double recountedY) {
+        graphics.setColor(Color.BLACK);
+
+
+        String xLabel = String.valueOf(formatLabelValue(xAxisLabelValue));
+        String yLabel = String.valueOf(formatLabelValue(yAxisLabelValue));
+
+        if (!this.xLabels.contains(xLabel)) {
+            graphics.drawString(
+                    xLabel,
+                    (int) recountedX,
+                    recountY(0) - 2
+            );
+            this.xLabels.add(xLabel);
+        }
+        if (!this.yLabels.contains(yLabel)) {
+            graphics.drawString(
+                    yLabel,
+                    recountX(0) + 5,
+                    (int) recountedY
+            );
+            this.yLabels.add(yLabel);
+        }
     }
 
     private void drawPointLabel(Graphics graphics, double labelX, double labelY, double x, double y) {
@@ -208,7 +239,6 @@ public class DrawingPanel extends JPanel {
                 (int) labelY - 5
         );
     }
-
 
     private void drawCoordinateAxises(Graphics graphics) {
         drawXAxis(graphics);

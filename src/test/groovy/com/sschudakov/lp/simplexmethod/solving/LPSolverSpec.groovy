@@ -79,6 +79,36 @@ class LPSolverSpec extends Specification {
         solution.getFunctionValue() == -10.8D
     }
 
+    def "solution exists test 3"() {
+        given:
+
+        LPTable table = new LPTable()
+        table.numOfVariables = 3
+        table.numOfInitialVariables = 3
+        table.numOfEquations = 3
+
+        table.function = [0.0D, 0.0D, 1.0D]
+
+        table.taskType = TaskType.MIN
+
+        table.mainTable = [
+                new LPRestriction([-3.0D, 4.0D, -1.0D], Sign.LESS_THAN_OR_EQUAL_TO, 0.0D, null),
+                new LPRestriction([5.0D, -2.0D, -1.0D], Sign.LESS_THAN_OR_EQUAL_TO, 0.0D, null),
+                new LPRestriction([1.0D, 1.0D, 0.0D], Sign.EQUAL, 1.0D, null)
+        ]
+
+        LPTableBuilder builder = new LPTableBuilder()
+        builder.buildSimplexTable(table)
+
+        when:
+        def solution = this.lpSolver.solveLP(table)
+        println "solution vector: ${solution.getSolutionVector()}"
+        println "function value: ${solution.getFunctionValue()}"
+        println "exception: ${solution.getSolvingException()}"
+        then:
+        notThrown(Exception)
+    }
+
     def "no solution test"() {
 
         given:

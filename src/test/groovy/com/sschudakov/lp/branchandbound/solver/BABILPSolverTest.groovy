@@ -111,7 +111,7 @@ class BABILPSolverTest extends Specification {
         solution.functionValue == 10.0D
     }
 
-    def "task 4 answer is correct"() {
+    def "task 4 answer is correct"()    {
 
         given:
         ILPTable ilpTable = new ILPTable()
